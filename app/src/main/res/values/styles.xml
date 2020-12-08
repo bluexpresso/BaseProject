@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="regularText">
+        <item name="fontFamily">@font/regular</item>
+        <item name="font">@font/regular</item>
+    </style>
+
+    <style name="boldText">
+        <item name="fontFamily">@font/bold</item>
+        <item name="font">@font/bold</item>
+    </style>
+
+    <style name="mediumText">
+        <item name="fontFamily">@font/medium</item>
+        <item name="font">@font/medium</item>
+    </style>
+
+    <style name="italicText">
+        <item name="fontFamily">@font/italic</item>
+        <item name="font">@font/italic</item>
+    </style>
+</resources>
