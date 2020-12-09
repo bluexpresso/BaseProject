@@ -3,6 +3,7 @@ package com.ankuradlakha.baseproject.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.ankuradlakha.baseproject.BuildConfig
 import com.ankuradlakha.baseproject.data.AppCache
 import com.ankuradlakha.baseproject.data.AppDatabase
 import com.ankuradlakha.baseproject.network.API
@@ -57,7 +58,7 @@ class AppModules {
     @Provides
     fun provideAPI(gson: Gson, okHttpClient: OkHttpClient) = Retrofit.Builder()
         .client(okHttpClient)
-        .baseUrl("https://raw.githubusercontent.com/bluexpresso/Pashu-Pakshi/gh-pages/")
+        .baseUrl(BuildConfig.REST_ENDPOINT)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(API::class.java)

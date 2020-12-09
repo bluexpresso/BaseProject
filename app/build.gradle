@@ -8,6 +8,7 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
+    flavorDimensions "primary"
 
     defaultConfig {
         applicationId "com.ankuradlakha.baseproject"
@@ -24,6 +25,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+            manifestPlaceholders = [CRASHLYTICS_ENABLED: true]
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,6 +39,25 @@ android {
     }
     dataBinding {
         enabled = true
+    }
+    flavorDimensions "primary"
+    productFlavors {
+        dev {
+            dimension "primary"
+            buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
+        }
+        qa {
+            dimension "primary"
+            buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
+        }
+        uat {
+            dimension "primary"
+            buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
+        }
+        prod {
+            dimension "primary"
+            buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
+        }
     }
 }
 
