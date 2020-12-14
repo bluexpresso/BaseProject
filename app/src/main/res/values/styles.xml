@@ -1,23 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="regularText">
+    <style name="RegularText">
         <item name="fontFamily">@font/regular</item>
         <item name="font">@font/regular</item>
     </style>
 
-    <style name="boldText">
+    <style name="BoldText">
         <item name="fontFamily">@font/bold</item>
         <item name="font">@font/bold</item>
     </style>
 
-    <style name="mediumText">
+    <style name="MediumText">
         <item name="fontFamily">@font/medium</item>
         <item name="font">@font/medium</item>
     </style>
 
-    <style name="italicText">
+    <style name="ItalicText">
         <item name="fontFamily">@font/italic</item>
         <item name="font">@font/italic</item>
+    </style>
+
+    <style name="LightText">
+        <item name="fontFamily">@font/light</item>
+        <item name="font">@font/light</item>
+    </style>
+
+    <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/primary_button_tint_states</item>
+        <item name="android:textColor">@color/primary_button_text_colors</item>
+        <item name="rippleColor">@color/primaryButtonPressed</item>
+        <item name="cornerRadius">2dp</item>
+    </style>
+
+    <style name="SecondaryButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/secondary_button_tint_states</item>
+        <item name="android:textColor">@color/secondary_button_text_colors</item>
+        <item name="strokeColor">@color/secondary_button_stroke_colors</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="rippleColor">@color/secondaryButtonPressed</item>
+        <item name="cornerRadius">2dp</item>
+    </style>
+
+    <style name="TextBodySmall" parent="LightText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.0</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="TextBody" parent="LightText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.0277</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="TextPriceSmall" parent="LightText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.0</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="lineHeight">16dp</item>
+    </style>
+
+    <style name="TextPriceBig" parent="TextPriceSmall">
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">28dp</item>
+    </style>
+
+    <style name="TextTitleSmall" parent="LightText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.0</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="lineHeight">22dp</item>
+    </style>
+
+    <style name="TextTitleBig" parent="TextTitleSmall">
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">28dp</item>
+    </style>
+
+    <style name="TextLabelBrandSmall" parent="MediumText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:letterSpacing">0.03125</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="lineHeight">15dp</item>
+    </style>
+
+    <style name="TextLabelBrandBig" parent="TextLabelBrandSmall">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.125</item>
+        <item name="lineHeight">20dp</item>
+    </style>
+
+    <style name="TextSubheader" parent="LightText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.125</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="TextHeading4" parent="RegularText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.03125</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
+        <item name="lineHeight">20dp</item>
+    </style>
+
+    <style name="TextHeading3" parent="LightText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0.03125</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="TextHeading2" parent="TextHeading3">
+        <item name="android:textSize">32sp</item>
+        <item name="lineHeight">32dp</item>
+    </style>
+
+    <style name="TextHeading1" parent="TextHeading3">
+        <item name="android:textSize">46sp</item>
+        <item name="lineHeight">46dp</item>
+        <item name="android:letterSpacing">0.0</item>
+    </style>
+
+    <style name="TextHero" parent="TextHeading3">
+        <item name="android:textSize">54sp</item>
+        <item name="lineHeight">54dp</item>
+        <item name="android:letterSpacing">0.0</item>
     </style>
 </resources>

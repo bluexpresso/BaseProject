@@ -13,4 +13,19 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <color name="primaryButtonDefault">@color/black</color>
+    <color name="primaryButtonDisabled">@color/gray_78</color>
+    <color name="primaryButtonPressed">@color/black_panther</color>
+    <color name="textOnPrimaryDisabled">@color/white</color>
+    <color name="textOnPrimaryEnabled">@color/white</color>
+
+
+    <color name="secondaryButtonDefault">@android:color/transparent</color>
+    <color name="secondaryButtonDisabled">@color/gray_78</color>
+    <color name="secondaryButtonPressed">@color/nero</color>
+    <color name="textOnSecondaryButton">@color/secondary_button_text_colors</color>
+    <color name="textOnSecondaryDisabled">@color/white</color>
+    <color name="textOnSecondaryEnabled">@color/white</color>
+    <color name="secondaryButtonStrokeColor">@color/white</color>
 </resources>
