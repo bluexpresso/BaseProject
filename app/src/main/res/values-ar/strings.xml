@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BaseProject</string>
+    <string name="app_name">SampleRTLSupport</string>
     <string name="skip_intro">Skip Intro</string>
     <string name="choose_a_country">Choose a country</string>
     <string name="enable_notifications_to_stay_up_to_date_on_latest_collections_and_offers">Enable notifications to stay up-to-date on latest collections and offers</string>

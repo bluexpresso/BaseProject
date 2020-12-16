@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/spacing_32"
+        android:paddingTop="@dimen/spacing_40">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/choose_country"
+            style="@style/InputDropDown"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/choose_a_country"
+            app:hintAnimationEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_enable_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_24"
+            android:text="@string/enable_notifications_to_stay_up_to_date_on_latest_collections_and_offers"
+            android:textAppearance="@style/TextBodySmall"
+            android:thumb="@drawable/ic_switch_thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/choose_country"
+            app:thumbTint="@color/white"
+            app:thumbTintMode="multiply"
+            app:track="@drawable/switch_track"
+            app:trackTint="@color/switch_track_states" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_40"
+            android:text="@string/text_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/switch_enable_notifications" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

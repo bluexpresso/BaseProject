@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.ankuradlakha.baseproject.BuildConfig
 import com.ankuradlakha.baseproject.data.AppCache
 import com.ankuradlakha.baseproject.data.AppDatabase
+import com.ankuradlakha.baseproject.data.repositories.ConfigurationRepository
 import com.ankuradlakha.baseproject.network.API
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -104,6 +105,11 @@ class AppModules {
     @Singleton
     internal fun provideAppDatabase(@ApplicationContext context: Context) =
         Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
+
+    @Provides
+    @Singleton
+    internal fun providesConfigurationRepository(api: API,appCache: AppCache) =
+        ConfigurationRepository(api,appCache)
 
 //    @Provides
 //    @Singleton

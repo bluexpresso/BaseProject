@@ -44,7 +44,7 @@ android {
     productFlavors {
         dev {
             dimension "primary"
-            buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
+            buildConfigField 'String', 'REST_ENDPOINT', '"https://staginges.levelshoes.com:9202/"'
         }
         qa {
             dimension "primary"
@@ -70,8 +70,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.13.1'
     /*hilt*/
-    implementation "com.google.dagger:hilt-android:2.28.1-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28.1-alpha"
+    implementation "com.google.dagger:hilt-android:2.28.3-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28.3-alpha"
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02"
     /*retrofit*/
@@ -97,7 +97,8 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.2.5'
     /*Glide*/
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.caverock:androidsvg:1.2.1'
     /*Navigation*/
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'

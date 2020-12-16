@@ -31,6 +31,10 @@
         <item name="android:textColor">@color/primary_button_text_colors</item>
         <item name="rippleColor">@color/primaryButtonPressed</item>
         <item name="cornerRadius">2dp</item>
+        <item name="font">@font/regular</item>
+        <item name="fontFamily">@font/regular</item>
+        <item name="android:letterSpacing">0.107</item>
+        <item name="lineHeight">20dp</item>
     </style>
 
     <style name="SecondaryButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -40,6 +44,10 @@
         <item name="strokeWidth">1dp</item>
         <item name="rippleColor">@color/secondaryButtonPressed</item>
         <item name="cornerRadius">2dp</item>
+        <item name="font">@font/regular</item>
+        <item name="fontFamily">@font/regular</item>
+        <item name="android:letterSpacing">0.107</item>
+        <item name="lineHeight">20dp</item>
     </style>
 
     <style name="TextBodySmall" parent="LightText">
@@ -133,5 +141,18 @@
         <item name="android:textSize">54sp</item>
         <item name="lineHeight">54dp</item>
         <item name="android:letterSpacing">0.0</item>
+    </style>
+
+    <style name="InputDropDown" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="endIconDrawable">@drawable/ic_baseline_keyboard_arrow_down_24</item>
+        <item name="hintTextColor">@color/hintTextColor</item>
+        <item name="hintTextAppearance">@style/TextPriceBig</item>
+    </style>
+
+    <style name="SwitchStyle">
+        <item name="android:textAppearance">@style/TextBodySmall</item>
+        <item name="android:thumb">@drawable/ic_switch_thumb</item>
+        <item name="thumbTint">@color/white</item>
     </style>
 </resources>

@@ -1,16 +1,17 @@
 package com.ankuradlakha.baseproject
 
+import android.graphics.drawable.PictureDrawable
+import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import com.ankuradlakha.baseproject.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
+import com.ankuradlakha.baseproject.di.GlideApp
+import com.ankuradlakha.baseproject.utils.SvgSoftwareLayerSetter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.withCrossFade
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import timber.log.Timber
+
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {

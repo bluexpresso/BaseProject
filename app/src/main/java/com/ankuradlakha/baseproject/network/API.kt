@@ -1,9 +1,18 @@
 package com.ankuradlakha.baseproject.network
 
+import com.ankuradlakha.baseproject.data.models.BaseModel
+import com.ankuradlakha.baseproject.data.models.VersionInfoResponse
+import com.google.gson.JsonObject
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Url
 
 interface API {
-    @GET("animals.json")
-    fun getAnimals(): Call<ArrayList<Any>>
+    @POST
+    fun getVersionInfo(
+        @Url url: String,
+        @Body request: JsonObject
+    ): Call<BaseModel<VersionInfoResponse>>
 }
