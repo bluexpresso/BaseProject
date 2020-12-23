@@ -11,23 +11,16 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:paddingHorizontal="@dimen/spacing_32"
-        android:paddingTop="@dimen/spacing_40">
+        android:paddingTop="@dimen/spacing_40"
+        android:paddingBottom="@dimen/spacing_56">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.ankuradlakha.baseproject.custom.CountryDropdownView
             android:id="@+id/choose_country"
-            style="@style/InputDropDown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/choose_a_country"
-            app:hintAnimationEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch_enable_notifications"
@@ -45,6 +38,7 @@
             app:trackTint="@color/switch_track_states" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_continue"
             style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -1,34 +1,45 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-<!--    <style name="Theme.BaseProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
-<!--        &lt;!&ndash; Primary brand color. &ndash;&gt;-->
-<!--        <item name="colorPrimary">@color/purple_200</item>-->
-<!--        <item name="colorPrimaryVariant">@color/purple_700</item>-->
-<!--        <item name="colorOnPrimary">@color/black</item>-->
-<!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
-<!--        <item name="colorSecondary">@color/teal_200</item>-->
-<!--        <item name="android:windowBackground">@color/black</item>-->
-<!--        <item name="colorSecondaryVariant">@color/teal_200</item>-->
-<!--        <item name="colorOnSecondary">@color/black</item>-->
-<!--        &lt;!&ndash; Status bar color. &ndash;&gt;-->
-<!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
-<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-<!--    </style>-->
 
-<!--    <color name="primaryButtonDefault">@color/black</color>-->
-<!--    <color name="primaryButtonDisabled">@color/gray_78</color>-->
-<!--    <color name="primaryButtonPressed">@color/black_panther</color>-->
-<!--    <color name="textOnPrimaryDisabled">@color/white</color>-->
-<!--    <color name="textOnPrimaryEnabled">@color/white</color>-->
+    <!--    <style name="Theme.BaseProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+    <!--        &lt;!&ndash; Primary brand color. &ndash;&gt;-->
+    <!--        <item name="colorPrimary">@color/purple_200</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/purple_700</item>-->
+    <!--        <item name="colorOnPrimary">@color/black</item>-->
+    <!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
+    <!--        <item name="colorSecondary">@color/teal_200</item>-->
+    <!--        <item name="android:windowBackground">@color/black</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/teal_200</item>-->
+    <!--        <item name="colorOnSecondary">@color/black</item>-->
+    <!--        &lt;!&ndash; Status bar color. &ndash;&gt;-->
+    <!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+    <!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--    </style>-->
+
+    <!--    <color name="primaryButtonDefault">@color/black</color>-->
+    <!--    <color name="primaryButtonDisabled">@color/gray_78</color>-->
+    <!--    <color name="primaryButtonPressed">@color/black_panther</color>-->
+    <!--    <color name="textOnPrimaryDisabled">@color/white</color>-->
+    <!--    <color name="textOnPrimaryEnabled">@color/white</color>-->
 
 
-<!--    <color name="secondaryButtonDefault">@android:color/transparent</color>-->
-<!--    <color name="secondaryButtonDisabled">@color/gray_78</color>-->
-<!--    <color name="secondaryButtonPressed">@color/nero</color>-->
-<!--    <color name="textOnSecondaryButton">@color/secondary_button_text_colors</color>-->
-<!--    <color name="textOnSecondaryDisabled">@color/white</color>-->
-<!--    <color name="textOnSecondaryEnabled">@color/white</color>-->
-<!--    <color name="secondaryButtonStrokeColor">@color/white</color>-->
+    <!--    <color name="secondaryButtonDefault">@android:color/transparent</color>-->
+    <!--    <color name="secondaryButtonDisabled">@color/gray_78</color>-->
+    <!--    <color name="secondaryButtonPressed">@color/nero</color>-->
+    <!--    <color name="textOnSecondaryButton">@color/secondary_button_text_colors</color>-->
+    <!--    <color name="textOnSecondaryDisabled">@color/white</color>-->
+    <!--    <color name="textOnSecondaryEnabled">@color/white</color>-->
+    <!--    <color name="secondaryButtonStrokeColor">@color/white</color>-->
 
-<!--    <color name="hintTextColor">@color/charcoal</color>-->
+    <!--    <color name="hintTextColor">@color/charcoal</color>-->
+    <!--    <color name="textOnSurface">@color/white</color>-->
+    <!--    <color name="background">@color/black</color>-->
+<!--    <color name="backgroundReverse">@color/white</color>-->
+<!--    <color name="textOnSurfaceReverse">@color/white</color>-->
+<!--    <color name="iconTintOnSurface">@color/white</color>-->
+<!--    <color name="iconTintOnSurfaceReverse">@color/black</color>-->
+<!--    <color name="dropdownDisabledColor">@color/gray_78</color>-->
+<!--    <color name="dropdownTextDefault">@color/black</color>-->
+    <!--    <color name="dropdownTextDisabled">@color/charcoal</color>-->
+<!--    <color name="dropdownDisabledColor">@color/gray_78</color>-->
+<!--    <color name="dropdownEnabledColor">@color/black</color>-->
 </resources>

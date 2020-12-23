@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/caption_title"
+        style="@style/TextCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_a_country"
+        android:textColor="@color/dropdown_caption_color_states"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/icon_default"
+        android:layout_height="@dimen/icon_default"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/text_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_input"
+        tools:src="@tools:sample/avatars" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input"
+        style="@style/InputDropDown"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/select_a_country"
+        app:endIconDrawable="@drawable/ic_baseline_keyboard_arrow_down_24"
+        app:endIconTint="@color/dropdown_item_color_states"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:hintTextAppearance="@style/TextBodySmall"
+        app:hintTextColor="@color/hintTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintTop_toBottomOf="@id/caption_title">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/choose_country_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:dropDownAnchor="@id/underline"
+            android:dropDownHeight="180dp"
+            android:focusable="false"
+            android:hint="@string/select_a_country"
+            android:inputType="none"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:textAppearance="@style/TextBodySmallRegular"
+            android:textColor="@color/dropdown_text_color_states"
+            android:textColorHint="@color/hintTextColor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/underline"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:background="@color/dropdown_item_color_states"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_input" />
+</merge>

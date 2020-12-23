@@ -1,12 +1,16 @@
 package com.ankuradlakha.baseproject.ui.splash
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.ankuradlakha.baseproject.BaseActivity
+import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.network.Status.*
 import com.ankuradlakha.baseproject.ui.onboarding.OnboardingActivity
 import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
 import com.ankuradlakha.baseproject.utils.RequestBuilder
+import com.ankuradlakha.baseproject.utils.getNoInternetDialog
+import com.ankuradlakha.baseproject.utils.isInternetAvailable
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -14,12 +18,11 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
+    lateinit var viewModel: SplashViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel = ViewModelProvider(this).get(SplashViewModel::class.java)
-        GlobalScope.launch {
-            viewModel.getVersionInfo()
-        }
+        viewModel = ViewModelProvider(this).get(SplashViewModel::class.java)
+        checkVersion()
         viewModel.versionInfoLiveData.observe(this@SplashActivity, {
             when (it.status) {
                 LOADING -> {
@@ -34,5 +37,19 @@ class SplashActivity : BaseActivity() {
                 }
             }
         })
+    }
+
+    private fun checkVersion() {
+        if (isInternetAvailable(this)) {
+            GlobalScope.launch {
+                viewModel.getVersionInfo()
+            }
+        } else {
+            getNoInternetDialog(this).setPositiveButton(
+                R.string.retry
+            ) { _, _ ->
+                checkVersion()
+            }.show()
+        }
     }
 }

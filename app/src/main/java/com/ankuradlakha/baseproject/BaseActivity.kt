@@ -9,7 +9,8 @@ import dagger.hilt.android.AndroidEntryPoint
 open class BaseActivity : AppCompatActivity() {
     fun swapFragment(fragment: Fragment, addTobackStack: Boolean) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .addToBackStack(null).commit()
+            .addToBackStack(null)
+            .commit()
     }
 
 }
