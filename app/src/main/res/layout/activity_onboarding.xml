@@ -11,35 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/you_are_in"
-            style="@style/TextLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_56"
-            android:gravity="center"
-            android:text="@string/you_re_in"
-            android:textColor="@color/textOnSurfaceReverse"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
-            app:textAllCaps="true" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/country_language"
-            style="@style/TextBodyRegular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/you_re_in"
-            android:textColor="@color/textOnSurfaceReverse"
-            app:layout_constraintBottom_toTopOf="@id/logo_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/you_are_in"
-            app:layout_constraintVertical_bias="0" />
-
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
@@ -96,5 +67,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/logo_image"
             app:layout_constraintVertical_bias="1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/you_are_in"
+            style="@style/TextLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_56"
+            android:gravity="center"
+            android:text="@string/you_re_in"
+            android:textColor="@color/textOnSurfaceReverse"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            app:textAllCaps="true" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/country_language"
+            style="@style/TextBodyRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/you_re_in"
+            android:textColor="@color/textOnSurfaceReverse"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/logo_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/you_are_in"
+            app:layout_constraintVertical_bias="0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

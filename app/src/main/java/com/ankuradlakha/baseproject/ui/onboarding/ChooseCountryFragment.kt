@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.ankuradlakha.baseproject.OnboardingTransitionFragment
@@ -38,14 +37,14 @@ class ChooseCountryFragment : OnboardingTransitionFragment() {
 
     private fun initCountriesList(binding: FragmentChooseCountryBinding) {
         activityViewModel.countriesListLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), "Got countries", Toast.LENGTH_SHORT).show()
-            binding.chooseCountry.setCountries(it)
+            binding.chooseCountry.setCountries(it!!)
         })
     }
 
     private fun initContinue(binding: FragmentChooseCountryBinding) {
         binding.btnContinue.setOnClickListener {
             val activityViewModel: OnboardingViewModel by activityViewModels()
+            activityViewModel.setSelectedCountry(binding.chooseCountry.selectedCountry)
             activityViewModel.onboardingNavigationInteractor.value = true
         }
     }

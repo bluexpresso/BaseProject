@@ -2,10 +2,12 @@ package com.ankuradlakha.baseproject.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.ankuradlakha.baseproject.data.models.Country
 import com.ankuradlakha.baseproject.utils.GENDER_KIDS
 import com.ankuradlakha.baseproject.utils.GENDER_MEN
 import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
 import com.ankuradlakha.baseproject.utils.LANGUAGE_ENGLISH
+import com.google.gson.Gson
 import javax.inject.Inject
 
 class AppCache @Inject constructor(context: Context) {
@@ -15,6 +17,8 @@ class AppCache @Inject constructor(context: Context) {
         const val KEY_VERSION_KIDS = "key_version_kids"
         const val KEY_AUTH_TOKEN = "key_auth_token"
         const val KEY_SELECTED_LANGUAGE = "key_selected_language"
+        const val KEY_COUNTRY = "key_country"
+        const val KEY_GENDER = "key_gender"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -59,4 +63,17 @@ class AppCache @Inject constructor(context: Context) {
 
     fun getSelectedLanguage() =
         sharedPreferences.getString(KEY_SELECTED_LANGUAGE, LANGUAGE_ENGLISH) ?: LANGUAGE_ENGLISH
+
+    fun setSelectedCountry(country: Country?) {
+        sharedPreferences.edit().putString(KEY_COUNTRY, Gson().toJson(country)).apply()
+    }
+
+    fun getSelectedCountry() =
+        Gson().fromJson(sharedPreferences.getString(KEY_COUNTRY, ""), Country::class.java)
+
+    fun setSelectedGender(value: String?) {
+        sharedPreferences.edit().putString(KEY_GENDER, value).apply()
+    }
+
+    fun getSelectedGender() = sharedPreferences.getString(KEY_GENDER, GENDER_WOMEN)
 }

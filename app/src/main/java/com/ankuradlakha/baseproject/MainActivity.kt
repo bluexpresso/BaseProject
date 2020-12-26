@@ -1,5 +1,7 @@
 package com.ankuradlakha.baseproject
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.PictureDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -15,6 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
+    companion object {
+        fun startActivity(context: Context) {
+            context.startActivity(Intent(context, MainActivity::class.java))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding =

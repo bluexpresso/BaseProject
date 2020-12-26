@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class Language(
     @Expose
     @SerializedName("name")
-    var name:String,
+    var name: String,
     @Expose
-    @SerializedName("lancode")
-    var lancode : String
+    @SerializedName("langcode")
+    var lancode: String
 )

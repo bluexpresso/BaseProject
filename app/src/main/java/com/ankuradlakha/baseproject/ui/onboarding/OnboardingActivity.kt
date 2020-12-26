@@ -12,7 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ankuradlakha.baseproject.BaseActivity
 import com.ankuradlakha.baseproject.BuildConfig
+import com.ankuradlakha.baseproject.MainActivity
 import com.ankuradlakha.baseproject.R
+import com.ankuradlakha.baseproject.data.models.Country
 import com.ankuradlakha.baseproject.databinding.ActivityOnboardingBinding
 import com.ankuradlakha.baseproject.network.APIUrl
 import com.ankuradlakha.baseproject.network.Status
@@ -46,6 +48,14 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
         initSkipIntro()
         initOnboardingNavigationInteractor()
         initOnboardingData(binding)
+        initGenderSelection()
+    }
+
+    private fun initGenderSelection() {
+        viewModel.selectedGender.observe(this, {
+            viewModel.saveSelectedGender()
+            MainActivity.startActivity(this)
+        })
     }
 
     private fun initOnboardingData(binding: ActivityOnboardingBinding) {
@@ -55,8 +65,9 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
                     Toast.makeText(this, "Loading data", Toast.LENGTH_SHORT).show()
                 }
                 SUCCESS -> {
-                    if (!it.data?.source?.countries.isNullOrEmpty()) {
-                        viewModel.countriesListLiveData.value = it.data!!.source.countries
+                    if (!it.data?.countries.isNullOrEmpty()) {
+                        viewModel.countriesListLiveData.value =
+                            it.data!!.countries ?: arrayListOf<Country>()
                     }
                 }
                 ERROR -> {
@@ -85,6 +96,10 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
             swapFragment(ChooseGenderFragment.newInstance(), true)
             you_are_in.visibility = View.VISIBLE
             country_language.visibility = View.VISIBLE
+            country_language.text = String.format(
+                "%s|%s",
+                viewModel.getSelectedCountry().name, viewModel.getSelectedCountry().storeCode
+            )
         })
     }
 

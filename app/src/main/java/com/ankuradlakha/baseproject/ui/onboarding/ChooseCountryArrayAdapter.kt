@@ -19,20 +19,21 @@ class ChooseCountryArrayAdapter(
 ) :
     ArrayAdapter<Country>(context, resource, objects) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_country_dropdown, parent,false)
-            val iconFlag = view.findViewById<AppCompatImageView>(R.id.icon_flag)
-            val countryName = view.findViewById<MaterialTextView>(R.id.text_country)
-            loadSVG(parent.context, objects[position].flag).into(iconFlag)
-            countryName.text = objects[position].name
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_country_dropdown, parent, false)
+        val iconFlag = view.findViewById<AppCompatImageView>(R.id.icon_flag)
+        val countryName = view.findViewById<MaterialTextView>(R.id.text_country)
+        loadSVG(parent.context, objects[position]?.flag ?: "").into(iconFlag)
+        countryName.text = objects[position]?.name
         return view
     }
 
     override fun getDropDownViewTheme(): Resources.Theme? {
         return super.getDropDownViewTheme()
     }
+
     override fun getItem(position: Int): Country {
-        return objects[position]
+        return objects[position]!!
     }
 
     override fun getCount(): Int {

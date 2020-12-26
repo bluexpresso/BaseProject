@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName
 data class Country(
     @Expose
     @SerializedName("name")
-    var name: String,
+    var name: String?,
     @Expose
     @SerializedName("storecode")
-    var storeCode: String,
+    var storeCode: String?,
     @Expose
     @SerializedName("flag")
-    var flag: String,
+    var flag: String?,
     @Expose
     @SerializedName("currency")
-    var currency: String
+    var currency: String?
 )

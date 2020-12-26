@@ -6,8 +6,6 @@ import androidx.room.Room
 import com.ankuradlakha.baseproject.BuildConfig
 import com.ankuradlakha.baseproject.data.AppCache
 import com.ankuradlakha.baseproject.data.AppDatabase
-import com.ankuradlakha.baseproject.data.models.Onboarding
-import com.ankuradlakha.baseproject.data.models.OnboardingResponse
 import com.ankuradlakha.baseproject.data.repositories.ConfigurationRepository
 import com.ankuradlakha.baseproject.data.repositories.OnboardingRepository
 import com.ankuradlakha.baseproject.network.API
@@ -111,15 +109,16 @@ class AppModules {
 
     @Provides
     @Singleton
-    internal fun providesConfigurationRepository(api: API,appCache: AppCache) =
-        ConfigurationRepository(api,appCache)
+    internal fun providesConfigurationRepository(api: API, appCache: AppCache) =
+        ConfigurationRepository(api, appCache)
 
     @Provides
     @Singleton
-    internal fun providesOnboardingRepository(api: API,appCache: AppCache) =
-        OnboardingRepository(api,appCache)
+    internal fun providesOnboardingRepository(
+        api: API,
+        appCache: AppCache,
+        appDatabase: AppDatabase
+    ) =
+        OnboardingRepository(api, appCache, appDatabase)
 
-//    @Provides
-//    @Singleton
-//    internal fun getMainDAO(appDatabase: AppDatabase) = appDatabase.getMainDAO()
 }
