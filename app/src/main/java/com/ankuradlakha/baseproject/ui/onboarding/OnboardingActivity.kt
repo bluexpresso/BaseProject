@@ -1,29 +1,25 @@
 package com.ankuradlakha.baseproject.ui.onboarding
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.ankuradlakha.baseproject.BaseActivity
+import com.ankuradlakha.baseproject.ui.BaseActivity
 import com.ankuradlakha.baseproject.BuildConfig
-import com.ankuradlakha.baseproject.MainActivity
+import com.ankuradlakha.baseproject.ui.MainActivity
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.data.models.Country
 import com.ankuradlakha.baseproject.databinding.ActivityOnboardingBinding
 import com.ankuradlakha.baseproject.network.APIUrl
-import com.ankuradlakha.baseproject.network.Status
 import com.ankuradlakha.baseproject.network.Status.*
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.video.VideoRendererEventListener
-import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_onboarding.*
 import kotlinx.coroutines.GlobalScope
@@ -55,6 +51,7 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
         viewModel.selectedGender.observe(this, {
             viewModel.saveSelectedGender()
             MainActivity.startActivity(this)
+            finishAffinity()
         })
     }
 

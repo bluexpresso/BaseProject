@@ -1,8 +1,9 @@
-package com.ankuradlakha.baseproject
+package com.ankuradlakha.baseproject.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
+import com.ankuradlakha.baseproject.R
 
 open class OnboardingTransitionFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {

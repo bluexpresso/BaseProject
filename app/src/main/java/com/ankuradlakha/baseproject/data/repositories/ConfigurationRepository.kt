@@ -2,7 +2,7 @@ package com.ankuradlakha.baseproject.data.repositories
 
 import com.ankuradlakha.baseproject.data.AppCache
 import com.ankuradlakha.baseproject.data.models.BaseModel
-import com.ankuradlakha.baseproject.data.models.VersionInfoResponse
+import com.ankuradlakha.baseproject.data.models.LandingResponse
 import com.ankuradlakha.baseproject.network.API
 import com.ankuradlakha.baseproject.network.APIUrl
 import com.ankuradlakha.baseproject.network.Resource
@@ -11,7 +11,7 @@ import retrofit2.Response
 import java.io.IOException
 
 class ConfigurationRepository(private val api: API, private val appCache: AppCache) {
-    fun getVersionInfo(buildGetVersionInfoRequest: JsonObject): Resource<Response<BaseModel<VersionInfoResponse>>> {
+    fun getLandingData(buildGetVersionInfoRequest: JsonObject): Resource<Response<BaseModel<LandingResponse>>> {
         return try {
             val response =
                 api.getVersionInfo(APIUrl.getVersionInfo(), buildGetVersionInfoRequest).execute()
@@ -32,4 +32,6 @@ class ConfigurationRepository(private val api: API, private val appCache: AppCac
     fun saveCurrentVersion(gender: String, version: String) {
         appCache.setCurrentVersion(gender, version)
     }
+
+    fun getSelectedGender() = appCache.getSelectedGender()
 }

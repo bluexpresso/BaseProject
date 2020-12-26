@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import com.ankuradlakha.baseproject.OnboardingTransitionFragment
+import com.ankuradlakha.baseproject.ui.OnboardingTransitionFragment
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentChooseCountryBinding
 import dagger.hilt.android.AndroidEntryPoint

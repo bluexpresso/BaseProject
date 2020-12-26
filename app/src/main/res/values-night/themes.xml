@@ -42,4 +42,5 @@
     <!--    <color name="dropdownTextDisabled">@color/charcoal</color>-->
 <!--    <color name="dropdownDisabledColor">@color/gray_78</color>-->
 <!--    <color name="dropdownEnabledColor">@color/black</color>-->
+<!--    <color name="bottomNavBackground">@color/white</color>-->
 </resources>

@@ -5,8 +5,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ankuradlakha.baseproject.data.models.LandingElement
-import com.ankuradlakha.baseproject.data.models.LandingElementResponse
 import com.ankuradlakha.baseproject.data.repositories.ConfigurationRepository
 import com.ankuradlakha.baseproject.network.Resource
 import com.ankuradlakha.baseproject.network.Status.SUCCESS
@@ -14,12 +12,9 @@ import com.ankuradlakha.baseproject.utils.GENDER_KIDS
 import com.ankuradlakha.baseproject.utils.GENDER_MEN
 import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
 import com.ankuradlakha.baseproject.utils.RequestBuilder
-import com.google.gson.Gson
-import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class SplashViewModel @ViewModelInject constructor(
     var configurationRepository: ConfigurationRepository,
@@ -34,17 +29,17 @@ class SplashViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 versionInfoLiveData.postValue(Resource.loading())
-                val responseMen = configurationRepository.getVersionInfo(
+                val responseMen = configurationRepository.getLandingData(
                     RequestBuilder.buildGetVersionInfoRequest(
                         GENDER_MEN
                     )
                 )
-                val responseWomen = configurationRepository.getVersionInfo(
+                val responseWomen = configurationRepository.getLandingData(
                     RequestBuilder.buildGetVersionInfoRequest(
                         GENDER_WOMEN
                     )
                 )
-                val responseKids = configurationRepository.getVersionInfo(
+                val responseKids = configurationRepository.getLandingData(
                     RequestBuilder.buildGetVersionInfoRequest(
                         GENDER_KIDS
                     )

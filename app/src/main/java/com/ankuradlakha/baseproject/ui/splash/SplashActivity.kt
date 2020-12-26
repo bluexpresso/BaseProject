@@ -1,14 +1,11 @@
 package com.ankuradlakha.baseproject.ui.splash
 
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.ankuradlakha.baseproject.BaseActivity
+import com.ankuradlakha.baseproject.ui.BaseActivity
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.network.Status.*
 import com.ankuradlakha.baseproject.ui.onboarding.OnboardingActivity
-import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
-import com.ankuradlakha.baseproject.utils.RequestBuilder
 import com.ankuradlakha.baseproject.utils.getNoInternetDialog
 import com.ankuradlakha.baseproject.utils.isInternetAvailable
 import dagger.hilt.android.AndroidEntryPoint

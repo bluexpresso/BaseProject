@@ -2,7 +2,7 @@ package com.ankuradlakha.baseproject.network
 
 import com.ankuradlakha.baseproject.data.models.BaseModel
 import com.ankuradlakha.baseproject.data.models.OnboardingResponse
-import com.ankuradlakha.baseproject.data.models.VersionInfoResponse
+import com.ankuradlakha.baseproject.data.models.LandingResponse
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.Body
@@ -15,7 +15,7 @@ interface API {
     fun getVersionInfo(
         @Url url: String,
         @Body request: JsonObject
-    ): Call<BaseModel<VersionInfoResponse>>
+    ): Call<BaseModel<LandingResponse>>
 
     @GET
     fun getOnboardingData(@Url url: String): Call<OnboardingResponse>

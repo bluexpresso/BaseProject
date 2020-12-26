@@ -22,4 +22,7 @@ data class Element(
     @Expose
     @SerializedName("link_type")
     var linkType: String,
+    @Expose
+    @SerializedName("category_id")
+    var categoryId: Int
 )

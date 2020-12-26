@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BaseProject">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.splash.SplashActivity"

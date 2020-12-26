@@ -3,7 +3,7 @@ package com.ankuradlakha.baseproject.data.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class VersionInfoResponse(
+data class LandingResponse(
     @Expose
     @SerializedName("title")
     var title: String,
@@ -15,6 +15,9 @@ data class VersionInfoResponse(
     @Expose
     @SerializedName("content")
     var content: String,
+
+    @Expose
+    var data: ArrayList<Content>,
 
     @Expose
     @SerializedName("version_no")

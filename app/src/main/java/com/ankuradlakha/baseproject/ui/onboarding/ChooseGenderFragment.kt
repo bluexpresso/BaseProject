@@ -5,16 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.ankuradlakha.baseproject.OnboardingTransitionFragment
+import com.ankuradlakha.baseproject.ui.OnboardingTransitionFragment
 import com.ankuradlakha.baseproject.R
-import com.ankuradlakha.baseproject.databinding.FragmentChooseCountryBinding
 import com.ankuradlakha.baseproject.databinding.FragmentChooseGenderBinding
 import com.ankuradlakha.baseproject.utils.GENDER_KIDS
 import com.ankuradlakha.baseproject.utils.GENDER_MEN
 import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
-import dagger.BindsInstance
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

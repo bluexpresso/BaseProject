@@ -61,4 +61,8 @@
     <color name="dropdownTextUnselected">@color/charcoal</color>
     <color name="dropdownDisabledColor">@color/gray_78</color>
     <color name="dropdownEnabledColor">@color/black</color>
+
+    <color name="bottomNavBackground">@color/black</color>
+    <color name="bottomNavIconSelected">@color/white</color>
+    <color name="bottomNavIconUnselected">@color/gray_62</color>
 </resources>
