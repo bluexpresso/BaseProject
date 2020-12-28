@@ -7,4 +7,5 @@
     <dimen name="spacing_16">16dp</dimen>
     <dimen name="icon_default">24dp</dimen>
     <dimen name="spacing_12">12dp</dimen>
+    <dimen name="spacing_64">64dp</dimen>
 </resources>

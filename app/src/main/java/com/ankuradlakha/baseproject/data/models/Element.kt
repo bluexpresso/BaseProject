@@ -9,16 +9,16 @@ data class Element(
     var type: String,
     @Expose
     @SerializedName("content")
-    var contenxt: String,
+    var content: String?,
     @Expose
     @SerializedName("background-color")
-    var backgroundColor: String,
+    var backgroundColor: String?,
     @Expose
     @SerializedName("background-image")
     var bakcgroundImage: String,
     @Expose
     @SerializedName("foreground-color")
-    var foregroundColor: String,
+    var foregroundColor: String?,
     @Expose
     @SerializedName("link_type")
     var linkType: String,

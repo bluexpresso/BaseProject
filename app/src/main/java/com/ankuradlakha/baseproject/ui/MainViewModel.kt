@@ -9,10 +9,11 @@ import com.ankuradlakha.baseproject.data.models.*
 import com.ankuradlakha.baseproject.data.repositories.ConfigurationRepository
 import com.ankuradlakha.baseproject.network.Resource
 import com.ankuradlakha.baseproject.network.Status
+import com.ankuradlakha.baseproject.utils.GENDER_KIDS
 import com.ankuradlakha.baseproject.utils.GENDER_MEN
+import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
 import com.ankuradlakha.baseproject.utils.RequestBuilder
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -24,34 +25,47 @@ class MainViewModel @ViewModelInject constructor(
     application: Application
 ) :
     AndroidViewModel(application) {
-    val landingLiveData = MutableLiveData<Resource<BaseModel<LandingResponse>>>()
-    suspend fun getLandingData(gender: String) {
+    val landingLiveData = MutableLiveData<Resource<HashMap<String, ArrayList<Content>>>>()
+    suspend fun getLandingData() {
+        val mapLandingData = HashMap<String, ArrayList<Content>>()
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 landingLiveData.postValue(Resource.loading())
-                val response = configurationRepository.getLandingData(
+                val responseMen = configurationRepository.getLandingData(
                     RequestBuilder.buildGetVersionInfoRequest(
-                        gender
+                        GENDER_MEN
                     )
                 )
-                if (response.status == Status.SUCCESS && response.data?.body() != null) {
-                    if (!response.data.body()?.hits?.hits.isNullOrEmpty()) {
-                        val version = response.data.body()?.hits?.hits!![0].source?.versionNo
-                        val currentVersion = configurationRepository.getCurrentVersion(GENDER_MEN)
-                        if (version != currentVersion) {
-                            version.let {
-                                if (it != null)
-                                    configurationRepository.saveCurrentVersion(gender, it)
+                val responseWomen = configurationRepository.getLandingData(
+                    RequestBuilder.buildGetVersionInfoRequest(
+                        GENDER_WOMEN
+                    )
+                )
+                val responseKids = configurationRepository.getLandingData(
+                    RequestBuilder.buildGetVersionInfoRequest(
+                        GENDER_KIDS
+                    )
+                )
+                for (i in 0..3) {
+                    val response =
+                        if (i == 0) responseWomen else if (i == 1) responseMen else responseKids
+                    if (response.status == Status.SUCCESS && response.data?.body() != null) {
+                        if (!response.data.body()?.hits?.hits.isNullOrEmpty()) {
+                            val content =
+                                response.data.body()?.hits?.hits?.get(0)?.source?.content
+                            if (content != null) {
+                                mapLandingData[if (i == 0) GENDER_WOMEN else if (i == 1) GENDER_MEN else GENDER_KIDS] =
+                                    getParsedLandingData(content)
                             }
                         }
-                        val content = response.data.body()?.hits?.hits?.get(0)?.source?.content
-                        if (content != null) {
-                            response.data.body()?.hits?.hits?.get(0)?.source?.data =
-                                getParsedLandingData(content)
-                        }
-                        landingLiveData.postValue(Resource.success(response.data.body(), 200))
                     }
                 }
+                landingLiveData.postValue(
+                    Resource.success(
+                        mapLandingData,
+                        200
+                    )
+                )
             }
         }
     }

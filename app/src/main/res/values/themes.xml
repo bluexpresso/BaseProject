@@ -19,6 +19,13 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="FullScreenTheme" parent="Theme.BaseProject">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
     <style name="AppLauncher.Theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
@@ -65,4 +72,6 @@
     <color name="bottomNavBackground">@color/black</color>
     <color name="bottomNavIconSelected">@color/white</color>
     <color name="bottomNavIconUnselected">@color/gray_62</color>
+
+    <color name="tabIndicatorColor">@color/white</color>
 </resources>

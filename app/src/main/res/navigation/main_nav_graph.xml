@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.ankuradlakha.baseproject.ui.home.landing.LandingFragment"
+        android:label="LandingFragment"
+        tools:layout="@layout/fragment_landing" />
+    <fragment
+        android:id="@+id/nav_a_z"
+        android:name="com.ankuradlakha.baseproject.ui.home.atoz.AToZFragment"
+        android:label="fragment_a_to_z"
+        tools:layout="@layout/fragment_a_to_z" />
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.ankuradlakha.baseproject.ui.home.myaccount.MyAccountFragment"
+        android:label="fragment_my_account"
+        tools:layout="@layout/fragment_my_account" />
+    <fragment
+        android:id="@+id/nav_shopping_bag"
+        android:name="com.ankuradlakha.baseproject.ui.home.shoppingbag.ShoppingBagFragment"
+        android:label="fragment_shopping_bag"
+        tools:layout="@layout/fragment_shopping_bag" />
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.ankuradlakha.baseproject.ui.home.search.SearchFragment"
+        android:label="search_fragment"
+        tools:layout="@layout/fragment_search" />
+</navigation>

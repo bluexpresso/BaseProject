@@ -15,7 +15,8 @@
         android:theme="@style/Theme.BaseProject">
         <activity
             android:name=".ui.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/OnboardingTheme" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait"

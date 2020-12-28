@@ -2,17 +2,20 @@ package com.ankuradlakha.baseproject.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.ActivityMainBinding
-import com.ankuradlakha.baseproject.network.Status
 import com.ankuradlakha.baseproject.network.Status.*
-import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -32,25 +35,19 @@ class MainActivity : BaseActivity() {
         val binding =
             DataBindingUtil.setContentView(this, R.layout.activity_main) as ActivityMainBinding
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        initLandingData(binding)
+        initBottomNavigation()
+        initLandingData()
     }
 
-    private fun initLandingData(binding: ActivityMainBinding) {
+    private fun initBottomNavigation() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        bottom_navigation.setupWithNavController(navHostFragment.navController)
+    }
+
+    private fun initLandingData() {
         GlobalScope.launch {
-            viewModel.getLandingData(viewModel.getSelectedGender() ?: GENDER_WOMEN)
+            viewModel.getLandingData()
         }
-        viewModel.landingLiveData.observe(this, {
-            when (it.status) {
-                LOADING -> {
-                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-                }
-                SUCCESS -> {
-                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
-                }
-                ERROR -> {
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
     }
 }
