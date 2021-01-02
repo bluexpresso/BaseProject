@@ -16,4 +16,12 @@
     <string name="kids">Kids</string>
     <string name="you_re_in">You\'re in</string>
     <string name="select_a_country">Select a country</string>
+    <string name="register_sign_in">Register or Sign in</string>
+    <string name="register_sign_in_description">For a more enjoyable experience, faster shopping and tailored recommendations.</string>
+    <string name="lets_go">Let\'s go</string>
+    <string name="home">Home</string>
+    <string name="AZ">a_z</string>
+    <string name="search">Search</string>
+    <string name="shopping_bag">Shopping Bag</string>
+    <string name="account">Account</string>
 </resources>

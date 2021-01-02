@@ -21,4 +21,7 @@
     <string name="search">Search</string>
     <string name="shopping_bag">Shopping Bag</string>
     <string name="account">Account</string>
+    <string name="register_sign_in">Register or Sign in</string>
+    <string name="register_sign_in_description">For a more enjoyable experience, faster shopping and tailored recommendations.</string>
+    <string name="lets_go">Let\'s go</string>
 </resources>

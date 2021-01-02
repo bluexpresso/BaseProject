@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/product_image"
+            android:layout_width="@dimen/pager_product_image_dimension"
+            android:layout_height="@dimen/pager_product_image_dimension"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_8"
+            android:background="?attr/selectableItemBackground"
+            android:src="@drawable/ic_baseline_bookmark_border_24"
+            android:tint="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/product_image"
+            app:layout_constraintTop_toTopOf="@id/product_image" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/brand"
+            style="@style/TextLabelBrandBig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/product_image"
+            tools:text="Saint Laurent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            style="@style/TextBodySmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textOnSurface"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/brand"
+            tools:text="Saint Laurent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/price"
+            style="@style/TextPriceBig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:textColor="@color/textOnSurface"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="11AED" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

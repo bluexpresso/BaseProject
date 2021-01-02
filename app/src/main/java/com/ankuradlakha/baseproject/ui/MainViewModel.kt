@@ -5,14 +5,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ankuradlakha.baseproject.R
+import com.ankuradlakha.baseproject.data.AppCache
 import com.ankuradlakha.baseproject.data.models.*
 import com.ankuradlakha.baseproject.data.repositories.ConfigurationRepository
 import com.ankuradlakha.baseproject.network.Resource
 import com.ankuradlakha.baseproject.network.Status
-import com.ankuradlakha.baseproject.utils.GENDER_KIDS
-import com.ankuradlakha.baseproject.utils.GENDER_MEN
-import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
-import com.ankuradlakha.baseproject.utils.RequestBuilder
+import com.ankuradlakha.baseproject.utils.*
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
@@ -22,9 +21,11 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel @ViewModelInject constructor(
     private val configurationRepository: ConfigurationRepository,
+    private val appCache: AppCache,
     application: Application
 ) :
     AndroidViewModel(application) {
+    private val context = application.applicationContext
     val landingLiveData = MutableLiveData<Resource<HashMap<String, ArrayList<Content>>>>()
     suspend fun getLandingData() {
         val mapLandingData = HashMap<String, ArrayList<Content>>()
@@ -54,8 +55,27 @@ class MainViewModel @ViewModelInject constructor(
                             val content =
                                 response.data.body()?.hits?.hits?.get(0)?.source?.content
                             if (content != null) {
+                                val parsedContent = getParsedLandingData(content)
+                                parsedContent.forEach {
+                                    if (it.boxType.equals(BOX_TYPE_PRODUCT_VIEW, true)) {
+                                        val productIds = it.productIds?.products
+                                        if (!productIds.isNullOrEmpty()) {
+                                            val productResponse =
+                                                configurationRepository.getLandingProducts(
+                                                    arrayOf(
+                                                        "553770-WHGP7-9061",
+                                                        " J000138945",
+                                                        "DRWFLAA0-NAP-000",
+                                                        " 5XX451-XWH-F0002-B065",
+                                                        " G1986000RICVER"
+                                                    )
+                                                )
+                                            it.productsList = productResponse.data
+                                        }
+                                    }
+                                }
                                 mapLandingData[if (i == 0) GENDER_WOMEN else if (i == 1) GENDER_MEN else GENDER_KIDS] =
-                                    getParsedLandingData(content)
+                                    parsedContent
                             }
                         }
                     }
@@ -70,13 +90,21 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getSelectedGender() = configurationRepository.getSelectedGender()
     private fun getParsedLandingData(content: String): ArrayList<Content> {
-        return Gson().fromJson(
+        val contentList: ArrayList<Content> = Gson().fromJson(
             JsonParser.parseString(content).asJsonObject.getAsJsonArray("data"),
             object : TypeToken<ArrayList<Content>>() {
             }.type
         )
+        if (contentList.size > 1 && appCache.getAuthToken().isEmpty()) {
+            contentList.add(
+                1, Content(
+                    BOX_TYPE_REGISTER_SIGN_IN, 1, context.getString(R.string.register_sign_in),
+                    context.getString(R.string.register_sign_in_description), 0, null, null, null
+                )
+            )
+        }
+        return contentList
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ankuradlakha.baseproject.ui.BaseActivity
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.network.Status.*
+import com.ankuradlakha.baseproject.ui.MainActivity
 import com.ankuradlakha.baseproject.ui.onboarding.OnboardingActivity
 import com.ankuradlakha.baseproject.utils.getNoInternetDialog
 import com.ankuradlakha.baseproject.utils.isInternetAvailable
@@ -23,11 +24,15 @@ class SplashActivity : BaseActivity() {
         viewModel.versionInfoLiveData.observe(this@SplashActivity, {
             when (it.status) {
                 LOADING -> {
-                    Timber.d("LOADING")
                 }
                 SUCCESS -> {
-                    OnboardingActivity.startActivity(this)
-                    finish()
+                    if (viewModel.isOnboardingDone()) {
+                        MainActivity.startActivity(this)
+                        finishAffinity()
+                    } else {
+                        OnboardingActivity.startActivity(this)
+                        finish()
+                    }
                 }
                 ERROR -> {
                     Timber.d("Error")

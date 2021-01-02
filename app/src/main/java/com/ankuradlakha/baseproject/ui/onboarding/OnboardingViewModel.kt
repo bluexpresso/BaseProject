@@ -16,6 +16,7 @@ import kotlinx.coroutines.withContext
 class OnboardingViewModel @ViewModelInject constructor(
     private val onboardingRepository: OnboardingRepository, application: Application
 ) : AndroidViewModel(application) {
+    val skipIntroLiveData = MutableLiveData<Boolean>()
     var selectedGender = MutableLiveData<String>()
     val onboardingNavigationInteractor = MutableLiveData<Boolean>()
     val onboardingLiveData = MutableLiveData<Resource<Source>>()
@@ -61,5 +62,6 @@ class OnboardingViewModel @ViewModelInject constructor(
     fun getSelectedCountry() = onboardingRepository.getSelectedCountry()
     fun saveSelectedGender() {
         onboardingRepository.saveSelectedGender(selectedGender.value)
+        onboardingRepository.setOnboardingCompleted(true)
     }
 }

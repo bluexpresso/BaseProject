@@ -39,4 +39,8 @@ class OnboardingRepository(
     fun saveSelectedGender(value: String?) {
         appCache.setSelectedGender(value)
     }
+
+    fun setOnboardingCompleted(isOnboardingCompleted: Boolean) {
+        appCache.setOnboardingCompleted(isOnboardingCompleted)
+    }
 }

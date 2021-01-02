@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/spacing_24">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/box_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/box_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_24"
+            android:layout_marginBottom="@dimen/spacing_24"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:visibility="gone"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/box_title"
+            style="@style/TextHeading3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_24"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/spacing_16"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/box_action_button"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="WHATS NEW" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

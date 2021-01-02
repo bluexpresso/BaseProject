@@ -48,7 +48,8 @@ class SliderItemFragment : Fragment() {
         val content = Gson().fromJson(
             args.getString(ARG_SLIDER_CONTENT, ""), Content::class.java
         )
-        val videoContent = content.data.find { it.type.equals(CONTENT_TYPE_VIDEO, true) }
+        if (content.data.isNullOrEmpty()) return
+        val videoContent = content.data!!.find { it.type.equals(CONTENT_TYPE_VIDEO, true) }
         if (videoContent != null) {
             GlideApp.with(requireContext()).asGif()
                 .load(videoContent.url)
@@ -62,9 +63,17 @@ class SliderItemFragment : Fragment() {
                     )
                 }
                 if (buttonContent != null) {
-                    binding.btnAction.setBackgroundColor(Color.parseColor(buttonContent.backgroundColor?:"#FFFFFF"))
-                    binding.btnAction.setTextColor(Color.parseColor(buttonContent.foregroundColor?:"#000000"))
-                    binding.btnAction.text = buttonContent.content?:""
+                    binding.btnAction.setBackgroundColor(
+                        Color.parseColor(
+                            buttonContent.backgroundColor ?: "#FFFFFF"
+                        )
+                    )
+                    binding.btnAction.setTextColor(
+                        Color.parseColor(
+                            buttonContent.foregroundColor ?: "#000000"
+                        )
+                    )
+                    binding.btnAction.text = buttonContent.content ?: ""
                 }
             }
         }

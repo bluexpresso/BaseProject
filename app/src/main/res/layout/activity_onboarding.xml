@@ -46,18 +46,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_logo_splash" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/skip_intro"
-            style="@style/SecondaryButtonOnDark"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/spacing_32"
-            android:layout_marginBottom="@dimen/spacing_56"
-            android:text="@string/skip_intro"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="0dp"

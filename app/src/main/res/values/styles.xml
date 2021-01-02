@@ -123,7 +123,7 @@
 
     <style name="TextPriceBig" parent="TextPriceSmall">
         <item name="android:textSize">14sp</item>
-        <item name="lineHeight">28dp</item>
+        <item name="lineHeight">26dp</item>
     </style>
 
     <style name="TextTitleSmall" parent="LightText">
@@ -132,6 +132,13 @@
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>
         <item name="lineHeight">22dp</item>
+    </style>
+
+    <style name="TextTitleSmall.ProductBoxSubtitle" parent="LightText">
+        <item name="android:letterSpacing">0.124</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="lineHeight">27dp</item>
     </style>
 
     <style name="TextCaption" parent="TextTitleSmall">
@@ -156,6 +163,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.125</item>
         <item name="lineHeight">20dp</item>
+        <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
     <style name="TextLabel" parent="TextLabelBrandBig">
@@ -225,6 +233,12 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/textOnSurface</item>
         <item name="lineHeight">28dp</item>
+    </style>
+
+    <style name="TextHeading4.Medium.ProductBoxTitle" parent="MediumText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textOnSurface</item>
+        <item name="lineHeight">32dp</item>
     </style>
 
     <style name="DismissibleCardTitleStyle" parent="TextLabelBrandBig">

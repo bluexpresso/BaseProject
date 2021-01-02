@@ -12,19 +12,20 @@ data class Content(
     var sortOrder: Int,
     @Expose
     @SerializedName("title")
-    var title: String,
+    var title: String?,
     @Expose
     @SerializedName("subtitle")
-    var subTitle: String,
+    var subTitle: String?,
     @Expose
     @SerializedName("category_id")
     var categoryId: Int,
     @Expose
     @SerializedName("data")
-    var data: ArrayList<ContentData>,
+    var data: ArrayList<ContentData>?,
     @Expose
     @SerializedName("products")
-    var productIds: ProductIds
+    var productIds: ProductIds?,
+    var productsList: ArrayList<BaseModel.Hit<Product>>?
 )
 
 data class ContentData(

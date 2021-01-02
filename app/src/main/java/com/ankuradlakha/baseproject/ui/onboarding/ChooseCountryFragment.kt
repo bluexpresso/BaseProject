@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.ankuradlakha.baseproject.ui.OnboardingTransitionFragment
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentChooseCountryBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +30,6 @@ class ChooseCountryFragment : OnboardingTransitionFragment() {
         val binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_choose_country, container, false)
                     as FragmentChooseCountryBinding
-        initChooseCountryDropdown(binding)
         initContinue(binding)
         initCountriesList(binding)
         return binding.root
@@ -43,12 +43,13 @@ class ChooseCountryFragment : OnboardingTransitionFragment() {
 
     private fun initContinue(binding: FragmentChooseCountryBinding) {
         binding.btnContinue.setOnClickListener {
-            val activityViewModel: OnboardingViewModel by activityViewModels()
-            activityViewModel.setSelectedCountry(binding.chooseCountry.selectedCountry)
-            activityViewModel.onboardingNavigationInteractor.value = true
+            if (binding.chooseCountry.selectedCountry != null) {
+                val activityViewModel: OnboardingViewModel by activityViewModels()
+                activityViewModel.setSelectedCountry(binding.chooseCountry.selectedCountry)
+                activityViewModel.onboardingNavigationInteractor.value = true
+            } else {
+                Snackbar.make(binding.root, "Please select country", Snackbar.LENGTH_SHORT).show()
+            }
         }
-    }
-
-    private fun initChooseCountryDropdown(binding: FragmentChooseCountryBinding) {
     }
 }

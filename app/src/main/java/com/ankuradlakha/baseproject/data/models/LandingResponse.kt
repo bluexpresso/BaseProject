@@ -16,6 +16,7 @@ data class LandingResponse(
     @SerializedName("content")
     var content: String,
 
+    @SerializedName("data")
     @Expose
     var data: ArrayList<Content>,
 

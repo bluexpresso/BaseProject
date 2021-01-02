@@ -19,6 +19,7 @@ class AppCache @Inject constructor(context: Context) {
         const val KEY_SELECTED_LANGUAGE = "key_selected_language"
         const val KEY_COUNTRY = "key_country"
         const val KEY_GENDER = "key_gender"
+        const val KEY_ONBOARDING_COMPLETED = "key_onboarding_completed"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -76,4 +77,9 @@ class AppCache @Inject constructor(context: Context) {
     }
 
     fun getSelectedGender() = sharedPreferences.getString(KEY_GENDER, GENDER_WOMEN)
+    fun setOnboardingCompleted(onboardingCompleted: Boolean) {
+        sharedPreferences.edit().putBoolean(KEY_ONBOARDING_COMPLETED, onboardingCompleted).apply()
+    }
+
+    fun isOnboardingCompleted() = sharedPreferences.getBoolean(KEY_ONBOARDING_COMPLETED, false)
 }

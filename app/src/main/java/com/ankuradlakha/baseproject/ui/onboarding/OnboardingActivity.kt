@@ -43,8 +43,11 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
         viewModel = ViewModelProvider(this).get(OnboardingViewModel::class.java)
         initSkipIntro()
         initOnboardingNavigationInteractor()
-        initOnboardingData(binding)
+        initOnboardingData()
         initGenderSelection()
+        if (savedInstanceState == null) {
+            swapFragment(SkipIntroFragment.newInstance(), false)
+        }
     }
 
     private fun initGenderSelection() {
@@ -55,7 +58,7 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
         })
     }
 
-    private fun initOnboardingData(binding: ActivityOnboardingBinding) {
+    private fun initOnboardingData() {
         viewModel.onboardingLiveData.observe(this, {
             when (it.status) {
                 LOADING -> {
@@ -121,15 +124,13 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
     }
 
     private fun initSkipIntro() {
-        skip_intro.setOnClickListener {
-            skip_intro.visibility = View.GONE
+        viewModel.skipIntroLiveData.observe(this, {
             swapFragment(ChooseCountryFragment.newInstance(), true)
-        }
+        })
     }
 
     override fun onBackPressed() {
         if (supportFragmentManager.findFragmentById(R.id.fragment_container) is ChooseCountryFragment) {
-            skip_intro.visibility = View.VISIBLE
             you_are_in.visibility = View.GONE
             country_language.visibility = View.GONE
         }

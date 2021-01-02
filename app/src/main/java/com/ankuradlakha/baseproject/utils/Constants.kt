@@ -8,3 +8,41 @@ const val LANGUAGE_ARABIC = "ae"
 const val CONTENT_TYPE_VIDEO = "video"
 const val CONTENT_TYPE_BUTTON = "button"
 const val CONTENT_TYPE_TEXT = "text"
+const val CONTENT_TYPE_HEADING = "heading"
+const val BOX_TYPE_SLIDER = "slider_view"
+const val BOX_TYPE_REGISTER_SIGN_IN = "register_sign_in"
+const val BOX_TYPE_BOX_VIEW = "box_view"
+const val BOX_TYPE_PRODUCT_VIEW = "product_view"
+const val GENDER_ID_MEN = 39
+const val GENDER_ID_WOMEN = 61
+const val GENDER_ID_KIDS = 1610
+val productFields = arrayOf(
+    "name",
+    "final_price",
+    "regular_price",
+    "media_gallery",
+    "configurable_options",
+    "thumbnail",
+    "configurable_children",
+    "size_options",
+    "size",
+    "description",
+    "meta_description",
+    "image",
+    "manufacturer",
+    "color",
+    "configurable_children.sku",
+    "configurable_options",
+    "material",
+    "media_gallery",
+    "lvl_category",
+    "lvl_concession_type",
+    "sku",
+    "stock",
+    "country_of_manufacture",
+    "id",
+    "badge_name",
+    "special_to_date",
+    "lvl_non_purchasable",
+    "special_from_date"
+)

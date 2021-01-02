@@ -3,9 +3,11 @@ package com.ankuradlakha.baseproject.data.repositories
 import com.ankuradlakha.baseproject.data.AppCache
 import com.ankuradlakha.baseproject.data.models.BaseModel
 import com.ankuradlakha.baseproject.data.models.LandingResponse
+import com.ankuradlakha.baseproject.data.models.Product
 import com.ankuradlakha.baseproject.network.API
 import com.ankuradlakha.baseproject.network.APIUrl
 import com.ankuradlakha.baseproject.network.Resource
+import com.ankuradlakha.baseproject.utils.RequestBuilder
 import com.google.gson.JsonObject
 import retrofit2.Response
 import java.io.IOException
@@ -34,4 +36,16 @@ class ConfigurationRepository(private val api: API, private val appCache: AppCac
     }
 
     fun getSelectedGender() = appCache.getSelectedGender()
+    fun isOnboardingCompleted() = appCache.isOnboardingCompleted()
+    fun getLandingProducts(productIds: Array<String>): Resource<ArrayList<BaseModel.Hit<Product>>> {
+        val response = api.getLandingProducts(
+            APIUrl.getLandingProducts(),
+            RequestBuilder.buildLandingProductSearchRequest(productIds)
+        ).execute()
+        return if (response.isSuccessful && !response.body()?.hits?.hits.isNullOrEmpty()) {
+            Resource.success(response.body()?.hits?.hits, response.code())
+        } else {
+            Resource.error()
+        }
+    }
 }

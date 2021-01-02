@@ -3,6 +3,7 @@ package com.ankuradlakha.baseproject.network
 import com.ankuradlakha.baseproject.data.models.BaseModel
 import com.ankuradlakha.baseproject.data.models.OnboardingResponse
 import com.ankuradlakha.baseproject.data.models.LandingResponse
+import com.ankuradlakha.baseproject.data.models.Product
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.Body
@@ -19,4 +20,7 @@ interface API {
 
     @GET
     fun getOnboardingData(@Url url: String): Call<OnboardingResponse>
+
+    @POST
+    fun getLandingProducts(@Url url: String, @Body request: JsonObject): Call<BaseModel<Product>>
 }

@@ -67,7 +67,7 @@ class BaseModel<T> {
 
         @Expose
         @SerializedName("_score")
-        lateinit var score: String
+        lateinit var score: Any
 
         @Expose
         @SerializedName("_source")

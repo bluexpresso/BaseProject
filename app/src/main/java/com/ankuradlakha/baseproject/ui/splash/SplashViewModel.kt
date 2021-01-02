@@ -87,4 +87,6 @@ class SplashViewModel @ViewModelInject constructor(
             }
         }
     }
+
+    fun isOnboardingDone() = configurationRepository.isOnboardingCompleted()
 }
