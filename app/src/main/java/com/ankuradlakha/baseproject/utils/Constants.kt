@@ -13,6 +13,7 @@ const val BOX_TYPE_SLIDER = "slider_view"
 const val BOX_TYPE_REGISTER_SIGN_IN = "register_sign_in"
 const val BOX_TYPE_BOX_VIEW = "box_view"
 const val BOX_TYPE_PRODUCT_VIEW = "product_view"
+const val BOX_TYPE_ADDITIONAL_PRODUCTS_VIEW = "additionalproduct_view"
 const val GENDER_ID_MEN = 39
 const val GENDER_ID_WOMEN = 61
 const val GENDER_ID_KIDS = 1610

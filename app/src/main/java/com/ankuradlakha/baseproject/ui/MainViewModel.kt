@@ -72,6 +72,25 @@ class MainViewModel @ViewModelInject constructor(
                                                 )
                                             it.productsList = productResponse.data
                                         }
+                                    } else if (it.boxType.equals(
+                                            BOX_TYPE_ADDITIONAL_PRODUCTS_VIEW,
+                                            true
+                                        )
+                                    ) {
+                                        val productIds = it.productIds?.products
+                                        if (!productIds.isNullOrEmpty()) {
+                                            val productResponse =
+                                                configurationRepository.getLandingProducts(
+                                                    arrayOf(
+                                                        "553770-WHGP7-9061",
+                                                        " J000138945",
+                                                        "DRWFLAA0-NAP-000",
+                                                        " 5XX451-XWH-F0002-B065",
+                                                        " G1986000RICVER"
+                                                    )
+                                                )
+                                            it.productsList = productResponse.data
+                                        }
                                     }
                                 }
                                 mapLandingData[if (i == 0) GENDER_WOMEN else if (i == 1) GENDER_MEN else GENDER_KIDS] =

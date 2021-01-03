@@ -166,6 +166,11 @@
         <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
+    <style name="TextSerialNumber" parent="TextLabelBrandBig">
+        <item name="fontFamily">@font/bold</item>
+        <item name="android:fontFamily">@font/bold</item>
+    </style>
+
     <style name="TextLabel" parent="TextLabelBrandBig">
         <item name="android:letterSpacing">0.0714</item>
     </style>

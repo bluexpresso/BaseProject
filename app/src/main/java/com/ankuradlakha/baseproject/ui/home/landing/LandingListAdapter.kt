@@ -21,6 +21,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
         const val viewTypeBoxView = 2
         const val viewTypeNoContent = 3
         const val viewTypeProductView = 4
+        const val viewTypeAdditionalProductsView = 5
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -32,6 +33,8 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             return viewTypeBoxView
         if (landingItems[position].boxType == BOX_TYPE_PRODUCT_VIEW)
             return viewTypeProductView
+        if (landingItems[position].boxType == BOX_TYPE_ADDITIONAL_PRODUCTS_VIEW)
+            return viewTypeAdditionalProductsView
         return viewTypeNoContent
     }
 
@@ -55,13 +58,14 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             )
         }
         if (viewType == viewTypeBoxView) {
-            return BoxViewHolder(
-                ItemBoxViewBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+            val binding = ItemBoxViewBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
             )
+            val layoutParams: ViewGroup.LayoutParams = binding.root.layoutParams
+            layoutParams.height = (parent.height * 0.8).toInt()
+            binding.root.layoutParams = layoutParams
+
+            return BoxViewHolder(binding)
         }
         if (viewType == viewTypeProductView) {
             return ProductViewHolder(
@@ -69,6 +73,13 @@ class LandingListAdapter(private val activity: FragmentActivity) :
                     LayoutInflater.from(parent.context),
                     parent,
                     false
+                )
+            )
+        }
+        if (viewType == viewTypeAdditionalProductsView) {
+            return AdditionalProductsViewHolder(
+                ItemLandingAdditionalProductsViewBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
                 )
             )
         }
@@ -92,7 +103,10 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             holder.bind(landingItems[position])
         }
         if (holder is ProductViewHolder) {
-            holder.bind(activity,landingItems[position])
+            holder.bind(activity, landingItems[position])
+        }
+        if (holder is AdditionalProductsViewHolder) {
+            holder.bind(landingItems[position])
         }
         if (holder is NoContentViewHolder) {
             holder.bind()
