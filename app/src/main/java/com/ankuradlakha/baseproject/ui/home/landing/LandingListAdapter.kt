@@ -2,8 +2,10 @@ package com.ankuradlakha.baseproject.ui.home.landing
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.ankuradlakha.baseproject.data.models.Content
 import com.ankuradlakha.baseproject.databinding.*
 import com.ankuradlakha.baseproject.ui.home.landing.viewholders.*
@@ -14,6 +16,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
     var landingItems = arrayListOf<Content>()
     var mapItems = HashMap<String, ArrayList<Content>>()
     var currentSelectedTab = GENDER_WOMEN
+    var parent: RecyclerView? = null
 
     companion object {
         const val viewTypeSlider = 0
@@ -40,13 +43,16 @@ class LandingListAdapter(private val activity: FragmentActivity) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == viewTypeSlider) {
-            return SliderViewHolder(
+            val binding =
                 ItemLandingSliderBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
-            )
+            val sliderViewHolder = SliderViewHolder(binding)
+            this.parent = parent as RecyclerView
+            observePageChanges(sliderViewHolder)
+            return SliderViewHolder(binding)
         }
         if (viewType == viewTypeRegisterSignIn) {
             return RegisterSignInViewHolder(
@@ -92,9 +98,53 @@ class LandingListAdapter(private val activity: FragmentActivity) :
         )
     }
 
+    private fun observePageChanges(
+        sliderViewHolder: SliderViewHolder
+    ) {
+        sliderViewHolder.getSlider().registerOnPageChangeCallback(sliderPageChangedCallback)
+    }
+
+    private val sliderPageChangedCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            if (parent != null && !parent!!.isComputingLayout) {
+                super.onPageSelected(position)
+                updateItems(
+                    when (position) {
+                        0 -> {
+                            currentSelectedTab = GENDER_WOMEN
+                            GENDER_WOMEN
+                        }
+                        1 -> {
+                            currentSelectedTab = GENDER_MEN
+                            GENDER_MEN
+                        }
+                        2 -> {
+                            currentSelectedTab = GENDER_KIDS
+                            GENDER_KIDS
+                        }
+                        else -> {
+                            currentSelectedTab = GENDER_WOMEN
+                            GENDER_WOMEN
+                        }
+                    }
+                )
+            }
+        }
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is SliderViewHolder) {
             holder.bind(activity, mapItems = mapItems)
+            holder.getSlider().unregisterOnPageChangeCallback(sliderPageChangedCallback)
+            holder.getSlider().setCurrentItem(
+                when (currentSelectedTab) {
+                    GENDER_WOMEN -> 0
+                    GENDER_MEN -> 1
+                    GENDER_KIDS -> 2
+                    else -> 1
+                }, false
+            )
+            holder.getSlider().registerOnPageChangeCallback(sliderPageChangedCallback)
         }
         if (holder is RegisterSignInViewHolder) {
             holder.bind(landingItems[position])
@@ -121,5 +171,11 @@ class LandingListAdapter(private val activity: FragmentActivity) :
         landingItems.clear()
         landingItems.addAll(mapItems[GENDER_MEN] ?: arrayListOf())
         notifyDataSetChanged()
+    }
+
+    fun updateItems(gender: String) {
+        landingItems.clear()
+        landingItems.addAll(mapItems[gender] ?: arrayListOf())
+        notifyItemRangeChanged(1, landingItems.size - 1)
     }
 }

@@ -3,32 +3,25 @@ package com.ankuradlakha.baseproject.ui.home.landing.viewholders
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.data.models.Content
 import com.ankuradlakha.baseproject.databinding.ItemLandingProductViewBinding
 import com.ankuradlakha.baseproject.ui.home.landing.LandingProductPagerAdapter
-import dagger.BindsInstance
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class ProductViewHolder(private val binding: ItemLandingProductViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(activity: FragmentActivity, content: Content) {
         binding.contentSubtitle.text = content.subTitle ?: ""
         binding.contentTitle.text = content.title ?: ""
-//        binding.productsPager.apply {
-//            offscreenPageLimit = 1
-//            val recyclerView = getChildAt(0) as RecyclerView
-//            recyclerView.apply {
-//                val padding = resources.getDimensionPixelOffset(R.dimen.spacing_12) +
-//                        resources.getDimensionPixelOffset(R.dimen.spacing_24)
-//                // setting padding on inner RecyclerView puts overscroll effect in the right place
-//                // TODO: expose in later versions not to rely on getChildAt(0) which might break
-//                setPadding(padding, 0, padding, 0)
-//                clipToPadding = false
-//            }
-//        }
+        if (!content.productsList.isNullOrEmpty()) {
+            for (i in 0..content.productsList!!.size) {
+                binding.productTabs.addTab(binding.productTabs.newTab())
+            }
+        }
         binding.productsPager.apply {
             clipToPadding = false
             offscreenPageLimit = 1
@@ -49,5 +42,9 @@ class ProductViewHolder(private val binding: ItemLandingProductViewBinding) :
         val pagerAdapter = LandingProductPagerAdapter(activity)
         binding.productsPager.adapter = pagerAdapter
         pagerAdapter.setItems(content.productsList)
+        TabLayoutMediator(
+            binding.productTabs,
+            binding.productsPager
+        ) { tab: TabLayout.Tab, i: Int -> }.attach()
     }
 }

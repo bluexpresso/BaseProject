@@ -74,4 +74,6 @@
     <color name="bottomNavIconUnselected">@color/gray_62</color>
 
     <color name="tabIndicatorColor">@color/white</color>
+
+    <color name="tabIndicatorColorOnSurface">@color/black</color>
 </resources>

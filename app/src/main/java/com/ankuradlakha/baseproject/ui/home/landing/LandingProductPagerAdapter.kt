@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.ankuradlakha.baseproject.data.models.BaseModel
 import com.ankuradlakha.baseproject.data.models.Product
 
-class LandingProductPagerAdapter(private val activity: FragmentActivity) :
+class LandingProductPagerAdapter(activity: FragmentActivity) :
     FragmentStateAdapter(activity) {
     var products: ArrayList<BaseModel.Hit<Product>>? = null
     override fun getItemCount() = 4
