@@ -2,7 +2,6 @@ package com.ankuradlakha.baseproject.ui.home.landing
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -20,7 +19,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
 
     companion object {
         const val viewTypeSlider = 0
-        const val viewTypeRegisterSignIn = 1
+        const val viewTypeDismissibleCard = 1
         const val viewTypeBoxView = 2
         const val viewTypeNoContent = 3
         const val viewTypeProductView = 4
@@ -31,7 +30,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
         if (landingItems[position].boxType == BOX_TYPE_SLIDER)
             return viewTypeSlider
         if (landingItems[position].boxType == BOX_TYPE_REGISTER_SIGN_IN)
-            return viewTypeRegisterSignIn
+            return viewTypeDismissibleCard
         if (landingItems[position].boxType == BOX_TYPE_BOX_VIEW)
             return viewTypeBoxView
         if (landingItems[position].boxType == BOX_TYPE_PRODUCT_VIEW)
@@ -54,8 +53,8 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             observePageChanges(sliderViewHolder)
             return SliderViewHolder(binding)
         }
-        if (viewType == viewTypeRegisterSignIn) {
-            return RegisterSignInViewHolder(
+        if (viewType == viewTypeDismissibleCard) {
+            return DismissibleCardViewHolder(
                 ViewDismissibleCardBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -146,8 +145,14 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             )
             holder.getSlider().registerOnPageChangeCallback(sliderPageChangedCallback)
         }
-        if (holder is RegisterSignInViewHolder) {
+        if (holder is DismissibleCardViewHolder) {
             holder.bind(landingItems[position])
+            holder.getCloseButton().setOnClickListener {
+                onDismissibleCardDismissed?.invoke(BOX_TYPE_REGISTER_SIGN_IN)
+            }
+            holder.getActionButtonOne().setOnClickListener {
+                onDismissibleCardActioned?.invoke(BOX_TYPE_REGISTER_SIGN_IN)
+            }
         }
         if (holder is BoxViewHolder) {
             holder.bind(landingItems[position])
@@ -169,7 +174,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
         if (mapItems == null) return
         this.mapItems = mapItems
         landingItems.clear()
-        landingItems.addAll(mapItems[GENDER_MEN] ?: arrayListOf())
+        landingItems.addAll(mapItems[GENDER_WOMEN] ?: arrayListOf())
         notifyDataSetChanged()
     }
 
@@ -178,4 +183,15 @@ class LandingListAdapter(private val activity: FragmentActivity) :
         landingItems.addAll(mapItems[gender] ?: arrayListOf())
         notifyItemRangeChanged(1, landingItems.size - 1)
     }
+
+    fun removeDismissibleCards() {
+        mapItems[GENDER_WOMEN]?.removeAt(1)
+        mapItems[GENDER_MEN]?.removeAt(1)
+        mapItems[GENDER_KIDS]?.removeAt(1)
+        landingItems.removeAt(1)
+        notifyItemRemoved(1)
+    }
+
+    var onDismissibleCardActioned: ((String) -> Unit)? = null
+    var onDismissibleCardDismissed: ((String) -> Unit)? = null
 }

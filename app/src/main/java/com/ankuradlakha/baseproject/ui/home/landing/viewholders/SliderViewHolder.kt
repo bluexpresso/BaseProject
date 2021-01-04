@@ -11,10 +11,13 @@ import com.ankuradlakha.baseproject.utils.GENDER_MEN
 import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import timber.log.Timber
 import java.text.FieldPosition
 
 class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
     RecyclerView.ViewHolder(binding.root) {
+    private val MIN_SCALE = 0.85f
+    private val MIN_ALPHA = 0.5f
     fun bind(activity: FragmentActivity, mapItems: HashMap<String, ArrayList<Content>>) {
         val adapter = SliderAdapter(activity)
         adapter.setItems(
@@ -36,6 +39,49 @@ class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
                 else -> binding.root.context.getString(R.string.women)
             }
         }.attach()
+        initSliderTransition()
+    }
+
+    private fun initSliderTransition() {
+        binding.sliderPager.setPageTransformer { page, position ->
+            Timber.d("POSITION->$position")
+            page.apply {
+                val pageWidth = width
+                val pageHeight = height
+                when {
+                    position < -1 -> { // [-Infinity,-1)
+                        // This page is way off-screen to the left.
+//                        alpha = 0f
+                    }
+                    position <= 0 -> { // [-1,0]
+                        // Use the default slide transition when moving to the left page
+//                        alpha = 1f
+//                        translationX = 0f
+//                        translationZ = 0f
+//                        scaleX = 1f
+//                        scaleY = 1f
+//                        translationX = pageWidth*position
+//                        translationX = pageWidth*position
+
+                    }
+                    position <= 1 -> { // (0,1]
+                        // Fade the page out.
+
+                        // Counteract the default slide transition
+//                        translationX = pageWidth*-position
+                        // Move it behind the left page
+//                        translationZ = -1f
+
+                        // Scale the page down (between MIN_SCALE and 1)
+                    }
+                    else -> { // (1,+Infinity]
+                        // This page is way off-screen to the right.
+//                        alpha = 0f
+                    }
+                }
+            }
+
+        }
     }
 
     fun getSlider() = binding.sliderPager

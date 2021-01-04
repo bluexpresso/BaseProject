@@ -14,6 +14,8 @@ import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentLandingBinding
 import com.ankuradlakha.baseproject.network.Status.*
 import com.ankuradlakha.baseproject.ui.MainViewModel
+import com.ankuradlakha.baseproject.utils.BOX_TYPE_REGISTER_SIGN_IN
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_landing.*
 
 class LandingFragment : Fragment() {
@@ -33,12 +35,26 @@ class LandingFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_landing, container, false)
                     as FragmentLandingBinding
         initData()
+        initDismissibleCard(binding)
         return binding.root
+    }
+
+    private fun initDismissibleCard(binding: FragmentLandingBinding) {
+        landingListAdapter.onDismissibleCardActioned = {
+            if (it == BOX_TYPE_REGISTER_SIGN_IN) {
+                Snackbar.make(binding.root, "Feature coming soon", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+        landingListAdapter.onDismissibleCardDismissed = {
+            if (it == BOX_TYPE_REGISTER_SIGN_IN) {
+                landingListAdapter.removeDismissibleCards()
+            }
+        }
     }
 
     private fun initData() {
         landingListAdapter = LandingListAdapter(requireActivity())
-        activityViewModel.landingLiveData.observe(viewLifecycleOwner, Observer {
+        activityViewModel.landingLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 LOADING -> {
                     Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()

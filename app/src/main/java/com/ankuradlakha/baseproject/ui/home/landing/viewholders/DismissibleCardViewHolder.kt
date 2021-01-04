@@ -6,7 +6,7 @@ import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.data.models.Content
 import com.ankuradlakha.baseproject.databinding.ViewDismissibleCardBinding
 
-class RegisterSignInViewHolder(private val binding: ViewDismissibleCardBinding) :
+class DismissibleCardViewHolder(private val binding: ViewDismissibleCardBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(content: Content) {
         binding.actionBtnTwo.visibility = View.GONE
@@ -21,4 +21,8 @@ class RegisterSignInViewHolder(private val binding: ViewDismissibleCardBinding) 
 
         }
     }
+
+    fun getCloseButton() = binding.iconClose
+    fun getActionButtonOne() = binding.actionBtnOne
+    fun getActionButtonTwo() = binding.actionBtnTwo
 }
