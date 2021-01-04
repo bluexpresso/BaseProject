@@ -9,12 +9,10 @@ import com.ankuradlakha.baseproject.data.models.Product
 class LandingProductPagerAdapter(activity: FragmentActivity) :
     FragmentStateAdapter(activity) {
     var products: ArrayList<BaseModel.Hit<Product>>? = null
-    override fun getItemCount() = 4
+    override fun getItemCount() = products?.size ?: 0
 
     override fun createFragment(position: Int): Fragment {
-        return ProductPagerItemFragment.newInstance(
-            Product()
-        )
+        return ProductPagerItemFragment.newInstance(products!![position])
     }
 
     fun setItems(products: ArrayList<BaseModel.Hit<Product>>?) {

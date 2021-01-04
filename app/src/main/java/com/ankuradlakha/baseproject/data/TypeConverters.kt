@@ -67,5 +67,4 @@ class TypeConverters {
         return Gson().fromJson(value, object : TypeToken<ArrayList<Intro>>() {
         }.type)
     }
-
 }

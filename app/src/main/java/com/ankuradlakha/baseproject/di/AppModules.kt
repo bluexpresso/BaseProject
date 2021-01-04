@@ -109,8 +109,8 @@ class AppModules {
 
     @Provides
     @Singleton
-    internal fun providesConfigurationRepository(api: API, appCache: AppCache) =
-        ConfigurationRepository(api, appCache)
+    internal fun providesConfigurationRepository(api: API, appCache: AppCache,appDatabase: AppDatabase) =
+        ConfigurationRepository(api, appCache,appDatabase)
 
     @Provides
     @Singleton

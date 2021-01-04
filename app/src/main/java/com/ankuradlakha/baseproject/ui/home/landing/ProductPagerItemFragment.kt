@@ -8,17 +8,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ankuradlakha.baseproject.R
+import com.ankuradlakha.baseproject.data.models.BaseModel
 import com.ankuradlakha.baseproject.data.models.Product
 import com.ankuradlakha.baseproject.databinding.ItemProductViewBinding
 import com.ankuradlakha.baseproject.di.GlideApp
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductPagerItemFragment : Fragment() {
     lateinit var viewModel: ProductPagerItemViewModel
 
     companion object {
         const val ARG_PRODUCT = "arg_product"
-        fun newInstance(product: Product?) = ProductPagerItemFragment().apply {
+        fun newInstance(product: BaseModel.Hit<Product>?) = ProductPagerItemFragment().apply {
             arguments = Bundle().apply { putString(ARG_PRODUCT, Gson().toJson(product)) }
         }
     }
@@ -33,7 +37,10 @@ class ProductPagerItemFragment : Fragment() {
                     as ItemProductViewBinding
         viewModel = ViewModelProvider(this).get(ProductPagerItemViewModel::class.java)
         viewModel.product =
-            Gson().fromJson(arguments?.getString(ARG_PRODUCT, ""), Product::class.java)
+            Gson().fromJson(
+                arguments?.getString(ARG_PRODUCT, ""),
+                object : TypeToken<BaseModel.Hit<Product>>() {}.type
+            )
         initProduct(binding)
         return binding.root
     }
@@ -42,8 +49,9 @@ class ProductPagerItemFragment : Fragment() {
         GlideApp.with(binding.productImage)
             .load("https://raw.githubusercontent.com/bluexpresso/Pashu-Pakshi/gh-pages/g3184115ricgsv-glgz_1.jpg")
             .into(binding.productImage)
-        binding.name.text = "N/A"
-        binding.brand.text = "Brand"
-        binding.price.text = "123AED"
+        binding.name.text = viewModel.product.source?.name
+        binding.brand.text = viewModel.product.source?.name
+        binding.price.text =
+            String.format("%d%s", viewModel.product.source?.finalPrice, viewModel.getCurrency())
     }
 }

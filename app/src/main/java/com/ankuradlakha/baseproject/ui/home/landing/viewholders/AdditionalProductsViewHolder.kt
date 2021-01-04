@@ -10,7 +10,10 @@ import com.ankuradlakha.baseproject.databinding.ItemAdditionalProductBinding
 import com.ankuradlakha.baseproject.databinding.ItemLandingAdditionalProductsViewBinding
 import com.ankuradlakha.baseproject.di.GlideApp
 
-class AdditionalProductsViewHolder(val binding: ItemLandingAdditionalProductsViewBinding) :
+class AdditionalProductsViewHolder(
+    val binding: ItemLandingAdditionalProductsViewBinding,
+    val selectedCurrency: String
+) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(content: Content) {
         binding.contentSubtitle.text = content.subTitle ?: ""
@@ -20,7 +23,7 @@ class AdditionalProductsViewHolder(val binding: ItemLandingAdditionalProductsVie
         adapter.setItems(content.productsList)
     }
 
-    class AdditionalProductsListAdapter :
+    inner class AdditionalProductsListAdapter :
         RecyclerView.Adapter<AdditionalProductsListAdapter.AdditionalProductsListViewHolder>() {
         var products: ArrayList<BaseModel.Hit<Product>>? = null
 
@@ -32,10 +35,15 @@ class AdditionalProductsViewHolder(val binding: ItemLandingAdditionalProductsVie
                 GlideApp.with(binding.productImage)
                     .load("https://raw.githubusercontent.com/bluexpresso/Pashu-Pakshi/gh-pages/g3184115ricgsv-glgz_1.jpg")
                     .into(binding.productImage)
-                binding.name.text = "Sandal"
-                binding.brand.text = "BRAND"
-                binding.price.text = "123AED"
-                binding.serialNumber.setText("0${adapterPosition + 1}")
+                binding.name.text = products!![adapterPosition].source?.name
+                binding.brand.text = products!![adapterPosition].source?.name
+                binding.price.text =
+                    String.format(
+                        "%d%s",
+                        products!![adapterPosition].source?.finalPrice,
+                        selectedCurrency
+                    )
+                binding.serialNumber.text = "0${adapterPosition + 1}"
             }
         }
 
@@ -56,7 +64,7 @@ class AdditionalProductsViewHolder(val binding: ItemLandingAdditionalProductsVie
             holder.bind()
         }
 
-        override fun getItemCount() = 10
+        override fun getItemCount() = products?.size ?: 0
 
         fun setItems(products: ArrayList<BaseModel.Hit<Product>>?) {
             this.products = products

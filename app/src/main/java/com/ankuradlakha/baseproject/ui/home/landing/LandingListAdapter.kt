@@ -12,6 +12,7 @@ import com.ankuradlakha.baseproject.utils.*
 
 class LandingListAdapter(private val activity: FragmentActivity) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    lateinit var selectedCurrency: String
     var landingItems = arrayListOf<Content>()
     var mapItems = HashMap<String, ArrayList<Content>>()
     var currentSelectedTab = GENDER_WOMEN
@@ -85,7 +86,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             return AdditionalProductsViewHolder(
                 ItemLandingAdditionalProductsViewBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                )
+                ),selectedCurrency
             )
         }
         return NoContentViewHolder(

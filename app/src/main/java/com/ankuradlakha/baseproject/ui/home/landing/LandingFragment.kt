@@ -10,14 +10,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentLandingBinding
 import com.ankuradlakha.baseproject.network.Status.*
 import com.ankuradlakha.baseproject.ui.MainViewModel
 import com.ankuradlakha.baseproject.utils.BOX_TYPE_REGISTER_SIGN_IN
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_landing.*
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LandingFragment : Fragment() {
 
     companion object {
@@ -48,6 +52,9 @@ class LandingFragment : Fragment() {
         landingListAdapter.onDismissibleCardDismissed = {
             if (it == BOX_TYPE_REGISTER_SIGN_IN) {
                 landingListAdapter.removeDismissibleCards()
+                lifecycleScope.launch {
+                    viewModel.updateCachedLandingData(landingListAdapter.mapItems)
+                }
             }
         }
     }
@@ -57,9 +64,9 @@ class LandingFragment : Fragment() {
         activityViewModel.landingLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 LOADING -> {
-                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                 }
                 SUCCESS -> {
+                    landingListAdapter.selectedCurrency = viewModel.getSelectedCurrency()
                     list_landing.adapter = landingListAdapter
                     landingListAdapter.setItems(it?.data)
                 }
