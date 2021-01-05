@@ -18,6 +18,12 @@
     <style name="OnboardingTheme" parent="Theme.BaseProject">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+    <style name="TransparentStatusTheme" parent="Theme.BaseProject">
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="statusBarScrim">@color/white</item>
+        <item name="statusBarBackground">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 
     <style name="FullScreenTheme" parent="Theme.BaseProject">
         <item name="android:windowTranslucentStatus">true</item>
@@ -76,4 +82,7 @@
     <color name="tabIndicatorColor">@color/white</color>
 
     <color name="tabIndicatorColorOnSurface">@color/black</color>
+    <color name="plpLabelBackgroundColor">@color/whiteSmokeColor</color>
+    <color name="toolbarColor">@color/white</color>
+    <color name="toolbarContentColor">@color/black</color>
 </resources>

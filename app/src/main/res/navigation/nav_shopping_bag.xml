@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_shopping_bag"
+    app:startDestination="@id/shoppingBagScreen">
+
+    <fragment
+        android:id="@+id/shoppingBagScreen"
+        android:name="com.ankuradlakha.baseproject.ui.home.shoppingbag.ShoppingBagFragment"
+        android:label="fragment_shopping_bag"
+        tools:layout="@layout/fragment_shopping_bag" />
+</navigation>

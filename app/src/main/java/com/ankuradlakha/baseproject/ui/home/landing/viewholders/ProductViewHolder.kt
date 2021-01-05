@@ -47,4 +47,6 @@ class ProductViewHolder(private val binding: ItemLandingProductViewBinding) :
             binding.productsPager
         ) { tab: TabLayout.Tab, i: Int -> }.attach()
     }
+
+    fun getNextButton() = binding.arrowNext
 }

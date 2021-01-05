@@ -86,7 +86,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             return AdditionalProductsViewHolder(
                 ItemLandingAdditionalProductsViewBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                ),selectedCurrency
+                ), selectedCurrency
             )
         }
         return NoContentViewHolder(
@@ -160,6 +160,9 @@ class LandingListAdapter(private val activity: FragmentActivity) :
         }
         if (holder is ProductViewHolder) {
             holder.bind(activity, landingItems[position])
+            holder.getNextButton().setOnClickListener {
+                onViewAllProducts?.invoke("")
+            }
         }
         if (holder is AdditionalProductsViewHolder) {
             holder.bind(landingItems[position])
@@ -195,4 +198,5 @@ class LandingListAdapter(private val activity: FragmentActivity) :
 
     var onDismissibleCardActioned: ((String) -> Unit)? = null
     var onDismissibleCardDismissed: ((String) -> Unit)? = null
+    var onViewAllProducts: ((Any) -> Unit)? = null
 }

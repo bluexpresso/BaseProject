@@ -1,9 +1,8 @@
 package com.ankuradlakha.baseproject.ui.home.landing
 
+import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -11,9 +10,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentLandingBinding
 import com.ankuradlakha.baseproject.network.Status.*
+import com.ankuradlakha.baseproject.ui.BaseFragment
 import com.ankuradlakha.baseproject.ui.MainViewModel
 import com.ankuradlakha.baseproject.utils.BOX_TYPE_REGISTER_SIGN_IN
 import com.google.android.material.snackbar.Snackbar
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_landing.*
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LandingFragment : Fragment() {
+class LandingFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = LandingFragment()
@@ -40,7 +41,14 @@ class LandingFragment : Fragment() {
                     as FragmentLandingBinding
         initData()
         initDismissibleCard(binding)
+        initProductListNavigation(binding)
         return binding.root
+    }
+
+    private fun initProductListNavigation(binding: FragmentLandingBinding) {
+        landingListAdapter.onViewAllProducts = {
+            findNavController().navigate(R.id.nav_from_home_to_product_list)
+        }
     }
 
     private fun initDismissibleCard(binding: FragmentLandingBinding) {

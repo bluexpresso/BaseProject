@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_a_z"
+    app:startDestination="@id/aToZScreen">
+
+    <fragment
+        android:id="@+id/aToZScreen"
+        android:name="com.ankuradlakha.baseproject.ui.home.atoz.AToZFragment"
+        android:label="AtoZFragment"
+        tools:layout="@layout/fragment_a_to_z" />
+</navigation>

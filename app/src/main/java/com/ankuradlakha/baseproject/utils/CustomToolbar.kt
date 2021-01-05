@@ -1,0 +1,52 @@
+package com.ankuradlakha.baseproject.utils
+
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
+import android.util.AttributeSet
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import com.ankuradlakha.baseproject.R
+import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.view_toolbar.view.*
+
+class CustomToolbar @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : AppBarLayout(context, attrs, defStyleAttr) {
+    private val title: String
+    private val leftIcon: Drawable?
+    private val rightIcon: Drawable?
+
+    init {
+        context.theme.obtainStyledAttributes(
+            attrs, R.styleable.CustomToolbar, 0, 0
+        ).apply {
+            try {
+                title = getString(R.styleable.CustomToolbar_titleText)
+                    ?: context.getString(R.string.not_available)
+                leftIcon =
+                    getDrawable(R.styleable.CustomToolbar_leftIcon)
+                rightIcon = getDrawable(R.styleable.CustomToolbar_rightIcon)
+                initToolbar()
+            } finally {
+                recycle()
+            }
+        }
+    }
+
+    private fun initToolbar() {
+        inflate(context, R.layout.view_toolbar, this)
+        setBackgroundColor(ContextCompat.getColor(context, R.color.toolbarColor))
+        left_icon.setImageDrawable(leftIcon)
+        left_icon.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.toolbarColor))
+        right_icon.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.toolbarColor))
+        right_icon.setImageDrawable(rightIcon)
+        title_text.text = title
+    }
+
+    fun setTitle(@StringRes title: Int) {
+        title_text.setText(title)
+    }
+}

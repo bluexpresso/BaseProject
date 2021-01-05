@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.ankuradlakha.baseproject.ui.home.landing.LandingFragment"
         android:label="LandingFragment"
-        tools:layout="@layout/fragment_landing" />
+        tools:layout="@layout/fragment_landing">
+        <action
+            android:id="@+id/nav_from_home_to_product_list"
+            app:destination="@id/product_list_graph" />
+    </fragment>
     <fragment
         android:id="@+id/nav_a_z"
         android:name="com.ankuradlakha.baseproject.ui.home.atoz.AToZFragment"
@@ -30,4 +34,13 @@
         android:name="com.ankuradlakha.baseproject.ui.home.search.SearchFragment"
         android:label="search_fragment"
         tools:layout="@layout/fragment_search" />
+    <navigation
+        android:id="@+id/product_list_graph"
+        app:startDestination="@id/product_list">
+        <fragment
+            android:id="@+id/product_list"
+            android:name="com.ankuradlakha.baseproject.ui.home.product.ProductListFragment"
+            android:label="products_list"
+            tools:layout="@layout/fragment_product_list" />
+    </navigation>
 </navigation>

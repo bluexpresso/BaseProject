@@ -121,6 +121,11 @@
         <item name="lineHeight">16dp</item>
     </style>
 
+    <style name="TextPriceMedium" parent="TextPriceSmall">
+        <item name="lineHeight">27dp</item>
+        <item name="android:textColor">@color/textOnSurface</item>
+    </style>
+
     <style name="TextPriceBig" parent="TextPriceSmall">
         <item name="android:textSize">14sp</item>
         <item name="lineHeight">26dp</item>
@@ -132,6 +137,7 @@
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>
         <item name="lineHeight">22dp</item>
+        <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
     <style name="TextTitleSmall.ProductBoxSubtitle" parent="LightText">
@@ -157,6 +163,7 @@
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>
         <item name="lineHeight">15dp</item>
+        <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
     <style name="TextLabelBrandBig" parent="TextLabelBrandSmall">
@@ -272,4 +279,17 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
+    <style name="TextLabelChip" parent="TextLabelBrandSmall">
+        <item name="android:padding">@dimen/spacing_4</item>
+        <item name="android:background">@drawable/plp_label_background_rounded_white_smoke</item>
+    </style>
+
+    <style name="ToolbarTextStyle" parent="MediumText">
+        <item name="lineHeight">20dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.107</item>
+        <item name="android:textColor">@color/toolbarContentColor</item>
+    </style>
 </resources>
