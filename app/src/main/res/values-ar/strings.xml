@@ -25,4 +25,5 @@
     <string name="shopping_bag">Shopping Bag</string>
     <string name="account">Account</string>
     <string name="not_available">N/A</string>
+    <string name="filters">Filters</string>
 </resources>

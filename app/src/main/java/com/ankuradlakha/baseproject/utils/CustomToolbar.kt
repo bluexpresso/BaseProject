@@ -16,6 +16,7 @@ class CustomToolbar @JvmOverloads constructor(
     private val title: String
     private val leftIcon: Drawable?
     private val rightIcon: Drawable?
+    private val actionButtonEnabled: Boolean
 
     init {
         context.theme.obtainStyledAttributes(
@@ -27,6 +28,8 @@ class CustomToolbar @JvmOverloads constructor(
                 leftIcon =
                     getDrawable(R.styleable.CustomToolbar_leftIcon)
                 rightIcon = getDrawable(R.styleable.CustomToolbar_rightIcon)
+                actionButtonEnabled =
+                    getBoolean(R.styleable.CustomToolbar_actionButtonEnabled, false)
                 initToolbar()
             } finally {
                 recycle()
@@ -44,9 +47,19 @@ class CustomToolbar @JvmOverloads constructor(
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.toolbarColor))
         right_icon.setImageDrawable(rightIcon)
         title_text.text = title
+        left_icon.setOnClickListener {
+            onLeftIconClick?.invoke()
+        }
+        right_icon.setOnClickListener {
+            onRightIconClick?.invoke()
+        }
     }
 
     fun setTitle(@StringRes title: Int) {
         title_text.setText(title)
     }
+
+    var onRightIconClick: (() -> Unit)? = null
+    var onActionButtonClick: (() -> Unit)? = null
+    var onLeftIconClick: (() -> Unit)? = null
 }

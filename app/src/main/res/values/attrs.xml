@@ -4,5 +4,6 @@
         <attr name="leftIcon" format="reference" />
         <attr name="rightIcon" format="reference" />
         <attr name="titleText" format="reference" />
+        <attr name="actionButtonEnabled" format="boolean" />
     </declare-styleable>
 </resources>

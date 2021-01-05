@@ -19,5 +19,14 @@
         android:id="@+id/productListScreen"
         android:name="com.ankuradlakha.baseproject.ui.home.product.ProductListFragment"
         android:label="products_list"
-        tools:layout="@layout/fragment_product_list" />
+        tools:layout="@layout/fragment_product_list">
+        <action
+            android:id="@+id/action_to_filters"
+            app:destination="@id/filtersScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/filtersScreen"
+        android:name="com.ankuradlakha.baseproject.ui.home.filters.FiltersFragment"
+        android:label="FiltersFragment"
+        tools:layout="@layout/fragment_filters" />
 </navigation>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentProductListBinding
 import com.ankuradlakha.baseproject.ui.BaseFragment
@@ -25,5 +26,11 @@ class ProductListFragment : BaseFragment() {
     }
 
     private fun initToolbar(toolbar: CustomToolbar) {
+        toolbar.onLeftIconClick = {
+            findNavController().navigateUp()
+        }
+        toolbar.onRightIconClick = {
+            findNavController().navigate(R.id.action_to_filters)
+        }
     }
 }
