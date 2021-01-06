@@ -11,6 +11,7 @@ import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentMyAccountBinding
 import com.ankuradlakha.baseproject.utils.LANGUAGE_ARABIC
 import com.ankuradlakha.baseproject.utils.LANGUAGE_ENGLISH
+import com.ankuradlakha.baseproject.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,10 +47,16 @@ class MyAccountFragment : Fragment() {
         binding.languageEnglish.setOnClickListener {
             binding.languageEnglish.isSelected = true
             binding.languageArabic.isSelected = false
+            viewModel.setSelectedLanguage(LANGUAGE_ENGLISH)
+            setLocale(context)
+            requireActivity().recreate()
         }
         binding.languageArabic.setOnClickListener {
             binding.languageEnglish.isSelected = false
             binding.languageArabic.isSelected = true
+            viewModel.setSelectedLanguage(LANGUAGE_ARABIC)
+            setLocale(context)
+            requireActivity().recreate()
         }
     }
 

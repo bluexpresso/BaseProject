@@ -11,5 +11,8 @@ class MyAccountViewModel @ViewModelInject constructor(
 ) :
     AndroidViewModel(application) {
     fun getSelectedLanguage() = appCache.getSelectedLanguage()
+    fun setSelectedLanguage(language: String) {
+        appCache.setSelectedLanguage(language)
+    }
 
 }

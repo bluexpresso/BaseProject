@@ -2,6 +2,7 @@ package com.ankuradlakha.baseproject.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.data.models.Country
 import com.ankuradlakha.baseproject.utils.GENDER_KIDS
 import com.ankuradlakha.baseproject.utils.GENDER_MEN
@@ -23,7 +24,7 @@ class AppCache @Inject constructor(context: Context) {
     }
 
     private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences("", Context.MODE_PRIVATE)
+        context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
 
     fun getAuthToken(): String {
         return ""
