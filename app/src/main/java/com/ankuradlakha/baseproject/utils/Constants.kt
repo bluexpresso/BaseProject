@@ -17,6 +17,7 @@ const val BOX_TYPE_ADDITIONAL_PRODUCTS_VIEW = "additionalproduct_view"
 const val GENDER_ID_MEN = 39
 const val GENDER_ID_WOMEN = 61
 const val GENDER_ID_KIDS = 1610
+const val SHORT_ANIMATION_DURATION = 300L
 val productFields = arrayOf(
     "name",
     "final_price",

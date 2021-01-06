@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.ankuradlakha.baseproject.ui.BaseActivity
 import com.ankuradlakha.baseproject.BuildConfig
 import com.ankuradlakha.baseproject.ui.MainActivity
@@ -62,20 +63,18 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
         viewModel.onboardingLiveData.observe(this, {
             when (it.status) {
                 LOADING -> {
-                    Toast.makeText(this, "Loading data", Toast.LENGTH_SHORT).show()
                 }
                 SUCCESS -> {
                     if (!it.data?.countries.isNullOrEmpty()) {
                         viewModel.countriesListLiveData.value =
-                            it.data!!.countries ?: arrayListOf<Country>()
+                            it.data!!.countries ?: arrayListOf()
                     }
                 }
                 ERROR -> {
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 }
             }
         })
-        GlobalScope.launch {
+        lifecycleScope.launch {
             viewModel.getOnboardingData()
         }
     }
@@ -130,10 +129,18 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.findFragmentById(R.id.fragment_container) is ChooseCountryFragment) {
-            you_are_in.visibility = View.GONE
-            country_language.visibility = View.GONE
+        when {
+            supportFragmentManager.findFragmentById(R.id.fragment_container) is ChooseCountryFragment -> {
+                you_are_in.visibility = View.GONE
+                country_language.visibility = View.GONE
+                super.onBackPressed()
+            }
+            supportFragmentManager.findFragmentById(R.id.fragment_container) is SkipIntroFragment -> {
+                finish()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
-        super.onBackPressed()
     }
 }

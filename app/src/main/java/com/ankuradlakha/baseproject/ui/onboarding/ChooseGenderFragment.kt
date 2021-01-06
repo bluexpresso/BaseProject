@@ -1,26 +1,37 @@
 package com.ankuradlakha.baseproject.ui.onboarding
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.ankuradlakha.baseproject.ui.OnboardingTransitionFragment
+import androidx.transition.Slide
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentChooseGenderBinding
 import com.ankuradlakha.baseproject.utils.GENDER_KIDS
 import com.ankuradlakha.baseproject.utils.GENDER_MEN
 import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
+import com.ankuradlakha.baseproject.utils.SHORT_ANIMATION_DURATION
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChooseGenderFragment : OnboardingTransitionFragment() {
+class ChooseGenderFragment : Fragment() {
     companion object {
         fun newInstance() = ChooseGenderFragment()
     }
 
     val activityViewModel: OnboardingViewModel by activityViewModels()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = Slide().apply {
+            slideEdge = Gravity.BOTTOM
+            duration = SHORT_ANIMATION_DURATION
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

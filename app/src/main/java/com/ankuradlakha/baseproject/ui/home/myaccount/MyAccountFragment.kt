@@ -6,8 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.ankuradlakha.baseproject.R
+import com.ankuradlakha.baseproject.databinding.FragmentMyAccountBinding
+import com.ankuradlakha.baseproject.utils.LANGUAGE_ARABIC
+import com.ankuradlakha.baseproject.utils.LANGUAGE_ENGLISH
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyAccountFragment : Fragment() {
 
     companion object {
@@ -16,11 +22,35 @@ class MyAccountFragment : Fragment() {
 
     private lateinit var viewModel: MyAccountViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MyAccountViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_my_account, container, false)
+    ): View {
+        val binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_my_account,
+            container, false
+        ) as FragmentMyAccountBinding
+        initMyLanguage(binding)
+        return binding.root
+    }
+
+    private fun initMyLanguage(binding: FragmentMyAccountBinding) {
+        val selectedLanguage = viewModel.getSelectedLanguage()
+        binding.languageEnglish.isSelected = selectedLanguage == LANGUAGE_ENGLISH
+        binding.languageArabic.isSelected = selectedLanguage == LANGUAGE_ARABIC
+        binding.languageEnglish.setOnClickListener {
+            binding.languageEnglish.isSelected = true
+            binding.languageArabic.isSelected = false
+        }
+        binding.languageArabic.setOnClickListener {
+            binding.languageEnglish.isSelected = false
+            binding.languageArabic.isSelected = true
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

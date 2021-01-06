@@ -18,6 +18,7 @@ class CountryDropdownView @JvmOverloads constructor(
         initView()
     }
 
+    var onCountrySelected: ((Country?) -> Unit)? = null
     var selectedCountry: Country? = null
     private fun initView() {
         inflate(context, R.layout.view_country_dropdown, this)
@@ -42,6 +43,7 @@ class CountryDropdownView @JvmOverloads constructor(
             icon.visibility = View.VISIBLE
             loadSVG(context, selectedCountry?.flag ?: "").into(icon)
             choose_country_autocomplete.setText(selectedCountry?.name)
+            onCountrySelected?.invoke(selectedCountry)
         }
     }
 

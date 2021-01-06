@@ -1,13 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.myaccount.MyAccountFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="@color/white"
+        tools:context=".ui.home.myaccount.MyAccountFragment">
 
-</FrameLayout>
+        <com.ankuradlakha.baseproject.utils.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftIcon="@drawable/ic_baseline_close_24"
+            app:titleText="@string/my_account" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/choose_language"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:text="@string/my_language"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/language_english"
+            style="@style/LanguageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_32"
+            android:text="@string/english"
+            app:layout_constraintEnd_toStartOf="@id/language_arabic"
+            app:layout_constraintStart_toStartOf="@id/choose_language"
+            app:layout_constraintTop_toBottomOf="@id/choose_language" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/language_arabic"
+            style="@style/LanguageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_8"
+            android:layout_marginTop="@dimen/spacing_32"
+            android:layout_marginEnd="@dimen/spacing_20"
+            android:text="@string/arabic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/language_english"
+            app:layout_constraintTop_toBottomOf="@id/choose_language" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

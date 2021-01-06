@@ -26,4 +26,8 @@
     <string name="lets_go">Let\'s go</string>
     <string name="not_available">N/A</string>
     <string name="filters">Filters</string>
+    <string name="my_account">My Account</string>
+    <string name="my_language">My Language</string>
+    <string name="english">English</string>
+    <string name="arabic">عربى</string>
 </resources>

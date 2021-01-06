@@ -42,12 +42,28 @@ class LandingFragment : BaseFragment() {
         initData()
         initDismissibleCard(binding)
         initProductListNavigation(binding)
+        activity?.window?.apply {
+            setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+        }
         return binding.root
     }
 
     private fun initProductListNavigation(binding: FragmentLandingBinding) {
         landingListAdapter.onViewAllProducts = {
             findNavController().navigate(R.id.nav_from_home_to_product_list)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        activity?.window?.apply {
+            clearFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
         }
     }
 

@@ -7,6 +7,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -27,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_24"
+            android:checked="true"
             android:text="@string/enable_notifications_to_stay_up_to_date_on_latest_collections_and_offers"
             android:textAppearance="@style/TextBodySmall"
             android:thumb="@drawable/ic_switch_thumb"
@@ -44,6 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_40"
+            android:enabled="false"
             android:text="@string/text_continue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

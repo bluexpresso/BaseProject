@@ -1,7 +1,15 @@
 package com.ankuradlakha.baseproject.ui.home.myaccount
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.AndroidViewModel
+import com.ankuradlakha.baseproject.data.AppCache
 
-class MyAccountViewModel : ViewModel() {
+class MyAccountViewModel @ViewModelInject constructor(
+    private val appCache: AppCache,
+    application: Application
+) :
+    AndroidViewModel(application) {
+    fun getSelectedLanguage() = appCache.getSelectedLanguage()
 
 }
