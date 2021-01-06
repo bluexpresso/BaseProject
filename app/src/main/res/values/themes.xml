@@ -85,4 +85,6 @@
     <color name="plpLabelBackgroundColor">@color/whiteSmokeColor</color>
     <color name="toolbarColor">@color/white</color>
     <color name="toolbarContentColor">@color/black</color>
+    <color name="dialogBackground">@color/white</color>
+    <color name="secondaryBackground">@color/black</color>
 </resources>

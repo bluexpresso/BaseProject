@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.search.SearchFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="@color/secondaryBackground"
+        tools:context=".ui.home.search.SearchFragment">
 
-</FrameLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_box"
+            style="@style/SearchBoxStyleDark"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_20"
+            android:layout_marginTop="@dimen/spacing_56"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="true"
+                android:hint="@string/search_here"
+                android:textAppearance="@style/TextBodySmallRegular"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/slider_tab_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_40"
+            android:layout_marginTop="@dimen/spacing_32"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_box"
+            app:tabIndicatorColor="@color/tabIndicatorColor"
+            app:tabIndicatorFullWidth="false"
+            app:tabTextColor="@color/tabIndicatorColor">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_women"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/women" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_men"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/men" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_kids"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/kids" />
+
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

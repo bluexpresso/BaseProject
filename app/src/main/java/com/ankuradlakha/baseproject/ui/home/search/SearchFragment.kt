@@ -1,12 +1,15 @@
 package com.ankuradlakha.baseproject.ui.home.search
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.ankuradlakha.baseproject.R
+import com.ankuradlakha.baseproject.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
 
@@ -16,17 +19,30 @@ class SearchFragment : Fragment() {
 
     private lateinit var viewModel: SearchViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        val binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_search, container,
+            false
+        ) as FragmentSearchBinding
+        initSearch(binding)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onStop() {
+        super.onStop()
+        activity?.window?.apply {
+            statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+        }
     }
 
+    private fun initSearch(binding: FragmentSearchBinding) {
+    }
 }

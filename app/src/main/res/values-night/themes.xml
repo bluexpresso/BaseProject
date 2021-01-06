@@ -44,4 +44,6 @@
 <!--    <color name="dropdownEnabledColor">@color/black</color>-->
 <!--    <color name="bottomNavBackground">@color/white</color>-->
 <!--    <color name="tabIndicatorColor">@color/white</color>-->
+<!--    <color name="dialogBackground">@color/white</color>-->
+<!--    <color name="secondaryBackground">@color/black</color>-->
 </resources>

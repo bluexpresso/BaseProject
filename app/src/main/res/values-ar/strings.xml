@@ -30,4 +30,6 @@
     <string name="my_language">My Language</string>
     <string name="english">English</string>
     <string name="arabic">عربى</string>
+    <string name="something_is_not_right">Something is not right</string>
+    <string name="search_here">Search here</string>
 </resources>
