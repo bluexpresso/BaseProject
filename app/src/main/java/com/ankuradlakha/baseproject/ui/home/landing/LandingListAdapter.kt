@@ -2,10 +2,13 @@ package com.ankuradlakha.baseproject.ui.home.landing
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.ankuradlakha.baseproject.data.models.BaseModel
 import com.ankuradlakha.baseproject.data.models.Content
+import com.ankuradlakha.baseproject.data.models.Product
 import com.ankuradlakha.baseproject.databinding.*
 import com.ankuradlakha.baseproject.ui.home.landing.viewholders.*
 import com.ankuradlakha.baseproject.utils.*
@@ -159,13 +162,13 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             holder.bind(landingItems[position])
         }
         if (holder is ProductViewHolder) {
-            holder.bind(activity, landingItems[position])
+            holder.bind(activity, landingItems[position],onProductSelected)
             holder.getNextButton().setOnClickListener {
                 onViewAllProducts?.invoke("")
             }
         }
         if (holder is AdditionalProductsViewHolder) {
-            holder.bind(landingItems[position])
+            holder.bind(landingItems[position],onProductSelected)
         }
         if (holder is NoContentViewHolder) {
             holder.bind()
@@ -199,4 +202,5 @@ class LandingListAdapter(private val activity: FragmentActivity) :
     var onDismissibleCardActioned: ((String) -> Unit)? = null
     var onDismissibleCardDismissed: ((String) -> Unit)? = null
     var onViewAllProducts: ((Any) -> Unit)? = null
+    var onProductSelected : ((BaseModel.Hit<Product>,AppCompatImageView)->Unit)? = null
 }

@@ -24,7 +24,7 @@ class CustomToolbar @JvmOverloads constructor(
         ).apply {
             try {
                 title = getString(R.styleable.CustomToolbar_titleText)
-                    ?: context.getString(R.string.not_available)
+                    ?: ""
                 leftIcon =
                     getDrawable(R.styleable.CustomToolbar_leftIcon)
                 rightIcon = getDrawable(R.styleable.CustomToolbar_rightIcon)

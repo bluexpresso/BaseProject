@@ -1,15 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/white"
+        app:layoutDescription="@xml/fragment_product_details_scene"
         tools:context=".ui.home.product.ProductDetailsFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.ankuradlakha.baseproject.utils.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftIcon="@drawable/ic_arrow_left_alt_24dp_black"
+            app:rightIcon="@drawable/ic_baseline_bookmark_border_24" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/images"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_20"
+            app:layout_constraintBottom_toTopOf="@id/guide_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="@dimen/spacing_20"
+            android:layout_marginTop="@dimen/spacing_40"
+            android:background="@color/off_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/images"
+            app:tabIndicator="@drawable/pager_tab_indicator"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="2dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/product_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            app:layout_constraintBottom_toTopOf="@id/sticky_container"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:background="@color/white">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/brand"
+                    style="@style/TextLabelBrandBig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_32"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Saint Laurent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/name"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_32"
+                    android:lineHeight="0dp"
+                    android:textColor="@color/textOnSurface"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/brand"
+                    tools:text="Saint Laurent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/price"
+                    style="@style/TextPriceBig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_32"
+                    android:layout_marginTop="@dimen/spacing_10"
+                    android:lineHeight="0dp"
+                    android:textColor="@color/textOnSurface"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/name"
+                    tools:text="11AED" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/arrow_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/price"
+                    app:srcCompat="@drawable/ic_baseline_arrow_downward_24"
+                    app:tint="@color/black" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    android:alpha="0.2"
+                    android:background="#000000"
+                    app:layout_constraintTop_toBottomOf="@id/arrow_down" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/heading_product_details"
+                    style="@style/TextHeading4.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_60"
+                    android:text="@string/product_details"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/divider_heading_product_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    android:background="@drawable/divider_black_05dp_rounded"
+                    app:layout_constraintTop_toBottomOf="@id/heading_product_details" />
+
+                <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+                    android:id="@+id/editorial_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/divider_heading_product_details" />
+
+                <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+                    android:id="@+id/about_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/editorial_notes" />
+
+                <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+                    android:id="@+id/shipping_return"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/about_product" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/sticky_container"
+            layout="@layout/view_sticky_bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

@@ -38,7 +38,7 @@
         <item name="font">@font/regular</item>
         <item name="fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
-        <item name="lineHeight">20dp</item>
+<!--        <item name="lineHeight">20dp</item>-->
     </style>
 
     <style name="PrimaryButtonOnDark" parent="Widget.MaterialComponents.Button">
@@ -53,7 +53,7 @@
         <item name="font">@font/regular</item>
         <item name="fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
-        <item name="lineHeight">20dp</item>
+<!--        <item name="lineHeight">20dp</item>-->
     </style>
 
     <style name="SecondaryButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -70,7 +70,7 @@
         <item name="android:insetBottom">0dp</item>
         <item name="fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
-        <item name="lineHeight">20dp</item>
+<!--        <item name="lineHeight">20dp</item>-->
     </style>
 
     <style name="SecondaryButtonOnDark" parent="SecondaryButton">
@@ -87,31 +87,32 @@
         <item name="font">@font/regular</item>
         <item name="fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
-        <item name="lineHeight">20dp</item>
+<!--        <item name="lineHeight">20dp</item>-->
     </style>
 
     <style name="TextBodySmall" parent="LightText">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.0</item>
-        <item name="lineHeight">24dp</item>
+<!--        <item name="lineHeight">24dp</item>-->
     </style>
 
     <style name="TextBodySmallRegular" parent="RegularText">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.0</item>
-        <item name="lineHeight">24dp</item>
+<!--        <item name="lineHeight">24dp</item>-->
     </style>
 
     <style name="TextBody" parent="LightText">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.0277</item>
-        <item name="lineHeight">24dp</item>
+<!--        <item name="lineHeight">24dp</item>-->
         <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
     <style name="TextBodyRegular" parent="RegularText">
         <item name="android:textSize">18sp</item>
-        <item name="lineHeight">24dp</item>
+<!--        <item name="lineHeight">24dp</item>-->
+        <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
     <style name="TextPriceSmall" parent="LightText">
@@ -119,17 +120,17 @@
         <item name="android:letterSpacing">0.0</item>
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>
-        <item name="lineHeight">16dp</item>
+<!--        <item name="lineHeight">16dp</item>-->
     </style>
 
     <style name="TextPriceMedium" parent="TextPriceSmall">
-        <item name="lineHeight">27dp</item>
+<!--        <item name="lineHeight">27dp</item>-->
         <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
     <style name="TextPriceBig" parent="TextPriceSmall">
         <item name="android:textSize">14sp</item>
-        <item name="lineHeight">26dp</item>
+<!--        <item name="lineHeight">26dp</item>-->
     </style>
 
     <style name="TextTitleSmall" parent="LightText">
@@ -137,7 +138,7 @@
         <item name="android:letterSpacing">0.0</item>
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>
-        <item name="lineHeight">22dp</item>
+<!--        <item name="lineHeight">22dp</item>-->
         <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
@@ -145,17 +146,17 @@
         <item name="android:letterSpacing">0.124</item>
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>
-        <item name="lineHeight">27dp</item>
+<!--        <item name="lineHeight">27dp</item>-->
     </style>
 
     <style name="TextCaption" parent="TextTitleSmall">
         <item name="textAllCaps">false</item>
-        <item name="lineHeight">27dp</item>
+<!--        <item name="lineHeight">27dp</item>-->
     </style>
 
     <style name="TextTitleBig" parent="TextTitleSmall">
         <item name="android:textSize">16sp</item>
-        <item name="lineHeight">28dp</item>
+<!--        <item name="lineHeight">28dp</item>-->
     </style>
 
     <style name="TextLabelBrandSmall" parent="MediumText">
@@ -163,14 +164,14 @@
         <item name="android:letterSpacing">0.03125</item>
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>
-        <item name="lineHeight">15dp</item>
+<!--        <item name="lineHeight">15dp</item>-->
         <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
     <style name="TextLabelBrandBig" parent="TextLabelBrandSmall">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.125</item>
-        <item name="lineHeight">20dp</item>
+<!--        <item name="lineHeight">20dp</item>-->
         <item name="android:textColor">@color/textOnSurface</item>
     </style>
 
@@ -188,7 +189,7 @@
         <item name="android:letterSpacing">0.125</item>
         <item name="android:textAllCaps">true</item>
         <item name="textAllCaps">true</item>
-        <item name="lineHeight">24dp</item>
+<!--        <item name="lineHeight">24dp</item>-->
     </style>
 
     <style name="TextHeading4" parent="RegularText">
@@ -196,7 +197,7 @@
         <item name="android:letterSpacing">0.03125</item>
         <item name="android:textAllCaps">true</item>
         <item name="textAllCaps">true</item>
-        <item name="lineHeight">20dp</item>
+<!--        <item name="lineHeight">20dp</item>-->
     </style>
 
     <style name="TextHeading3" parent="LightText">
@@ -204,23 +205,23 @@
         <item name="android:letterSpacing">0.03125</item>
         <item name="android:textAllCaps">true</item>
         <item name="textAllCaps">true</item>
-        <item name="lineHeight">24dp</item>
+<!--        <item name="lineHeight">24dp</item>-->
     </style>
 
     <style name="TextHeading2" parent="TextHeading3">
         <item name="android:textSize">32sp</item>
-        <item name="lineHeight">32dp</item>
+<!--        <item name="lineHeight">32dp</item>-->
     </style>
 
     <style name="TextHeading1" parent="TextHeading3">
         <item name="android:textSize">46sp</item>
-        <item name="lineHeight">46dp</item>
+<!--        <item name="lineHeight">46dp</item>-->
         <item name="android:letterSpacing">0.0</item>
     </style>
 
     <style name="TextHero" parent="TextHeading3">
         <item name="android:textSize">54sp</item>
-        <item name="lineHeight">54dp</item>
+<!--        <item name="lineHeight">54dp</item>-->
         <item name="android:letterSpacing">0.0</item>
     </style>
 
@@ -245,13 +246,13 @@
     <style name="TextHeading4.Medium" parent="MediumText">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/textOnSurface</item>
-        <item name="lineHeight">28dp</item>
+<!--        <item name="lineHeight">28dp</item>-->
     </style>
 
     <style name="TextHeading4.Medium.ProductBoxTitle" parent="MediumText">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/textOnSurface</item>
-        <item name="lineHeight">32dp</item>
+<!--        <item name="lineHeight">32dp</item>-->
     </style>
 
     <style name="DismissibleCardTitleStyle" parent="TextLabelBrandBig">
@@ -261,7 +262,7 @@
 
     <style name="TertiaryButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="font">@font/regular</item>
-        <item name="lineHeight">20dp</item>
+<!--        <item name="lineHeight">20dp</item>-->
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.107</item>
         <item name="android:textColor">@color/textOnSurfaceReverse</item>
@@ -286,7 +287,7 @@
     </style>
 
     <style name="ToolbarTextStyle" parent="MediumText">
-        <item name="lineHeight">20dp</item>
+<!--        <item name="lineHeight">20dp</item>-->
         <item name="android:textSize">14sp</item>
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>

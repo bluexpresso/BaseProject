@@ -13,6 +13,9 @@
         <action
             android:id="@+id/nav_from_home_to_product_list"
             app:destination="@id/productListScreen" />
+        <action
+            android:id="@+id/action_to_product_details"
+            app:destination="@id/productDetailsScreen" />
     </fragment>
 
     <fragment

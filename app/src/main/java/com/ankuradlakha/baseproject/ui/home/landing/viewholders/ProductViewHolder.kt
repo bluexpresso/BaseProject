@@ -1,12 +1,15 @@
 package com.ankuradlakha.baseproject.ui.home.landing.viewholders
 
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
 import com.ankuradlakha.baseproject.R
+import com.ankuradlakha.baseproject.data.models.BaseModel
 import com.ankuradlakha.baseproject.data.models.Content
+import com.ankuradlakha.baseproject.data.models.Product
 import com.ankuradlakha.baseproject.databinding.ItemLandingProductViewBinding
 import com.ankuradlakha.baseproject.ui.home.landing.LandingProductPagerAdapter
 import com.google.android.material.tabs.TabLayout
@@ -14,7 +17,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class ProductViewHolder(private val binding: ItemLandingProductViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(activity: FragmentActivity, content: Content) {
+    fun bind(
+        activity: FragmentActivity,
+        content: Content,
+        onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?
+    ) {
         binding.contentSubtitle.text = content.subTitle ?: ""
         binding.contentTitle.text = content.title ?: ""
         if (!content.productsList.isNullOrEmpty()) {
@@ -39,7 +46,7 @@ class ProductViewHolder(private val binding: ItemLandingProductViewBinding) :
                 }
             }
         }
-        val pagerAdapter = LandingProductPagerAdapter(activity)
+        val pagerAdapter = LandingProductPagerAdapter(onProductSelected)
         binding.productsPager.adapter = pagerAdapter
         pagerAdapter.setItems(content.productsList)
         TabLayoutMediator(

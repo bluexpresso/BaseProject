@@ -8,7 +8,7 @@ import com.ankuradlakha.baseproject.utils.getExitSlidingTransition
 open class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = getEnterSlidingTransition(requireContext())
-        exitTransition = getExitSlidingTransition(requireContext())
+//        enterTransition = getEnterSlidingTransition(requireContext())
+//        exitTransition = getExitSlidingTransition(requireContext())
     }
 }

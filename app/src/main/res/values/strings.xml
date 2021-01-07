@@ -32,4 +32,9 @@
     <string name="arabic">عربى</string>
     <string name="something_is_not_right">Something is not right</string>
     <string name="search_here">Search here</string>
+    <string name="add_to_bag">Add To Bag</string>
+    <string name="product_details">Product Details</string>
+    <string name="editorial_notes">Editorial Notes</string>
+    <string name="about_the_product">About the product</string>
+    <string name="shipping_and_returns"><![CDATA[Shipping & Returns]]></string>
 </resources>

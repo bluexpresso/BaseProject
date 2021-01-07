@@ -2,6 +2,7 @@ package com.ankuradlakha.baseproject.ui.home.landing.viewholders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.ankuradlakha.baseproject.data.models.BaseModel
 import com.ankuradlakha.baseproject.data.models.Content
@@ -15,7 +16,9 @@ class AdditionalProductsViewHolder(
     val selectedCurrency: String
 ) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(content: Content) {
+    var onProductSelected: ((BaseModel.Hit<Product>,AppCompatImageView) -> Unit)? = null
+    fun bind(content: Content, onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?) {
+        this.onProductSelected = onProductSelected
         binding.contentSubtitle.text = content.subTitle ?: ""
         binding.contentTitle.text = content.title ?: ""
         val adapter = AdditionalProductsListAdapter()
@@ -44,6 +47,9 @@ class AdditionalProductsViewHolder(
                         selectedCurrency
                     )
                 binding.serialNumber.text = "0${adapterPosition + 1}"
+                binding.root.setOnClickListener {
+                    onProductSelected?.invoke(products!![adapterPosition],binding.productImage)
+                }
             }
         }
 

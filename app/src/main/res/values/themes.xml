@@ -9,6 +9,7 @@
         <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
+        <item name="android:windowContentTransitions">true</item>
         <!-- Status bar color. -->
         <item name="android:windowBackground">@color/light_gray</item>
         <item name="android:statusBarColor">@color/light_gray</item>

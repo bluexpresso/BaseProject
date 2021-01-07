@@ -18,4 +18,5 @@
     <dimen name="additional_product_height">64dp</dimen>
     <dimen name="plp_image_dimension">140dp</dimen>
     <dimen name="spacing_4">4dp</dimen>
+    <dimen name="spacing_60">60dp</dimen>
 </resources>
