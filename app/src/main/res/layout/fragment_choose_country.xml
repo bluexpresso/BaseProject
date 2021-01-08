@@ -10,6 +10,7 @@
         android:id="@+id/view_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@color/white"
         android:paddingHorizontal="@dimen/spacing_32"
         android:paddingTop="@dimen/spacing_40"

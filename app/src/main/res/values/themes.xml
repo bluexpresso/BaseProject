@@ -17,7 +17,7 @@
     </style>
 
     <style name="OnboardingTheme" parent="Theme.BaseProject">
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentStatus">true</item>ch
     </style>
     <style name="TransparentStatusTheme" parent="Theme.BaseProject">
         <item name="android:statusBarColor">@color/white</item>

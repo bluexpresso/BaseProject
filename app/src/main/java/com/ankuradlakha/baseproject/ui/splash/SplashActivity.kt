@@ -32,6 +32,7 @@ class SplashActivity : BaseActivity() {
                     } else {
                         OnboardingActivity.startActivity(this)
                         finish()
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
                 }
                 ERROR -> {

@@ -5,25 +5,23 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.ankuradlakha.baseproject.ui.BaseActivity
 import com.ankuradlakha.baseproject.BuildConfig
-import com.ankuradlakha.baseproject.ui.MainActivity
 import com.ankuradlakha.baseproject.R
-import com.ankuradlakha.baseproject.data.models.Country
 import com.ankuradlakha.baseproject.databinding.ActivityOnboardingBinding
 import com.ankuradlakha.baseproject.network.APIUrl
 import com.ankuradlakha.baseproject.network.Status.*
+import com.ankuradlakha.baseproject.ui.BaseActivity
+import com.ankuradlakha.baseproject.ui.MainActivity
+import com.ankuradlakha.baseproject.utils.yAnimate
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.video.VideoRendererEventListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_onboarding.*
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,6 +30,7 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
     lateinit var viewModel: OnboardingViewModel
 
     companion object {
+        const val LOGO_TRANSLATE_ANIMATION = -200f
         fun startActivity(activity: Activity) {
             activity.startActivity(Intent(activity, OnboardingActivity::class.java))
         }
@@ -47,7 +46,7 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
         initOnboardingData()
         initGenderSelection()
         if (savedInstanceState == null) {
-            swapFragment(SkipIntroFragment.newInstance(), false)
+            swapFragment(SkipIntroFragment.newInstance(), true)
         }
     }
 
@@ -92,9 +91,9 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
 
     private fun initOnboardingNavigationInteractor() {
         viewModel.onboardingNavigationInteractor.observe(this, {
-            swapFragment(ChooseGenderFragment.newInstance(), true)
-            you_are_in.visibility = View.VISIBLE
-            country_language.visibility = View.VISIBLE
+            logo_image.yAnimate(0f)
+            swapFragment(ChooseGenderFragment.newInstance(), false)
+            group_selected_country.visibility = View.VISIBLE
             country_language.text = String.format(
                 "%s|%s",
                 viewModel.getSelectedCountry().name, viewModel.getSelectedCountry().storeCode
@@ -124,15 +123,21 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
 
     private fun initSkipIntro() {
         viewModel.skipIntroLiveData.observe(this, {
-            swapFragment(ChooseCountryFragment.newInstance(), true)
+            logo_image.yAnimate(LOGO_TRANSLATE_ANIMATION)
+            swapFragment(ChooseCountryFragment.newInstance(), false)
         })
     }
 
     override fun onBackPressed() {
         when {
             supportFragmentManager.findFragmentById(R.id.fragment_container) is ChooseCountryFragment -> {
+                logo_image.yAnimate(0f)
                 you_are_in.visibility = View.GONE
                 country_language.visibility = View.GONE
+                super.onBackPressed()
+            }
+            supportFragmentManager.findFragmentById(R.id.fragment_container) is ChooseGenderFragment -> {
+                logo_image.yAnimate(LOGO_TRANSLATE_ANIMATION)
                 super.onBackPressed()
             }
             supportFragmentManager.findFragmentById(R.id.fragment_container) is SkipIntroFragment -> {

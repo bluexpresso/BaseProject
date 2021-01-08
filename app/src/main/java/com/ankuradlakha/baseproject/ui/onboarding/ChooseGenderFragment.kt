@@ -11,10 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.transition.Slide
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentChooseGenderBinding
-import com.ankuradlakha.baseproject.utils.GENDER_KIDS
-import com.ankuradlakha.baseproject.utils.GENDER_MEN
-import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
-import com.ankuradlakha.baseproject.utils.SHORT_ANIMATION_DURATION
+import com.ankuradlakha.baseproject.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +25,7 @@ class ChooseGenderFragment : Fragment() {
         super.onCreate(savedInstanceState)
         enterTransition = Slide().apply {
             slideEdge = Gravity.BOTTOM
-            duration = SHORT_ANIMATION_DURATION
+            duration = MEDIUM_ANIMATION_DURATION
         }
     }
 

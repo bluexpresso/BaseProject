@@ -18,6 +18,8 @@ const val GENDER_ID_MEN = 39
 const val GENDER_ID_WOMEN = 61
 const val GENDER_ID_KIDS = 1610
 const val SHORT_ANIMATION_DURATION = 300L
+const val MEDIUM_ANIMATION_DURATION = 500L
+const val LONG_ANIMATION_DURATION = 750L
 val productFields = arrayOf(
     "name",
     "final_price",

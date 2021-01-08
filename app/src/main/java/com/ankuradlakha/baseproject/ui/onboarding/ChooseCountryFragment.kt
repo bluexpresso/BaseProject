@@ -9,9 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.Fade
 import androidx.transition.Slide
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentChooseCountryBinding
+import com.ankuradlakha.baseproject.utils.LONG_ANIMATION_DURATION
+import com.ankuradlakha.baseproject.utils.MEDIUM_ANIMATION_DURATION
 import com.ankuradlakha.baseproject.utils.SHORT_ANIMATION_DURATION
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +35,7 @@ class ChooseCountryFragment : Fragment() {
         viewmodel = ViewModelProvider(this).get(ChooseCountryViewModel::class.java)
         enterTransition = Slide().apply {
             slideEdge = Gravity.BOTTOM
-            duration = SHORT_ANIMATION_DURATION
+            duration = MEDIUM_ANIMATION_DURATION
         }
     }
 
