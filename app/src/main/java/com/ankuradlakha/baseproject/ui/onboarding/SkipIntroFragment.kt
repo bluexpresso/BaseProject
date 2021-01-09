@@ -15,6 +15,7 @@ import androidx.transition.Fade
 import androidx.transition.Slide
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentSkipIntroBinding
+import com.ankuradlakha.baseproject.utils.LONG_ANIMATION_DURATION
 import com.ankuradlakha.baseproject.utils.MEDIUM_ANIMATION_DURATION
 import com.ankuradlakha.baseproject.utils.SHORT_ANIMATION_DURATION
 import kotlinx.android.synthetic.main.fragment_skip_intro.*
@@ -30,15 +31,15 @@ class SkipIntroFragment : Fragment() {
         super.onCreate(savedInstanceState)
         enterTransition = Fade().apply {
             mode = Fade.MODE_IN
-            duration = MEDIUM_ANIMATION_DURATION
+            duration = LONG_ANIMATION_DURATION
         }
         exitTransition = Fade().apply {
             mode = Fade.MODE_OUT
-            duration = MEDIUM_ANIMATION_DURATION
+            duration = LONG_ANIMATION_DURATION
         }
         reenterTransition = Fade().apply {
             mode = Fade.MODE_IN
-            duration = MEDIUM_ANIMATION_DURATION
+            duration = LONG_ANIMATION_DURATION
         }
     }
 
@@ -62,15 +63,30 @@ class SkipIntroFragment : Fragment() {
         binding.skipIntro.setOnClickListener {
             shouldAutoNavigateToNextScreen = false
             binding.skipIntro.isClickable = false
-            activityViewModel.skipIntroLiveData.value = true
+            binding.root.animate().apply {
+                duration = 750
+                alpha(0f)
+            }.setListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(p0: Animator?) {
+                }
+
+                override fun onAnimationEnd(p0: Animator?) {
+                    activityViewModel.skipIntroLiveData.value = true
+                }
+
+                override fun onAnimationCancel(p0: Animator?) {
+                }
+
+                override fun onAnimationRepeat(p0: Animator?) {
+                }
+            })
         }
     }
 
     private val autoNavigateRunnable = Runnable {
         if (shouldAutoNavigateToNextScreen) {
             shouldAutoNavigateToNextScreen = false
-            skip_intro.isClickable = false
-            activityViewModel.skipIntroLiveData.value = true
+            skip_intro.performClick()
         }
 
     }

@@ -5,9 +5,15 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AnticipateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.transition.Slide
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.databinding.FragmentChooseGenderBinding
@@ -25,7 +31,8 @@ class ChooseGenderFragment : Fragment() {
         super.onCreate(savedInstanceState)
         enterTransition = Slide().apply {
             slideEdge = Gravity.BOTTOM
-            duration = MEDIUM_ANIMATION_DURATION
+            duration = LONG_ANIMATION_DURATION
+            interpolator = DecelerateInterpolator()
         }
     }
 

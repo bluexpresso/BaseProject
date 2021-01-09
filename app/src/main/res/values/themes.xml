@@ -17,13 +17,16 @@
     </style>
 
     <style name="OnboardingTheme" parent="Theme.BaseProject">
-        <item name="android:windowTranslucentStatus">true</item>ch
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
+
     <style name="TransparentStatusTheme" parent="Theme.BaseProject">
-        <item name="android:statusBarColor">@color/white</item>
+        <!--<item name="android:statusBarColor">@color/white</item>
         <item name="statusBarScrim">@color/white</item>
         <item name="statusBarBackground">@color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">true</item-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
     </style>
 
     <style name="FullScreenTheme" parent="Theme.BaseProject">

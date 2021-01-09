@@ -50,12 +50,12 @@ class LandingFragment : BaseFragment() {
         initDismissibleCard(binding)
         initProductListNavigation(binding)
         initProductDetailsNavigation(binding)
-        activity?.window?.apply {
-            setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
-        }
+//        activity?.window?.apply {
+//            setFlags(
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+//            )
+//        }
         return binding.root
     }
 

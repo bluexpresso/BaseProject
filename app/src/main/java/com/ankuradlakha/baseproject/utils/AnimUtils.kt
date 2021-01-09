@@ -16,7 +16,7 @@ fun getExitSlidingTransition(context: Context): Transition =
 
 fun View.yAnimate(translateBy: Float) {
     ObjectAnimator.ofFloat(this, "translationY", translateBy).apply {
-        duration = MEDIUM_ANIMATION_DURATION
+        duration = LONG_ANIMATION_DURATION
         start()
     }
 }

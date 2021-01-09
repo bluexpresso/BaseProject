@@ -35,7 +35,7 @@ class ChooseCountryFragment : Fragment() {
         viewmodel = ViewModelProvider(this).get(ChooseCountryViewModel::class.java)
         enterTransition = Slide().apply {
             slideEdge = Gravity.BOTTOM
-            duration = MEDIUM_ANIMATION_DURATION
+            duration = LONG_ANIMATION_DURATION
         }
     }
 

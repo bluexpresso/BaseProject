@@ -58,23 +58,19 @@ class MainActivity : BaseActivity() {
             ), supportFragmentManager, R.id.nav_host_fragment, intent
         )
         currentNavController = controller
-        currentNavController?.value?.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.label == "LandingFragment") {
-                window.apply {
-                    setFlags(
-                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                    )
-                }
-            } else {
-                window.apply {
-                    clearFlags(
-                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                    )
-                }
-            }
-        }
+//        currentNavController?.value?.addOnDestinationChangedListener { _, destination, _ ->
+//            if (destination.label == "LandingFragment") {
+//                window.apply {
+//                    setFlags(
+//                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+//                    )
+//                }
+//            } else {
+//                window.apply {
+//                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//                }
+//            }
+//        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
