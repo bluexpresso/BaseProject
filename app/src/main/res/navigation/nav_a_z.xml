@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/aToZScreen"
-        android:name="com.ankuradlakha.baseproject.ui.home.atoz.AToZFragment"
+        android:name="com.idslogic.levelshoes.ui.home.atoz.AToZFragment"
         android:label="AtoZFragment"
         tools:layout="@layout/fragment_a_to_z" />
 </navigation>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/accountScreen"
-        android:name="com.ankuradlakha.baseproject.ui.home.myaccount.MyAccountFragment"
+        android:name="com.idslogic.levelshoes.ui.home.myaccount.MyAccountFragment"
         android:label="fragment_my_account"
         tools:layout="@layout/fragment_my_account" />
 </navigation>

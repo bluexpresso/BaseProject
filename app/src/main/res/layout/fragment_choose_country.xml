@@ -16,7 +16,7 @@
         android:paddingTop="@dimen/spacing_40"
         android:paddingBottom="@dimen/spacing_56">
 
-        <com.ankuradlakha.baseproject.custom.CountryDropdownView
+        <com.idslogic.levelshoes.custom.CountryDropdownView
             android:id="@+id/choose_country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

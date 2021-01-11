@@ -1,0 +1,7 @@
+package com.idslogic.levelshoes.ui.home.landing
+
+import androidx.lifecycle.ViewModel
+
+class SliderItemViewModel : ViewModel() {
+    // TODO: Implement the ViewModel
+}

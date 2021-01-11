@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchScreen"
-        android:name="com.ankuradlakha.baseproject.ui.home.search.SearchFragment"
+        android:name="com.idslogic.levelshoes.ui.home.search.SearchFragment"
         android:label="search_fragment"
         tools:layout="@layout/fragment_search" />
 </navigation>

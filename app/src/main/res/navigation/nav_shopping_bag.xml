@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/shoppingBagScreen"
-        android:name="com.ankuradlakha.baseproject.ui.home.shoppingbag.ShoppingBagFragment"
+        android:name="com.idslogic.levelshoes.ui.home.shoppingbag.ShoppingBagFragment"
         android:label="fragment_shopping_bag"
         tools:layout="@layout/fragment_shopping_bag" />
 </navigation>

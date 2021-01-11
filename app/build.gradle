@@ -12,7 +12,7 @@ android {
     flavorDimensions "primary"
 
     defaultConfig {
-        applicationId "com.ankuradlakha.baseproject"
+        applicationId 'com.idslogic.levelshoes'
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
@@ -45,19 +45,23 @@ android {
     flavorDimensions "primary"
     productFlavors {
         dev {
+            applicationId "com.staging.levelshoes"
             dimension "primary"
 //            buildConfigField 'String', 'REST_ENDPOINT', '"https://staginges.levelshoes.com:9202/"'
             buildConfigField 'String', 'REST_ENDPOINT', '"https://lvles.levelshoes.com:9202/"'
         }
         qa {
+            applicationId "com.staging.levelshoes"
             dimension "primary"
             buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
         }
         uat {
+            applicationId "com.staging.levelshoes"
             dimension "primary"
             buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
         }
         prod {
+            applicationId "com.levelshoes"
             dimension "primary"
             buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
         }

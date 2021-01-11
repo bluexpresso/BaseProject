@@ -16,7 +16,7 @@
         tools:context=".ui.home.product.ProductDetailsFragment">
 
 
-        <com.ankuradlakha.baseproject.utils.CustomToolbar
+        <com.idslogic.levelshoes.utils.CustomToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -150,19 +150,19 @@
                     android:background="@drawable/divider_black_05dp_rounded"
                     app:layout_constraintTop_toBottomOf="@id/heading_product_details" />
 
-                <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+                <com.idslogic.levelshoes.utils.ExpandableHeaderBody
                     android:id="@+id/editorial_notes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/divider_heading_product_details" />
 
-                <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+                <com.idslogic.levelshoes.utils.ExpandableHeaderBody
                     android:id="@+id/about_product"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/editorial_notes" />
 
-                <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+                <com.idslogic.levelshoes.utils.ExpandableHeaderBody
                     android:id="@+id/shipping_return"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

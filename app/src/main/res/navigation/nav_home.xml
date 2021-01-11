@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeScreen"
-        android:name="com.ankuradlakha.baseproject.ui.home.landing.LandingFragment"
+        android:name="com.idslogic.levelshoes.ui.home.landing.LandingFragment"
         android:label="LandingFragment"
         tools:layout="@layout/fragment_landing">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/productListScreen"
-        android:name="com.ankuradlakha.baseproject.ui.home.product.ProductListFragment"
+        android:name="com.idslogic.levelshoes.ui.home.product.ProductListFragment"
         android:label="products_list"
         tools:layout="@layout/fragment_product_list">
         <action
@@ -32,12 +32,12 @@
     </fragment>
     <fragment
         android:id="@+id/filtersScreen"
-        android:name="com.ankuradlakha.baseproject.ui.home.filters.FiltersFragment"
+        android:name="com.idslogic.levelshoes.ui.home.filters.FiltersFragment"
         android:label="FiltersFragment"
         tools:layout="@layout/fragment_filters" />
     <fragment
         android:id="@+id/productDetailsScreen"
-        android:name="com.ankuradlakha.baseproject.ui.home.product.ProductDetailsFragment"
+        android:name="com.idslogic.levelshoes.ui.home.product.ProductDetailsFragment"
         android:label="ProductDetailsFragment"
         tools:layout="@layout/fragment_product_details" />
 </navigation>

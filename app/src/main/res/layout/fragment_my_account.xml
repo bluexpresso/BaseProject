@@ -13,7 +13,7 @@
         android:background="@color/white"
         tools:context=".ui.home.myaccount.MyAccountFragment">
 
-        <com.ankuradlakha.baseproject.utils.CustomToolbar
+        <com.idslogic.levelshoes.utils.CustomToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

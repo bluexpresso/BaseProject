@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.ankuradlakha.baseproject.ui.home.landing.LandingFragment"
+        android:name="com.idslogic.levelshoes.ui.home.landing.LandingFragment"
         android:label="LandingFragment"
         tools:layout="@layout/fragment_landing">
         <action
@@ -16,22 +16,22 @@
     </fragment>
     <fragment
         android:id="@+id/nav_a_z"
-        android:name="com.ankuradlakha.baseproject.ui.home.atoz.AToZFragment"
+        android:name="com.idslogic.levelshoes.ui.home.atoz.AToZFragment"
         android:label="fragment_a_to_z"
         tools:layout="@layout/fragment_a_to_z" />
     <fragment
         android:id="@+id/nav_account"
-        android:name="com.ankuradlakha.baseproject.ui.home.myaccount.MyAccountFragment"
+        android:name="com.idslogic.levelshoes.ui.home.myaccount.MyAccountFragment"
         android:label="fragment_my_account"
         tools:layout="@layout/fragment_my_account" />
     <fragment
         android:id="@+id/nav_shopping_bag"
-        android:name="com.ankuradlakha.baseproject.ui.home.shoppingbag.ShoppingBagFragment"
+        android:name="com.idslogic.levelshoes.ui.home.shoppingbag.ShoppingBagFragment"
         android:label="fragment_shopping_bag"
         tools:layout="@layout/fragment_shopping_bag" />
     <fragment
         android:id="@+id/nav_search"
-        android:name="com.ankuradlakha.baseproject.ui.home.search.SearchFragment"
+        android:name="com.idslogic.levelshoes.ui.home.search.SearchFragment"
         android:label="search_fragment"
         tools:layout="@layout/fragment_search" />
     <navigation
@@ -39,7 +39,7 @@
         app:startDestination="@id/product_list">
         <fragment
             android:id="@+id/product_list"
-            android:name="com.ankuradlakha.baseproject.ui.home.product.ProductListFragment"
+            android:name="com.idslogic.levelshoes.ui.home.product.ProductListFragment"
             android:label="products_list"
             tools:layout="@layout/fragment_product_list" />
     </navigation>

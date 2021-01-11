@@ -62,19 +62,19 @@
                 android:background="#000000"
                 app:layout_constraintTop_toBottomOf="@id/price" />
 
-            <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+            <com.idslogic.levelshoes.utils.ExpandableHeaderBody
                 android:id="@+id/editorial_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/divider" />
 
-            <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+            <com.idslogic.levelshoes.utils.ExpandableHeaderBody
                 android:id="@+id/about_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/editorial_notes" />
 
-            <com.ankuradlakha.baseproject.utils.ExpandableHeaderBody
+            <com.idslogic.levelshoes.utils.ExpandableHeaderBody
                 android:id="@+id/shipping_return"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
