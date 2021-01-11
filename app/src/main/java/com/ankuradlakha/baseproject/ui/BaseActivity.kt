@@ -9,16 +9,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 open class BaseActivity : AppCompatActivity() {
-    fun swapFragment(fragment: Fragment, customAnimation: Boolean) {
+    fun swapFragment(fragment: Fragment, addToBackStack: Boolean) {
         val transaction = supportFragmentManager.beginTransaction()
-        if (customAnimation) {
-            transaction.setCustomAnimations(
-                R.animator.fragment_slide_up,
-                R.animator.fragment_slide_down
-            )
-        }
+        if (addToBackStack)
+            transaction.addToBackStack(null)
         transaction.replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
             .commit()
     }
 

@@ -77,7 +77,7 @@ class AppCache @Inject constructor(context: Context) {
         sharedPreferences.edit().putString(KEY_GENDER, value).apply()
     }
 
-    fun getSelectedGender() = sharedPreferences.getString(KEY_GENDER, GENDER_WOMEN)
+    fun getSelectedGender() = sharedPreferences.getString(KEY_GENDER, "")
     fun setOnboardingCompleted(onboardingCompleted: Boolean) {
         sharedPreferences.edit().putBoolean(KEY_ONBOARDING_COMPLETED, onboardingCompleted).apply()
     }

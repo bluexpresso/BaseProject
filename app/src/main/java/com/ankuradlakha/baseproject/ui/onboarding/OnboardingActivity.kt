@@ -1,10 +1,14 @@
 package com.ankuradlakha.baseproject.ui.onboarding
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +19,7 @@ import com.ankuradlakha.baseproject.network.APIUrl
 import com.ankuradlakha.baseproject.network.Status.*
 import com.ankuradlakha.baseproject.ui.BaseActivity
 import com.ankuradlakha.baseproject.ui.MainActivity
+import com.ankuradlakha.baseproject.utils.LONG_ANIMATION_DURATION
 import com.ankuradlakha.baseproject.utils.yAnimate
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
@@ -28,6 +33,7 @@ import kotlinx.coroutines.launch
 class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
     private var player: SimpleExoPlayer? = null
     lateinit var viewModel: OnboardingViewModel
+    lateinit var alphaBackground: AppCompatImageView
 
     companion object {
         const val LOGO_TRANSLATE_ANIMATION = -200f
@@ -41,12 +47,45 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
         val binding = DataBindingUtil.setContentView(this, R.layout.activity_onboarding)
                 as ActivityOnboardingBinding
         viewModel = ViewModelProvider(this).get(OnboardingViewModel::class.java)
+        alphaBackground = binding.alphaBackground
         initSkipIntro()
         initOnboardingNavigationInteractor()
         initOnboardingData()
         initGenderSelection()
+        initNavigation(savedInstanceState)
+    }
+
+    private fun crossFadeAlphaBackground(shouldShow: Boolean) {
+        if (shouldShow) {
+            alphaBackground.apply {
+                alpha = 0f
+                visibility = View.VISIBLE
+                animate().alpha(0.5f)
+                    .setDuration(LONG_ANIMATION_DURATION)
+                    .setListener(null)
+            }
+        } else {
+            alphaBackground.animate().alpha(0f).setDuration(LONG_ANIMATION_DURATION)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        super.onAnimationEnd(animation)
+                        alphaBackground.visibility = View.GONE
+                    }
+                })
+        }
+    }
+
+    private fun initNavigation(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            swapFragment(SkipIntroFragment.newInstance(), true)
+            val storeCode = viewModel.getSelectedCountry()?.storeCode
+            if (storeCode != null && storeCode.isNotEmpty() &&
+                viewModel.getSelectedGender().isNullOrEmpty()
+            ) {
+                crossFadeAlphaBackground(true)
+                swapFragment(ChooseGenderFragment.newInstance(), false)
+            } else {
+                swapFragment(SkipIntroFragment.newInstance(), false)
+            }
         }
     }
 
@@ -92,7 +131,7 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
     private fun initOnboardingNavigationInteractor() {
         viewModel.onboardingNavigationInteractor.observe(this, {
             logo_image.yAnimate(0f)
-            swapFragment(ChooseGenderFragment.newInstance(), false)
+            swapFragment(ChooseGenderFragment.newInstance(), true)
             group_selected_country.visibility = View.VISIBLE
             country_language.text = String.format(
                 "%s|%s",
@@ -124,13 +163,15 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
     private fun initSkipIntro() {
         viewModel.skipIntroLiveData.observe(this, {
             logo_image.yAnimate(LOGO_TRANSLATE_ANIMATION)
-            swapFragment(ChooseCountryFragment.newInstance(), false)
+            swapFragment(ChooseCountryFragment.newInstance(), true)
+            crossFadeAlphaBackground(true)
         })
     }
 
     override fun onBackPressed() {
         when {
             supportFragmentManager.findFragmentById(R.id.fragment_container) is ChooseCountryFragment -> {
+                crossFadeAlphaBackground(false)
                 logo_image.yAnimate(0f)
                 you_are_in.visibility = View.GONE
                 country_language.visibility = View.GONE

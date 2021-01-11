@@ -64,4 +64,8 @@ class OnboardingViewModel @ViewModelInject constructor(
         onboardingRepository.saveSelectedGender(selectedGender.value)
         onboardingRepository.setOnboardingCompleted(true)
     }
+
+    fun getSelectedGender() =
+        onboardingRepository.getSelectedGender()
+
 }
