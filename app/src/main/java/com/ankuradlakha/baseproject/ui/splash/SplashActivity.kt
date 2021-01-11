@@ -7,12 +7,12 @@ import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.network.Status.*
 import com.ankuradlakha.baseproject.ui.MainActivity
 import com.ankuradlakha.baseproject.ui.onboarding.OnboardingActivity
-import com.ankuradlakha.baseproject.utils.getNoInternetDialog
-import com.ankuradlakha.baseproject.utils.isInternetAvailable
+import com.ankuradlakha.baseproject.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {

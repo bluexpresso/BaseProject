@@ -4,10 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.ankuradlakha.baseproject.R
 import com.ankuradlakha.baseproject.data.models.Country
-import com.ankuradlakha.baseproject.utils.GENDER_KIDS
-import com.ankuradlakha.baseproject.utils.GENDER_MEN
-import com.ankuradlakha.baseproject.utils.GENDER_WOMEN
-import com.ankuradlakha.baseproject.utils.LANGUAGE_ENGLISH
+import com.ankuradlakha.baseproject.utils.*
 import com.google.gson.Gson
 import javax.inject.Inject
 
@@ -20,11 +17,12 @@ class AppCache @Inject constructor(context: Context) {
         const val KEY_SELECTED_LANGUAGE = "key_selected_language"
         const val KEY_COUNTRY = "key_country"
         const val KEY_GENDER = "key_gender"
+        const val SHARED_PREFERENCE = "level_shoes_cache"
         const val KEY_ONBOARDING_COMPLETED = "key_onboarding_completed"
     }
 
     private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
+        context.getSharedPreferences(SHARED_PREFERENCE, Context.MODE_PRIVATE)
 
     fun getAuthToken(): String {
         return ""
@@ -64,7 +62,7 @@ class AppCache @Inject constructor(context: Context) {
     }
 
     fun getSelectedLanguage() =
-        sharedPreferences.getString(KEY_SELECTED_LANGUAGE, LANGUAGE_ENGLISH) ?: LANGUAGE_ENGLISH
+        sharedPreferences.getString(KEY_SELECTED_LANGUAGE, "") ?: ""
 
     fun setSelectedCountry(country: Country?) {
         sharedPreferences.edit().putString(KEY_COUNTRY, Gson().toJson(country)).apply()
