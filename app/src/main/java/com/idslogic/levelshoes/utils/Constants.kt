@@ -20,6 +20,9 @@ const val GENDER_ID_KIDS = 1610
 const val SHORT_ANIMATION_DURATION = 300L
 const val MEDIUM_ANIMATION_DURATION = 500L
 const val LONG_ANIMATION_DURATION = 750L
+const val STATUS_ACTIVE = "active"
+const val TYPE_IMAGE = "image"
+const val TYPE_VIDEO = "video"
 val productFields = arrayOf(
     "name",
     "final_price",

@@ -18,15 +18,20 @@ import com.idslogic.levelshoes.network.APIUrl
 import com.idslogic.levelshoes.network.Status.*
 import com.idslogic.levelshoes.ui.BaseActivity
 import com.idslogic.levelshoes.ui.MainActivity
-import com.idslogic.levelshoes.utils.LONG_ANIMATION_DURATION
-import com.idslogic.levelshoes.utils.yAnimate
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
 import com.google.android.exoplayer2.video.VideoRendererEventListener
+import com.idslogic.levelshoes.App
+import com.idslogic.levelshoes.di.GlideApp
+import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_onboarding.*
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
@@ -81,6 +86,7 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
                 viewModel.getSelectedGender().isNullOrEmpty()
             ) {
                 crossFadeAlphaBackground(true)
+                setLanguage()
                 swapFragment(ChooseGenderFragment.newInstance(), false)
             } else {
                 swapFragment(SkipIntroFragment.newInstance(), false)
@@ -106,6 +112,7 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
                         viewModel.countriesListLiveData.value =
                             it.data!!.countries ?: arrayListOf()
                     }
+                    initVideo()
                 }
                 ERROR -> {
                 }
@@ -131,32 +138,55 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
         viewModel.onboardingNavigationInteractor.observe(this, {
             logo_image.yAnimate(0f)
             swapFragment(ChooseGenderFragment.newInstance(), true)
-            group_selected_country.visibility = View.VISIBLE
-            country_language.text = String.format(
-                "%s|%s",
-                viewModel.getSelectedCountry().name, viewModel.getSelectedCountry().storeCode
-            )
+            setLanguage()
         })
     }
 
+    private fun setLanguage() {
+        group_selected_country.visibility = View.VISIBLE
+        country_language.text = String.format(
+            "%s | %s",
+            viewModel.getSelectedCountry().name, Locale.getDefault().displayLanguage
+        )
+    }
+
     private fun initVideo() {
-        val mediaItem: MediaItem = if (BuildConfig.DEBUG) {
-            MediaItem.fromUri(
-                Uri.parse(
-                    "android.resource://" + packageName + "/" +
-                            R.raw.onboarding_video
-                )
-            )
+        val introVideo = viewModel.onboardingLiveData.value?.data?.intro?.find {
+            it.type.equals(TYPE_VIDEO, true)
+        } ?: return
+        if (introVideo.status.equals(STATUS_ACTIVE, true)) {
+            val url = introVideo.url
+            val mediaItem = MediaItem.fromUri(Uri.parse(url))
+            player = SimpleExoPlayer.Builder(this).build()
+            video_view.player = player
+            player!!.addListener(object : Player.EventListener {
+                override fun onPlaybackStateChanged(state: Int) {
+                    super.onPlaybackStateChanged(state)
+                    if (state == Player.STATE_READY) {
+                    }
+                }
+            })
+
+            val cache = (application as App).simpleCache
+
+            val cacheDataSourceFactory =
+                CacheDataSourceFactory(cache, DefaultHttpDataSourceFactory("ExoplayerDemo"))
+
+            val mediaSource =
+                ExtractorMediaSource.Factory(cacheDataSourceFactory).createMediaSource(mediaItem)
+            player!!.setMediaSource(mediaSource)
+            player!!.playWhenReady = true
+            player!!.repeatMode = Player.REPEAT_MODE_ONE
+            if (BuildConfig.DEBUG) player!!.volume = 0f
+            player!!.prepare()
         } else {
-            MediaItem.fromUri(Uri.parse(APIUrl.getOnboardingVideoUrl()))
+            val introImage = viewModel.onboardingLiveData.value?.data?.intro?.find {
+                it.type.equals(TYPE_IMAGE, true)
+            }
+            video_view.visibility = View.GONE
+            bg_image.visibility = View.VISIBLE
+            GlideApp.with(bg_image).load(introImage?.url).into(bg_image)
         }
-        player = SimpleExoPlayer.Builder(this).build()
-        video_view.player = player
-        player!!.setMediaItem(mediaItem)
-        player!!.playWhenReady = true
-        player!!.repeatMode = Player.REPEAT_MODE_ONE
-        player!!.volume = 0f
-        player!!.prepare()
     }
 
     private fun initSkipIntro() {
