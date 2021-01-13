@@ -20,4 +20,5 @@
     <color name="off_white">#EEEEEE</color>
     <color name="dividerColor">#000000</color>
     <color name="whiteSmokeColor">#F5F5F5</color>
+    <color name="gray_38">#616161</color>
 </resources>

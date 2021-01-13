@@ -32,6 +32,7 @@
             android:checked="true"
             android:text="@string/enable_notifications_to_stay_up_to_date_on_latest_collections_and_offers"
             android:textAppearance="@style/TextBodySmall"
+            android:textColor="@color/switch_text_states"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/choose_country"
             app:thumbTextPadding="@dimen/spacing_16"

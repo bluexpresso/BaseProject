@@ -91,4 +91,6 @@
     <color name="toolbarContentColor">@color/black</color>
     <color name="dialogBackground">@color/white</color>
     <color name="secondaryBackground">@color/black</color>
+    <color name="switchTextUnchecked">@color/gray_38</color>
+    <color name="switchTextChecked">@color/black</color>
 </resources>
