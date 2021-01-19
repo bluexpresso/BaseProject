@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/productListScreen"
         android:name="com.idslogic.levelshoes.ui.home.product.ProductListFragment"
-        android:label="products_list"
+        android:label="ProductsListFragment"
         tools:layout="@layout/fragment_product_list">
         <action
             android:id="@+id/action_to_filters"

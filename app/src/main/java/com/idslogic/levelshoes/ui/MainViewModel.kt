@@ -73,7 +73,20 @@ class MainViewModel @ViewModelInject constructor(
                                             )
                                         ) {
                                             val productIds = it.productIds?.products
+                                            val formattedProductIds = arrayListOf<String>()
                                             if (!productIds.isNullOrEmpty()) {
+                                                productIds.forEach { str ->
+                                                    if (str.contains("|")) {
+                                                        formattedProductIds.add(
+                                                            str.substring(
+                                                                0,
+                                                                str.indexOf("|")
+                                                            )
+                                                        )
+                                                    } else {
+                                                        formattedProductIds.add(str)
+                                                    }
+                                                }
                                                 val productResponse =
                                                     configurationRepository.getLandingProducts(
                                                         /*arrayOf(
@@ -83,15 +96,11 @@ class MainViewModel @ViewModelInject constructor(
                                                             " 5XX451-XWH-F0002-B065",
                                                             " G1986000RICVER"
                                                         )*/
-                                                        productIds
+                                                        formattedProductIds
                                                     )
                                                 if (!productResponse.data.isNullOrEmpty()) {
                                                     it.productsList = productResponse.data
-                                                } else {
-                                                    it.boxType = ""
                                                 }
-                                            } else {
-                                                it.boxType = ""
                                             }
                                         }
                                         /*else if (it.boxType.equals(

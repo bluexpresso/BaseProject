@@ -15,8 +15,8 @@
         android:theme="@style/Theme.BaseProject">
         <activity
             android:name="com.idslogic.levelshoes.ui.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/TransparentStatusTheme" />
+            android:screenOrientation="portrait"/>
+            <!--android:theme="@style/TransparentStatusTheme"-->
         <activity
             android:name="com.idslogic.levelshoes.ui.splash.SplashActivity"
             android:screenOrientation="portrait"

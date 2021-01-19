@@ -6,9 +6,11 @@ const val GENDER_KIDS = "mobileapp_landing_kids"
 const val LANGUAGE_ENGLISH = "en"
 const val LANGUAGE_ARABIC = "ar"
 const val CONTENT_TYPE_VIDEO = "video"
+const val CONTENT_TYPE_IMAGE = "image"
 const val CONTENT_TYPE_BUTTON = "button"
 const val CONTENT_TYPE_TEXT = "text"
 const val CONTENT_TYPE_HEADING = "heading"
+const val CONTENT_TYPE_SUBHEADING = "heading"
 const val BOX_TYPE_SLIDER = "slider_view"
 const val BOX_TYPE_REGISTER_SIGN_IN = "register_sign_in"
 const val BOX_TYPE_BOX_VIEW = "box_view"
@@ -23,6 +25,11 @@ const val LONG_ANIMATION_DURATION = 750L
 const val STATUS_ACTIVE = "active"
 const val TYPE_IMAGE = "image"
 const val TYPE_VIDEO = "video"
+const val MAGNETO = "vue_storefront_magento"
+const val DEFAULT_COUNTRY = "ae"
+fun getStoreCode(country: String?, selectedLanguage: String) =
+    MAGNETO.plus("_").plus(country ?: DEFAULT_COUNTRY).plus("_").plus(selectedLanguage)
+
 val productFields = arrayOf(
     "name",
     "final_price",

@@ -13,4 +13,7 @@ interface LandingDao {
 
     @Query("select * from LandingData where gender = :gender")
     fun getLandingJson(gender: String): LandingData?
+
+    @Query("delete from LandingData where gender=:gender")
+    fun deleteData(gender: String)
 }

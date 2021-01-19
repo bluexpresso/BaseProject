@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -47,8 +48,8 @@ android {
         dev {
             applicationId "com.staging.levelshoes"
             dimension "primary"
-//            buildConfigField 'String', 'REST_ENDPOINT', '"https://staginges.levelshoes.com:9202/"'
-            buildConfigField 'String', 'REST_ENDPOINT', '"https://lvles.levelshoes.com:9202/"'
+            buildConfigField 'String', 'REST_ENDPOINT', '"https://staginges.levelshoes.com:9202/"'
+//            buildConfigField 'String', 'REST_ENDPOINT', '"https://lvles.levelshoes.com:9202/"'
         }
         qa {
             applicationId "com.staging.levelshoes"
@@ -117,7 +118,11 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.2'
 
     implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.firebase:firebase-config'
 }

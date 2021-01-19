@@ -10,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.databinding.FragmentSearchBinding
+import com.idslogic.levelshoes.ui.BaseFragment
 
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = SearchFragment()

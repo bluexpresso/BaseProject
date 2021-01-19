@@ -21,10 +21,19 @@
             app:rightIcon="@drawable/ic_preferences_black_24"
             app:titleText="@string/kids" />
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/ProgressBarDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/view_products"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layoutAnimation="@anim/product_list_animation"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/spacing_16"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

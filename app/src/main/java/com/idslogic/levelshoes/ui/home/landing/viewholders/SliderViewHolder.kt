@@ -1,5 +1,7 @@
 package com.idslogic.levelshoes.ui.home.landing.viewholders
 
+import android.util.Log
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.idslogic.levelshoes.R
@@ -12,6 +14,7 @@ import com.idslogic.levelshoes.utils.GENDER_WOMEN
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import timber.log.Timber
+import kotlin.math.abs
 
 class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -40,42 +43,32 @@ class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
         }.attach()
         initSliderTransition()
     }
+    companion object {
 
+        private const val DEFAULT_TRANSLATION_X = .0f
+        private const val DEFAULT_TRANSLATION_FACTOR = 1.2f
+
+        private const val SCALE_FACTOR = .14f
+        private const val DEFAULT_SCALE = 1f
+
+        private const val ALPHA_FACTOR = .3f
+        private const val DEFAULT_ALPHA = 1f
+
+    }
     private fun initSliderTransition() {
         binding.sliderPager.setPageTransformer { page, position ->
             Timber.d("POSITION->$position")
             page.apply {
-                val pageWidth = width
-                val pageHeight = height
                 when {
-                    position < -1 -> { // [-Infinity,-1)
-                        // This page is way off-screen to the left.
-//                        alpha = 0f
+                    position <= 0f -> {
+                        translationX = -width*position
                     }
-                    position <= 0 -> { // [-1,0]
-                        // Use the default slide transition when moving to the left page
-//                        alpha = 1f
-//                        translationX = 0f
-//                        translationZ = 0f
-//                        scaleX = 1f
-//                        scaleY = 1f
-//                        translationX = pageWidth*position
-//                        translationX = pageWidth*position
-
+                    position <=1 -> {
+                        translationX = 0f
                     }
-                    position <= 1 -> { // (0,1]
-                        // Fade the page out.
-
-                        // Counteract the default slide transition
-//                        translationX = pageWidth*-position
-                        // Move it behind the left page
-//                        translationZ = -1f
-
-                        // Scale the page down (between MIN_SCALE and 1)
-                    }
-                    else -> { // (1,+Infinity]
-                        // This page is way off-screen to the right.
-//                        alpha = 0f
+                    else -> {
+                        translationX = 0f
+//                        translationX = -width*position
                     }
                 }
             }

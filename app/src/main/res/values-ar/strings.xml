@@ -37,4 +37,6 @@
     <string name="editorial_notes">Editorial Notes</string>
     <string name="about_the_product">About the product</string>
     <string name="shipping_and_returns"><![CDATA[Shipping & Returns]]></string>
+    <string name="active_filters">Active Filters</string>
+    <string name="sort_by">Sort by</string>
 </resources>

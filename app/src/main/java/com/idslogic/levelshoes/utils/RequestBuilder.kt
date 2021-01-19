@@ -2,6 +2,7 @@ package com.idslogic.levelshoes.utils
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.idslogic.levelshoes.network.APIUrl
 
 class RequestBuilder {
     companion object {
@@ -11,6 +12,146 @@ class RequestBuilder {
             identifier.addProperty("identifier", gender)
             request.add("match", identifier)
             return buildRequest(request)
+        }
+
+        fun buildKlevuCategoryProductsRequest(
+            category: String,
+            fromSize: Int,
+            size: Int
+        ): JsonObject {
+            val parentJsonObject = JsonObject()
+
+            val query = JsonObject()
+            query.add("function_score", buildFunctionScoreForKlevuCategoryProducts())
+
+
+            parentJsonObject.add("_source", getSourceArray(productFields))
+            parentJsonObject.add("query", query)
+            parentJsonObject.addProperty("size", size)
+            parentJsonObject.addProperty("from", fromSize)
+            parentJsonObject.add("aggs", buildAggsForKlevuCategoryProducts())
+            return parentJsonObject
+        }
+
+        private fun buildAggsForKlevuCategoryProducts(): JsonObject {
+            val aggs = JsonObject()
+            val maxPriceParent = JsonObject()
+            val minPriceParent = JsonObject()
+            val manufacturerFilter = JsonObject()
+            val sizeFilter = JsonObject()
+            val genderFilter = JsonObject()
+            val lvlCategoryFilter = JsonObject()
+            val colorFilter = JsonObject()
+
+            val maxPrice = JsonObject()
+            val minPrice = JsonObject()
+            val finalPrice = JsonObject()
+            finalPrice.add("field", finalPrice)
+            maxPrice.add("max", finalPrice)
+            minPrice.add("min", finalPrice)
+            maxPriceParent.add("max_price", maxPrice)
+            minPriceParent.add("min_price", minPrice)
+
+            val termsManufacturerFilter = JsonObject()
+            termsManufacturerFilter.addProperty("field", "configurable_children.manufacturer")
+            termsManufacturerFilter.addProperty("size", 10000)
+            manufacturerFilter.add("terms", termsManufacturerFilter)
+
+            val termsSize = JsonObject()
+            termsSize.addProperty("field", "configurable_children.size")
+            termsSize.addProperty("size", 10000)
+            sizeFilter.add("terms", termsSize)
+
+            val termsGender = JsonObject()
+            termsSize.addProperty("field", "configurable_children.gender")
+            termsSize.addProperty("size", 10000)
+            genderFilter.add("terms", termsGender)
+
+            val termsLvlCategory = JsonObject()
+            termsSize.addProperty("field", "configurable_children.lvl_category")
+            termsSize.addProperty("size", 10000)
+            lvlCategoryFilter.add("terms", termsLvlCategory)
+
+            val termsColor = JsonObject()
+            termsSize.addProperty("field", "configurable_children.color")
+            termsSize.addProperty("size", 10000)
+            colorFilter.add("terms", termsColor)
+
+            aggs.add("", maxPriceParent)
+            aggs.add("", minPriceParent)
+            aggs.add("", manufacturerFilter)
+            aggs.add("", genderFilter)
+            aggs.add("", colorFilter)
+            aggs.add("", sizeFilter)
+            aggs.add("", lvlCategoryFilter)
+            return aggs
+        }
+
+        //category=KLEVU_PRODUCT%20Women;the%20occasion%20wear%20edit&sortOrder=rel&visibility=search
+        // &paginationStartsFrom=0&
+        // showOutOfStockProducts=false&ticket=klevu-158676873614211589&noOfResults=10000&
+        // enableMultiSelectFilters=true&resultForZero=1&enableFilters=true&term=*&responseType=json
+        fun getQueryParamsForKlevuCategoryProducts(): HashMap<String, String> {
+            val hashMap = hashMapOf<String, String>()
+            hashMap["category"] = "KLEVU_PRODUCT Women;the occasion wear edit"
+            hashMap["isCategoryNavigationRequest"] = "true"
+            hashMap["sortOrder"] = "rel"
+            hashMap["visibility"] = "search"
+            hashMap["paginationStartsFrom"] = "0"
+            hashMap["showOutOfStockProducts"] = "false"
+            hashMap["ticket"] = APIUrl.getKlevuSkuCode("", "")
+            hashMap["noOfResults"] = "10000"
+            hashMap["enableMultiSelectFilters"] = "true"
+            hashMap["resultForZero"] = "1"
+            hashMap["enableFilters"] = "true"
+            hashMap["term"] = "*"
+            hashMap["responseType"] = "json"
+            return hashMap
+        }
+
+        private fun buildFunctionScoreForKlevuCategoryProducts(): JsonObject {
+            val functionScore = JsonObject()
+            val query = JsonObject()
+            val bool = JsonObject()
+            val must = JsonArray()
+
+            val matchTypeId = JsonObject()
+            val typeId = JsonObject()
+            typeId.addProperty("type_id", "configurable")
+            matchTypeId.add("match", typeId)
+
+            val terms = JsonObject()
+            val visibility = JsonArray()
+            visibility.add(2)
+            visibility.add(4)
+            terms.add("visibility", visibility)
+
+            val matchIsInStock = JsonObject()
+            val isInStock = JsonObject()
+            isInStock.addProperty("configurable_children.stock.is_in_stock", true)
+            matchIsInStock.add("match", isInStock)
+
+            val matchStatus = JsonObject()
+            val status = JsonObject()
+            status.addProperty("configurable_children.status", 1)
+            matchStatus.add("match", status)
+
+            val gte = JsonObject()
+            gte.addProperty("gte", 1)
+            val configQty = JsonObject()
+            configQty.add("configurable_children.stock.qty", gte)
+            val range = JsonObject()
+            range.add("range", configQty)
+
+            must.add(matchTypeId)
+            must.add(terms)
+            must.add(matchStatus)
+            must.add(matchIsInStock)
+            must.add(range)
+            bool.add("must", must)
+            query.add("bool", bool)
+            functionScore.add("query", query)
+            return functionScore
         }
 
         private fun buildRequest(request: JsonObject): JsonObject {
@@ -25,7 +166,7 @@ class RequestBuilder {
             return json
         }
 
-        fun buildLandingProductSearchRequest(productIds: Array<String>?): JsonObject {
+        fun buildLandingProductSearchRequest(productIds: ArrayList<String>?): JsonObject {
             val parentJson = JsonObject()
             parentJson.addProperty("size", 5)
             parentJson.addProperty("from", 0)
@@ -67,10 +208,7 @@ class RequestBuilder {
             scriptJson.addProperty("inline", "params.sortOrder.indexOf((int)doc['id'].value)")
             scriptScoreJson.add("script", scriptJson)
 
-            val sourceArray = JsonArray()
-            productFields.forEach {
-                sourceArray.add(it)
-            }
+            val sourceArray = getSourceArray(productFields)
             scoreJson.add("query", queryChildJson)
             scoreJson.add("script_score", scriptScoreJson)
             queryParentJson.add("function_score", scoreJson)
@@ -79,6 +217,13 @@ class RequestBuilder {
             return parentJson
         }
 
+        private fun getSourceArray(fields: Array<String>): JsonArray {
+            val sourceArray = JsonArray()
+            fields.forEach {
+                sourceArray.add(it)
+            }
+            return sourceArray
+        }
 
         private fun getMustJsonArray(gender: String?): JsonArray {
             val mustJsonArray = JsonArray()

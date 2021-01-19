@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "995754159108",
+    "project_id": "level-shoes",
+    "storage_bucket": "level-shoes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995754159108:android:3d1237d5dcac721c421951",
+        "android_client_info": {
+          "package_name": "com.staging.levelshoes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995754159108-d32886osedro7610g8e9cqfkluk5n67e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDZB1VfiHbZDL2Oz6rK52uYkr60xlCw6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995754159108-d32886osedro7610g8e9cqfkluk5n67e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

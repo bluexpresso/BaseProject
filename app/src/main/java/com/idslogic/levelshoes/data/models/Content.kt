@@ -49,20 +49,5 @@ data class ContentData(
 data class ProductIds(
     @Expose
     @SerializedName("primary_vpn")
-    var products: Array<String>
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ProductIds
-
-        if (!products.contentEquals(other.products)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return products.contentHashCode()
-    }
-}
+    var products: ArrayList<String>
+)

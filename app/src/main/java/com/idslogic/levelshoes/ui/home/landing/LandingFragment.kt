@@ -1,7 +1,9 @@
 package com.idslogic.levelshoes.ui.home.landing
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -9,6 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.models.BaseModel
 import com.idslogic.levelshoes.data.models.Product
@@ -18,8 +24,7 @@ import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.ui.home.product.ProductDetailsFragment.Companion.ARG_PRODUCT
 import com.idslogic.levelshoes.utils.BOX_TYPE_REGISTER_SIGN_IN
-import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
+import com.idslogic.levelshoes.utils.LandingLinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_landing.*
 import kotlinx.coroutines.launch
@@ -45,13 +50,12 @@ class LandingFragment : BaseFragment() {
         initDismissibleCard(binding)
         initProductListNavigation(binding)
         initProductDetailsNavigation(binding)
-//        activity?.window?.apply {
-//            setFlags(
-//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-//                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-//            )
-//        }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideStatusBar()
     }
 
     private fun initProductDetailsNavigation(binding: FragmentLandingBinding) {
@@ -98,6 +102,10 @@ class LandingFragment : BaseFragment() {
                 }
                 SUCCESS -> {
                     landingListAdapter.selectedCurrency = viewModel.getSelectedCurrency()
+                    list_landing.layoutManager = LandingLinearLayoutManager(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL, false
+                    )
                     list_landing.adapter = landingListAdapter
                     landingListAdapter.setItems(it?.data)
                 }

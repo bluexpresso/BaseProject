@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ui.home.filters.FiltersFragment">
 
         <com.idslogic.levelshoes.utils.CustomToolbar
@@ -20,5 +21,47 @@
             app:leftIcon="@drawable/ic_arrow_left_alt_24dp_black"
             app:titleText="@string/filters" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/active_filters_title"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_32"
+            android:layout_marginTop="@dimen/spacing_40"
+            android:text="@string/active_filters"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/no_of_filters"
+            style="@style/TextBodySmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_40"
+            android:layout_marginEnd="@dimen/spacing_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:text="4 Filters" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/view_active_filters"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_32"
+            android:layout_marginTop="@dimen/spacing_24"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/active_filters_title" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sort_by_title"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_32"
+            android:layout_marginTop="@dimen/spacing_60"
+            android:text="@string/sort_by"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_active_filters" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

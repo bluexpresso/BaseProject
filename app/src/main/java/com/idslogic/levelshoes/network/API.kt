@@ -1,15 +1,9 @@
 package com.idslogic.levelshoes.network
 
-import com.idslogic.levelshoes.data.models.BaseModel
-import com.idslogic.levelshoes.data.models.OnboardingResponse
-import com.idslogic.levelshoes.data.models.LandingResponse
-import com.idslogic.levelshoes.data.models.Product
 import com.google.gson.JsonObject
+import com.idslogic.levelshoes.data.models.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Url
+import retrofit2.http.*
 
 interface API {
     @POST
@@ -23,4 +17,11 @@ interface API {
 
     @POST
     fun getLandingProducts(@Url url: String, @Body request: JsonObject): Call<BaseModel<Product>>
+
+    @POST
+    fun getCategoryProducts(
+        @Url url: String,
+        @QueryMap map: HashMap<String, String>,
+        @Body requestBody: JsonObject
+    ): Call<ListingProductResponse>
 }

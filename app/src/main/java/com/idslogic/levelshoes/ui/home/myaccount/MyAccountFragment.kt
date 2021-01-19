@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.databinding.FragmentMyAccountBinding
+import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.utils.LANGUAGE_ARABIC
 import com.idslogic.levelshoes.utils.LANGUAGE_ENGLISH
 import com.idslogic.levelshoes.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyAccountFragment : Fragment() {
+class MyAccountFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = MyAccountFragment()

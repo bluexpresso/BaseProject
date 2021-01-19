@@ -49,10 +49,10 @@ class SplashViewModel @ViewModelInject constructor(
                         val version = responseMen.data?.body()?.hits?.hits!![0].source?.versionNo
                         val currentVersion = configurationRepository.getCurrentVersion(GENDER_MEN)
                         if (version != currentVersion) {
+                            configurationRepository.deleteLandingData(GENDER_MEN)
                             hasMenVersionChanged = true
-                            version.let {
-                                if (it != null)
-                                    configurationRepository.saveCurrentVersion(GENDER_MEN, it)
+                            version?.let {
+                                configurationRepository.saveCurrentVersion(GENDER_MEN, it)
                             }
                         }
                     }
@@ -62,9 +62,9 @@ class SplashViewModel @ViewModelInject constructor(
                         val version = responseWomen.data?.body()?.hits?.hits!![0].source?.versionNo
                         val currentVersion = configurationRepository.getCurrentVersion(GENDER_WOMEN)
                         if (version != currentVersion) {
-                            version.let {
-                                if (it != null)
-                                    configurationRepository.saveCurrentVersion(GENDER_WOMEN, it)
+                            configurationRepository.deleteLandingData(GENDER_WOMEN)
+                            version?.let {
+                                configurationRepository.saveCurrentVersion(GENDER_WOMEN, it)
                             }
                             hasWomenVersionChanged = true
                         }
@@ -75,9 +75,9 @@ class SplashViewModel @ViewModelInject constructor(
                         val version = responseKids.data?.body()?.hits?.hits!![0].source?.versionNo
                         val currentVersion = configurationRepository.getCurrentVersion(GENDER_KIDS)
                         if (version != currentVersion) {
-                            version.let {
-                                if (it != null)
-                                    configurationRepository.saveCurrentVersion(GENDER_KIDS, it)
+                            configurationRepository.deleteLandingData(GENDER_KIDS)
+                            version?.let {
+                                configurationRepository.saveCurrentVersion(GENDER_KIDS, it)
                             }
                             hasKidsVersionChanged = true
                         }

@@ -7,8 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.idslogic.levelshoes.R
+import com.idslogic.levelshoes.ui.BaseFragment
 
-class AToZFragment : Fragment() {
+class AToZFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = AToZFragment()

@@ -1,7 +1,10 @@
 package com.idslogic.levelshoes.ui.splash
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.idslogic.levelshoes.App
 import com.idslogic.levelshoes.ui.BaseActivity
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.network.Status.*
@@ -42,9 +45,10 @@ class SplashActivity : BaseActivity() {
         })
     }
 
+
     private fun checkVersion() {
         if (isInternetAvailable(this)) {
-            GlobalScope.launch {
+            lifecycleScope.launch {
                 viewModel.getVersionInfo()
             }
         } else {

@@ -6,13 +6,10 @@ import com.idslogic.levelshoes.data.models.*
 import com.idslogic.levelshoes.network.API
 import com.idslogic.levelshoes.network.APIUrl
 import com.idslogic.levelshoes.network.Resource
-import com.idslogic.levelshoes.utils.GENDER_KIDS
-import com.idslogic.levelshoes.utils.GENDER_MEN
-import com.idslogic.levelshoes.utils.GENDER_WOMEN
-import com.idslogic.levelshoes.utils.RequestBuilder
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import com.idslogic.levelshoes.utils.*
 import retrofit2.Response
 import java.io.IOException
 
@@ -24,7 +21,14 @@ class ConfigurationRepository(
     fun getLandingData(buildGetVersionInfoRequest: JsonObject): Resource<Response<BaseModel<LandingResponse>>> {
         return try {
             val response =
-                api.getVersionInfo(APIUrl.getVersionInfo(), buildGetVersionInfoRequest).execute()
+                api.getVersionInfo(
+                    APIUrl.getVersionInfo(
+                        getStoreCode(
+                            appCache.getSelectedCountry()?.storeCode,
+                            appCache.getSelectedLanguage()
+                        )
+                    ), buildGetVersionInfoRequest
+                ).execute()
             if (response.isSuccessful) {
                 Resource.success(response, response.code())
             } else {
@@ -45,9 +49,14 @@ class ConfigurationRepository(
 
     fun getSelectedGender() = appCache.getSelectedGender()
     fun isOnboardingCompleted() = appCache.isOnboardingCompleted()
-    fun getLandingProducts(productIds: Array<String>): Resource<ArrayList<BaseModel.Hit<Product>>> {
+    fun getLandingProducts(productIds: ArrayList<String>): Resource<ArrayList<BaseModel.Hit<Product>>> {
         val response = api.getLandingProducts(
-            APIUrl.getLandingProducts(),
+            APIUrl.getLandingProducts(
+                getStoreCode(
+                    appCache.getSelectedCountry().storeCode,
+                    appCache.getSelectedLanguage()
+                )
+            ),
             RequestBuilder.buildLandingProductSearchRequest(productIds)
         ).execute()
         return if (response.isSuccessful && !response.body()?.hits?.hits.isNullOrEmpty()) {
@@ -86,5 +95,9 @@ class ConfigurationRepository(
             hashMap[GENDER_KIDS] =
                 Gson().fromJson(kidsData.content, object : TypeToken<ArrayList<Content>>() {}.type)
         return hashMap
+    }
+
+    fun deleteLandingData(gender: String) {
+        appDatabase.getLandingDao().deleteData(gender)
     }
 }

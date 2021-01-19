@@ -12,6 +12,7 @@ import com.idslogic.levelshoes.network.API
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.idslogic.levelshoes.data.repositories.ProductsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -109,8 +110,12 @@ class AppModules {
 
     @Provides
     @Singleton
-    internal fun providesConfigurationRepository(api: API, appCache: AppCache,appDatabase: AppDatabase) =
-        ConfigurationRepository(api, appCache,appDatabase)
+    internal fun providesConfigurationRepository(
+        api: API,
+        appCache: AppCache,
+        appDatabase: AppDatabase
+    ) =
+        ConfigurationRepository(api, appCache, appDatabase)
 
     @Provides
     @Singleton
@@ -120,5 +125,13 @@ class AppModules {
         appDatabase: AppDatabase
     ) =
         OnboardingRepository(api, appCache, appDatabase)
+
+    @Provides
+    @Singleton
+    internal fun providesProductsRepository(
+        api: API,
+        appCache: AppCache,
+        appDatabase: AppDatabase
+    ) = ProductsRepository(api, appCache, appDatabase)
 
 }

@@ -1,21 +1,22 @@
 package com.idslogic.levelshoes.ui.home.landing
 
 import android.graphics.Color
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.transition.Fade
+import androidx.transition.Slide
+import com.google.gson.Gson
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.models.Content
 import com.idslogic.levelshoes.databinding.FragmentSliderItemBinding
 import com.idslogic.levelshoes.di.GlideApp
-import com.idslogic.levelshoes.utils.CONTENT_TYPE_BUTTON
-import com.idslogic.levelshoes.utils.CONTENT_TYPE_TEXT
-import com.idslogic.levelshoes.utils.CONTENT_TYPE_VIDEO
-import com.google.gson.Gson
+import com.idslogic.levelshoes.utils.*
 
 class SliderItemFragment : Fragment() {
 
@@ -30,6 +31,10 @@ class SliderItemFragment : Fragment() {
 
     private lateinit var viewModel: SliderItemViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = Fade()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,31 +54,69 @@ class SliderItemFragment : Fragment() {
         )
         if (content.data.isNullOrEmpty()) return
         val videoContent = content.data!!.find { it.type.equals(CONTENT_TYPE_VIDEO, true) }
-        if (videoContent != null) {
-            GlideApp.with(requireContext()).asGif()
-                .load(videoContent.url)
-                .into(binding.gifMedia)
-            if (!videoContent.elements.isNullOrEmpty()) {
-                val buttonContent =
-                    videoContent.elements.find { it.type.equals(CONTENT_TYPE_BUTTON, true) }
-                val buttonTextContent = videoContent.elements.find {
-                    it.type.equals(
-                        CONTENT_TYPE_TEXT, true
+        val imageContent = content.data!!.find { it.type.equals(CONTENT_TYPE_IMAGE, true) }
+        val videoStatus = videoContent?.status ?: 0
+        val imageStatus = imageContent?.status ?: 0
+        val activeContent =
+            if (videoStatus == imageStatus || videoStatus == 1) videoContent else imageContent
+        activeContent?.let {
+            val mediaUrl = it.url
+            if (mediaUrl.endsWith(".gif")) {
+                GlideApp.with(requireContext()).asGif()
+                    .load(mediaUrl)
+                    .into(binding.gifMedia)
+            } else {
+                GlideApp.with(requireContext())
+                    .load(mediaUrl)
+                    .into(binding.gifMedia)
+            }
+            val buttonContent =
+                it.elements.find { cnt -> cnt.type.equals(CONTENT_TYPE_BUTTON, true) }
+            val buttonTextContent = it.elements.find { cnt ->
+                cnt.type.equals(
+                    CONTENT_TYPE_TEXT, true
+                )
+            }
+            val heading = it.elements.find { cnt ->
+                cnt.type.equals(CONTENT_TYPE_HEADING, true)
+            }
+            val subHeading = it.elements.find { cnt ->
+                cnt.type.equals(CONTENT_TYPE_SUBHEADING, true)
+            }
+            heading?.let { hdngElement ->
+                binding.heading.visibility = View.VISIBLE
+                try {
+                    binding.heading.setTextColor(
+                        Color.parseColor(hdngElement.foregroundColor ?: "#000000")
                     )
+                } catch (e: Exception) {
                 }
-                if (buttonContent != null) {
-                    binding.btnAction.setBackgroundColor(
+                binding.heading.text = hdngElement.content
+
+            }
+            subHeading?.let { subHdngElement ->
+                binding.subHeading.visibility = View.VISIBLE
+                try {
+                    binding.subHeading.setTextColor(
                         Color.parseColor(
-                            buttonContent.backgroundColor ?: "#FFFFFF"
+                            subHdngElement.foregroundColor ?: "" +
+                            "#000000"
                         )
                     )
+                } catch (e: Exception) {
+                }
+            }
+            buttonContent?.let { btnContent ->
+                binding.btnAction.visibility = View.VISIBLE
+                try {
                     binding.btnAction.setTextColor(
                         Color.parseColor(
-                            buttonContent.foregroundColor ?: "#000000"
+                            btnContent.foregroundColor ?: buttonTextContent?.foregroundColor ?: "#000000"
                         )
                     )
-                    binding.btnAction.text = buttonContent.content ?: ""
+                } catch (e: Exception) {
                 }
+                binding.btnAction.text = btnContent.content ?: buttonTextContent?.content ?: ""
             }
         }
     }

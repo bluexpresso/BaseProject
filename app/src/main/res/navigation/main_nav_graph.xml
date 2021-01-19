@@ -40,7 +40,7 @@
         <fragment
             android:id="@+id/product_list"
             android:name="com.idslogic.levelshoes.ui.home.product.ProductListFragment"
-            android:label="products_list"
+            android:label="ProductsListFragment"
             tools:layout="@layout/fragment_product_list" />
     </navigation>
 </navigation>

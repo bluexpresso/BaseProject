@@ -188,7 +188,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
     fun updateItems(gender: String) {
         landingItems.clear()
         landingItems.addAll(mapItems[gender] ?: arrayListOf())
-        notifyItemRangeChanged(1, landingItems.size - 1)
+        notifyItemRangeChanged(1, landingItems.size)
     }
 
     fun removeDismissibleCards() {
