@@ -35,6 +35,9 @@ data class Product(
     @SerializedName("manufacturer")
     var manufacturer: Long?,
     @Expose
+    @SerializedName("manufacturerName")
+    var manufacturerName: String?,
+    @Expose
     @SerializedName("size_options")
     var sizeOptions: ArrayList<Int>?,
     @Expose
@@ -162,8 +165,69 @@ data class Product(
     var subCategory: Long?,
     @Expose
     @SerializedName("status")
-    var status: Int?
-)
+    var status: Int?,
+    @Expose
+    @SerializedName("displayableImage")
+    var displayableImage: String?
+) {
+    constructor(name: String?) : this(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        name,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+    )
+}
 
 data class MediaGallery(
     @Expose

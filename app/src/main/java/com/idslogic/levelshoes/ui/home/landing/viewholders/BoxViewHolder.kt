@@ -29,6 +29,8 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
                         )
                     )
                     binding.boxActionButton.text = element.content ?: ""
+                } else {
+                    binding.boxActionButton.visibility = View.GONE
                 }
                 if (element.type.equals(CONTENT_TYPE_HEADING, true)
                     || element.type.equals(CONTENT_TYPE_TEXT, true)
@@ -40,6 +42,8 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
                         )
                     )
                     binding.boxTitle.text = element.content
+                } else {
+                    binding.boxTitle.visibility = View.GONE
                 }
             }
         }

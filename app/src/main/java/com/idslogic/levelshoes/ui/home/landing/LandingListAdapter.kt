@@ -13,7 +13,10 @@ import com.idslogic.levelshoes.databinding.*
 import com.idslogic.levelshoes.ui.home.landing.viewholders.*
 import com.idslogic.levelshoes.utils.*
 
-class LandingListAdapter(private val activity: FragmentActivity) :
+class LandingListAdapter(
+    private val activity: FragmentActivity,
+    var onSliderPageChanged: ((Int) -> Unit)? = null
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var selectedCurrency: String
     var landingItems = arrayListOf<Content>()
@@ -111,6 +114,7 @@ class LandingListAdapter(private val activity: FragmentActivity) :
         override fun onPageSelected(position: Int) {
             if (parent != null && !parent!!.isComputingLayout) {
                 super.onPageSelected(position)
+                onSliderPageChanged?.invoke(position)
                 updateItems(
                     when (position) {
                         0 -> {
@@ -138,12 +142,22 @@ class LandingListAdapter(private val activity: FragmentActivity) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is SliderViewHolder) {
             holder.bind(activity, mapItems = mapItems)
+            this.onSliderPageChanged = holder.onSliderPageChanged
             holder.getSlider().unregisterOnPageChangeCallback(sliderPageChangedCallback)
             holder.getSlider().setCurrentItem(
                 when (currentSelectedTab) {
-                    GENDER_WOMEN -> 0
-                    GENDER_MEN -> 1
-                    GENDER_KIDS -> 2
+                    GENDER_WOMEN -> {
+                        holder.onSliderPageChanged.invoke(0)
+                        0
+                    }
+                    GENDER_MEN -> {
+                        holder.onSliderPageChanged.invoke(1)
+                        1
+                    }
+                    GENDER_KIDS -> {
+                        holder.onSliderPageChanged.invoke(2)
+                        2
+                    }
                     else -> 1
                 }, false
             )
@@ -162,13 +176,13 @@ class LandingListAdapter(private val activity: FragmentActivity) :
             holder.bind(landingItems[position])
         }
         if (holder is ProductViewHolder) {
-            holder.bind(activity, landingItems[position],onProductSelected)
+            holder.bind(activity, landingItems[position], onProductSelected)
             holder.getNextButton().setOnClickListener {
                 onViewAllProducts?.invoke("")
             }
         }
         if (holder is AdditionalProductsViewHolder) {
-            holder.bind(landingItems[position],onProductSelected)
+            holder.bind(landingItems[position], onProductSelected)
         }
         if (holder is NoContentViewHolder) {
             holder.bind()
@@ -202,5 +216,5 @@ class LandingListAdapter(private val activity: FragmentActivity) :
     var onDismissibleCardActioned: ((String) -> Unit)? = null
     var onDismissibleCardDismissed: ((String) -> Unit)? = null
     var onViewAllProducts: ((Any) -> Unit)? = null
-    var onProductSelected : ((BaseModel.Hit<Product>,AppCompatImageView)->Unit)? = null
+    var onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)? = null
 }

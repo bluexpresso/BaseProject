@@ -24,4 +24,7 @@ interface API {
         @QueryMap map: HashMap<String, String>,
         @Body requestBody: JsonObject
     ): Call<ListingProductResponse>
+
+    @POST
+    fun getAttributes(@Url url: String,@Body request:JsonObject): Call<JsonObject>
 }

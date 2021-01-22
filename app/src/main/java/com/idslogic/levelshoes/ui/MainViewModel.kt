@@ -15,6 +15,7 @@ import com.idslogic.levelshoes.utils.*
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
+import com.idslogic.levelshoes.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,7 +34,7 @@ class MainViewModel @ViewModelInject constructor(
             withContext(Dispatchers.IO) {
                 landingLiveData.postValue(Resource.loading())
                 val cachedLandingData = configurationRepository.getLandingData()
-                if (!cachedLandingData.isNullOrEmpty()) {
+                if (!BuildConfig.DEBUG && !cachedLandingData.isNullOrEmpty()) {
                     landingLiveData.postValue(
                         Resource.success(
                             cachedLandingData,
@@ -73,57 +74,68 @@ class MainViewModel @ViewModelInject constructor(
                                             )
                                         ) {
                                             val productIds = it.productIds?.products
-                                            val formattedProductIds = arrayListOf<String>()
+//                                            val formattedProductIds = arrayListOf<String>()
+                                            val mapProductImages = hashMapOf<String, String?>()
                                             if (!productIds.isNullOrEmpty()) {
                                                 productIds.forEach { str ->
                                                     if (str.contains("|")) {
-                                                        formattedProductIds.add(
-                                                            str.substring(
-                                                                0,
-                                                                str.indexOf("|")
-                                                            )
-                                                        )
+                                                        val spltStrings = str.split("|")
+                                                        mapProductImages[spltStrings[0]] =
+                                                            spltStrings[1]
+//                                                        formattedProductIds.add(
+//                                                            str.substring(
+//                                                                0,
+//                                                                str.indexOf("|")
+//                                                            )
+//                                                        )
                                                     } else {
-                                                        formattedProductIds.add(str)
+                                                        mapProductImages[str] = null
+//                                                        formattedProductIds.add(str)
                                                     }
                                                 }
                                                 val productResponse =
                                                     configurationRepository.getLandingProducts(
-                                                        /*arrayOf(
-                                                            "553770-WHGP7-9061",
-                                                            " J000138945",
-                                                            "DRWFLAA0-NAP-000",
-                                                            " 5XX451-XWH-F0002-B065",
-                                                            " G1986000RICVER"
-                                                        )*/
-                                                        formattedProductIds
+                                                        when (i) {
+                                                            0 -> GENDER_WOMEN
+                                                            1 -> GENDER_MEN
+                                                            else -> GENDER_KIDS
+                                                        },
+                                                        mapProductImages.keys.toList()
                                                     )
                                                 if (!productResponse.data.isNullOrEmpty()) {
+                                                    productResponse.data.forEach { product ->
+                                                        product.source?.manufacturer?.let { value ->
+                                                            product.source?.manufacturerName =
+                                                                configurationRepository.getManufacturerName(
+                                                                    value
+                                                                )
+                                                        }
+                                                        if (mapProductImages[product.source?.sku].isNullOrEmpty()) {
+                                                            product.source?.displayableImage =
+                                                                BuildConfig.IMAGE_URL.plus(
+                                                                    product.source?.thumbnail
+                                                                )
+                                                        } else {
+                                                            product.source?.displayableImage =
+                                                                mapProductImages[product.source?.sku]
+                                                        }
+                                                    }
                                                     it.productsList = productResponse.data
+                                                    if (it.boxType.equals(
+                                                            BOX_TYPE_PRODUCT_VIEW,
+                                                            true
+                                                        )
+                                                    ) {
+                                                        val viewAllCollection =
+                                                            BaseModel.Hit<Product>()
+                                                        viewAllCollection.source = Product(
+                                                            VIEW_ALL_COLLECTION
+                                                        )
+                                                        it.productsList?.add(viewAllCollection)
+                                                    }
                                                 }
                                             }
                                         }
-                                        /*else if (it.boxType.equals(
-                                                BOX_TYPE_ADDITIONAL_PRODUCTS_VIEW,
-                                                true
-                                            )
-                                        ) {
-                                            val productIds = it.productIds?.products
-                                            if (!productIds.isNullOrEmpty()) {
-                                                val productResponse =
-                                                    configurationRepository.getLandingProducts(
-                                                        *//*arrayOf(
-                                                            "553770-WHGP7-9061",
-                                                            " J000138945",
-                                                            "DRWFLAA0-NAP-000",
-                                                            " 5XX451-XWH-F0002-B065",
-                                                            " G1986000RICVER"
-                                                        )*//*
-                                                        productIds
-                                                    )
-                                                it.productsList = productResponse.data
-                                            }
-                                        }*/
                                     }
                                     mapLandingData[if (i == 0) GENDER_WOMEN else if (i == 1) GENDER_MEN else GENDER_KIDS] =
                                         parsedContent

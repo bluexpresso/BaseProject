@@ -1,11 +1,13 @@
 package com.idslogic.levelshoes.ui.home.landing
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +37,7 @@ class SliderItemFragment : Fragment() {
         super.onCreate(savedInstanceState)
         enterTransition = Fade()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,16 +61,19 @@ class SliderItemFragment : Fragment() {
         val videoStatus = videoContent?.status ?: 0
         val imageStatus = imageContent?.status ?: 0
         val activeContent =
-            if (videoStatus == imageStatus || videoStatus == 1) videoContent else imageContent
+            if (videoStatus == imageStatus || imageStatus == 1) imageContent else videoContent
         activeContent?.let {
             val mediaUrl = it.url
+            val placeHolderColor = ContextCompat.getColor(requireContext(), R.color.gray_38)
             if (mediaUrl.endsWith(".gif")) {
                 GlideApp.with(requireContext()).asGif()
                     .load(mediaUrl)
+                    .placeholder(ColorDrawable(placeHolderColor))
                     .into(binding.gifMedia)
             } else {
                 GlideApp.with(requireContext())
                     .load(mediaUrl)
+                    .placeholder(ColorDrawable(placeHolderColor))
                     .into(binding.gifMedia)
             }
             val buttonContent =
@@ -105,13 +111,20 @@ class SliderItemFragment : Fragment() {
                     )
                 } catch (e: Exception) {
                 }
+                binding.subHeading.text = subHdngElement.content
             }
             buttonContent?.let { btnContent ->
                 binding.btnAction.visibility = View.VISIBLE
                 try {
+                    binding.btnAction.setBackgroundColor(
+                        Color.parseColor(
+                            btnContent.backgroundColor ?: "#000000"
+                        )
+                    )
                     binding.btnAction.setTextColor(
                         Color.parseColor(
-                            btnContent.foregroundColor ?: buttonTextContent?.foregroundColor ?: "#000000"
+                            btnContent.foregroundColor ?: buttonTextContent?.foregroundColor
+                            ?: "#000000"
                         )
                     )
                 } catch (e: Exception) {

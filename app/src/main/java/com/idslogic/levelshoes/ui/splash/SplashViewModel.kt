@@ -88,5 +88,15 @@ class SplashViewModel @ViewModelInject constructor(
         }
     }
 
+   suspend fun getAttributes(): MutableLiveData<Resource<Boolean>> {
+        val liveData = MutableLiveData<Resource<Boolean>>()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                liveData.postValue(configurationRepository.getAttributes())
+            }
+        }
+        return liveData
+    }
+
     fun isOnboardingDone() = configurationRepository.isOnboardingCompleted()
 }

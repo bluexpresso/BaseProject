@@ -49,7 +49,7 @@ class ConfigurationRepository(
 
     fun getSelectedGender() = appCache.getSelectedGender()
     fun isOnboardingCompleted() = appCache.isOnboardingCompleted()
-    fun getLandingProducts(productIds: ArrayList<String>): Resource<ArrayList<BaseModel.Hit<Product>>> {
+    fun getLandingProducts(gender:String,productIds: List<String>): Resource<ArrayList<BaseModel.Hit<Product>>> {
         val response = api.getLandingProducts(
             APIUrl.getLandingProducts(
                 getStoreCode(
@@ -57,7 +57,7 @@ class ConfigurationRepository(
                     appCache.getSelectedLanguage()
                 )
             ),
-            RequestBuilder.buildLandingProductSearchRequest(productIds)
+            RequestBuilder.buildLandingProductSearchRequest(gender,productIds)
         ).execute()
         return if (response.isSuccessful && !response.body()?.hits?.hits.isNullOrEmpty()) {
             Resource.success(response.body()?.hits?.hits, response.code())
@@ -100,4 +100,29 @@ class ConfigurationRepository(
     fun deleteLandingData(gender: String) {
         appDatabase.getLandingDao().deleteData(gender)
     }
+
+    fun getAttributes(): Resource<Boolean> {
+        val response =
+            api.getAttributes(APIUrl.getAttributes(), RequestBuilder.getAttributeRequestBody())
+                .execute()
+        if (response.isSuccessful) {
+            response.body()?.let {
+                it.getAsJsonObject(JSON_FIELD_HITS).getAsJsonArray(JSON_FIELD_HITS)[0].asJsonObject.getAsJsonObject(
+                    JSON_FIELD_SOURCE).getAsJsonArray(JSON_FIELD_OPTIONS)
+                ?.asJsonArray?.let { jsonArray ->
+                    appDatabase.getConfigurationDao().insertAttributes(
+                        Gson().fromJson(
+                            jsonArray,
+                            object : TypeToken<ArrayList<Attribute>>() {}.type
+                        )
+                                as ArrayList<Attribute>
+                    )
+                }
+            }
+
+        }
+        return Resource.success(true, response.code())
+    }
+
+    fun getManufacturerName(value: Long) = appDatabase.getConfigurationDao().getLabel(value)
 }

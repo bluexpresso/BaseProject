@@ -13,7 +13,7 @@
         android:background="@color/white"
         android:padding="@dimen/spacing_24">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.idslogic.levelshoes.custom.ParallaxImageView
             android:id="@+id/box_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,23 +33,26 @@
             android:layout_marginBottom="@dimen/spacing_24"
             android:insetLeft="0dp"
             android:insetTop="0dp"
-            android:visibility="gone"
             android:insetRight="0dp"
             android:insetBottom="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/box_title"
-            style="@style/TextHeading3"
-            android:layout_width="wrap_content"
+            style="@style/TextHeading1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_24"
-            android:visibility="gone"
             android:layout_marginBottom="@dimen/spacing_16"
             android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="viewStart"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/box_action_button"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="WHATS NEW" />
+            tools:text="WHATS NEW"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

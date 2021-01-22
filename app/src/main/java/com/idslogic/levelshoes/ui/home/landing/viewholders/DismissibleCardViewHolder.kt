@@ -1,5 +1,8 @@
 package com.idslogic.levelshoes.ui.home.landing.viewholders
 
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.UnderlineSpan
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.idslogic.levelshoes.R
@@ -13,13 +16,15 @@ class DismissibleCardViewHolder(private val binding: ViewDismissibleCardBinding)
         binding.actionBtnOne.visibility = View.VISIBLE
         binding.title.text = content.title
         binding.description.text = content.subTitle
-        binding.actionBtnOne.text = binding.root.context.getString(R.string.lets_go)
-        binding.iconClose.setOnClickListener {
-
-        }
-        binding.actionBtnOne.setOnClickListener {
-
-        }
+        val spannableString = SpannableString(binding.root.context.getString(R.string.sign_in))
+        val signInText = binding.root.context.getString(R.string.sign_in)
+        spannableString.setSpan(
+            UnderlineSpan(),
+            0,
+            signInText.length,
+            Spanned.SPAN_INCLUSIVE_INCLUSIVE
+        )
+        binding.actionBtnOne.text = spannableString
     }
 
     fun getCloseButton() = binding.iconClose

@@ -1,7 +1,9 @@
 package com.idslogic.levelshoes.utils
 
+import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.idslogic.levelshoes.network.APIUrl
 
 class RequestBuilder {
@@ -166,7 +168,7 @@ class RequestBuilder {
             return json
         }
 
-        fun buildLandingProductSearchRequest(productIds: ArrayList<String>?): JsonObject {
+        fun buildLandingProductSearchRequest(gender: String,productIds: List<String>?): JsonObject {
             val parentJson = JsonObject()
             parentJson.addProperty("size", 5)
             parentJson.addProperty("from", 0)
@@ -181,7 +183,7 @@ class RequestBuilder {
             val boolJson = JsonObject()
 
             /*bool json*/
-            val mustJson = getMustJsonArray(GENDER_WOMEN)
+            val mustJson = getMustJsonArray(gender)
             val sku = JsonArray()
             productIds?.forEach {
                 sku.add(it)
@@ -239,7 +241,7 @@ class RequestBuilder {
                         else -> GENDER_ID_KIDS
                     }
                 )
-                matchConfigurableGenderParent.add("match", matchConfigurableGender)
+//                matchConfigurableGenderParent.add("match", matchConfigurableGender)
                 mustJsonArray.add(matchConfigurableGenderParent)
             }
             val matchTypeIdParent = JsonObject()
@@ -255,5 +257,9 @@ class RequestBuilder {
             mustJsonArray.add(matchTypeIdParent)
             return mustJsonArray
         }
+
+        fun getAttributeRequestBody() = JsonParser.parseString(
+            "{\"_source\":\"options\",\"query\":{\"bool\":{\"must\":[{\"match\":{\"attribute_code\":\"manufacturer\"}}]}}}"
+        ).asJsonObject
     }
 }

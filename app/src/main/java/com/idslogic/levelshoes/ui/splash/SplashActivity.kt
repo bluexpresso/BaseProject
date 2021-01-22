@@ -1,13 +1,11 @@
 package com.idslogic.levelshoes.ui.splash
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.idslogic.levelshoes.App
-import com.idslogic.levelshoes.ui.BaseActivity
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.network.Status.*
+import com.idslogic.levelshoes.ui.BaseActivity
 import com.idslogic.levelshoes.ui.MainActivity
 import com.idslogic.levelshoes.ui.onboarding.OnboardingActivity
 import com.idslogic.levelshoes.utils.*
@@ -24,6 +22,7 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(SplashViewModel::class.java)
         checkVersion()
+        getAttributes()
         viewModel.versionInfoLiveData.observe(this@SplashActivity, {
             when (it.status) {
                 LOADING -> {
@@ -43,6 +42,12 @@ class SplashActivity : BaseActivity() {
                 }
             }
         })
+    }
+
+    private fun getAttributes() {
+        GlobalScope.launch {
+            viewModel.getAttributes()
+        }
     }
 
 

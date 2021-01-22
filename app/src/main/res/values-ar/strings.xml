@@ -39,4 +39,6 @@
     <string name="shipping_and_returns"><![CDATA[Shipping & Returns]]></string>
     <string name="active_filters">Active Filters</string>
     <string name="sort_by">Sort by</string>
+    <string name="sign_in">Sign in</string>
+    <string name="view_all_collection">View all collection</string>
 </resources>

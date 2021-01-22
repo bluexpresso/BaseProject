@@ -35,18 +35,20 @@ class AdditionalProductsViewHolder(
                 binding.root
             ) {
             fun bind() {
-                GlideApp.with(binding.productImage)
-                    .load("https://raw.githubusercontent.com/bluexpresso/Pashu-Pakshi/gh-pages/g3184115ricgsv-glgz_1.jpg")
-                    .into(binding.productImage)
-                binding.name.text = products!![adapterPosition].source?.name
-                binding.brand.text = products!![adapterPosition].source?.name
-                binding.price.text =
-                    String.format(
-                        "%d%s",
-                        products!![adapterPosition].source?.finalPrice,
-                        selectedCurrency
-                    )
-                binding.serialNumber.text = "0${adapterPosition + 1}"
+                products!![adapterPosition].source?.let { product->
+                    GlideApp.with(binding.productImage)
+                        .load(product.displayableImage)
+                        .into(binding.productImage)
+                    binding.name.text = product.name
+                    binding.brand.text = product.manufacturerName
+                    binding.price.text =
+                        String.format(
+                            "%d%s",
+                            product.finalPrice,
+                            selectedCurrency
+                        )
+                    binding.serialNumber.text = "0${adapterPosition + 1}"
+                }
                 binding.root.setOnClickListener {
                     onProductSelected?.invoke(products!![adapterPosition],binding.productImage)
                 }

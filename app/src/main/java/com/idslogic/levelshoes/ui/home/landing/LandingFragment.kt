@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.idslogic.levelshoes.R
@@ -95,7 +94,7 @@ class LandingFragment : BaseFragment() {
     }
 
     private fun initData() {
-        landingListAdapter = LandingListAdapter(requireActivity())
+        landingListAdapter = LandingListAdapter(requireActivity(),)
         activityViewModel.landingLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 LOADING -> {

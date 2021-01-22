@@ -102,6 +102,11 @@
         <item name="android:letterSpacing">0.0</item>
         <!--        <item name="lineHeight">24dp</item>-->
     </style>
+    <style name="TabTextAppearance" parent="TextBodySmallRegular">
+        <item name="android:letterSpacing">0.093</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 
     <style name="TextBody" parent="LightText">
         <item name="android:textSize">18sp</item>

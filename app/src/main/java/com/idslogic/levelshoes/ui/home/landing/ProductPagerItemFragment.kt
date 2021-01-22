@@ -50,7 +50,7 @@ class ProductPagerItemFragment : Fragment() {
             .load("https://raw.githubusercontent.com/bluexpresso/Pashu-Pakshi/gh-pages/g3184115ricgsv-glgz_1.jpg")
             .into(binding.productImage)
         binding.name.text = viewModel.product.source?.name
-        binding.brand.text = viewModel.product.source?.name
+        binding.brand.text = viewModel.product.source?.manufacturerName
         binding.price.text =
             String.format("%d%s", viewModel.product.source?.finalPrice, viewModel.getCurrency())
     }

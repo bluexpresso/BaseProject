@@ -22,7 +22,8 @@
     <string name="shopping_bag">Shopping Bag</string>
     <string name="account">Account</string>
     <string name="register_sign_in">Register or Sign in</string>
-    <string name="register_sign_in_description">For a more enjoyable experience, faster shopping and tailored recommendations.</string>
+    <string name="sign_in">Sign in</string>
+    <string name="register_sign_in_description">New to Level Shoes? Create an account by clicking below.</string>
     <string name="lets_go">Let\'s go</string>
     <string name="not_available">N/A</string>
     <string name="filters">Filters</string>
@@ -39,4 +40,5 @@
     <string name="shipping_and_returns"><![CDATA[Shipping & Returns]]></string>
     <string name="active_filters">Active Filters</string>
     <string name="sort_by">Sort by</string>
+    <string name="view_all_collection">View all collection</string>
 </resources>
