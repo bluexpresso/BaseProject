@@ -32,7 +32,7 @@ fun getPreferredLanguage(context: Context?): String {
     if (userSelectedLanguage.isEmpty()) {
         val systemLanguage = Locale.getDefault().language
         userSelectedLanguage =
-            if (systemLanguage == LANGUAGE_ENGLISH) LANGUAGE_ENGLISH else LANGUAGE_ARABIC
+            if (systemLanguage == LANGUAGE_ARABIC) LANGUAGE_ARABIC else LANGUAGE_ENGLISH
         savePreferredLanguage(
             context,
             userSelectedLanguage

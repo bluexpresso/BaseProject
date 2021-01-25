@@ -12,7 +12,8 @@ import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.VIEW_ALL_COLLECTION
 
 class LandingProductPagerAdapter(
-    private val onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?
+    private val onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?,
+    private val selectedCurrency: String?
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -55,9 +56,9 @@ class LandingProductPagerAdapter(
                 binding.brand.text = product.manufacturerName
                 binding.price.text =
                     String.format(
-                        "%d%s",
+                        "%d %s",
                         product.finalPrice,
-                        "AED"
+                        selectedCurrency
                     )
             }
             binding.productImage.setOnClickListener {

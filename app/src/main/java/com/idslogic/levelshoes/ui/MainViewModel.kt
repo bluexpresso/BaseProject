@@ -164,7 +164,7 @@ class MainViewModel @ViewModelInject constructor(
         if (contentList.size > 1 && appCache.getAuthToken().isEmpty()) {
             contentList.add(
                 1, Content(
-                    BOX_TYPE_REGISTER_SIGN_IN, 1, context.getString(R.string.register_sign_in),
+                    BOX_TYPE_REGISTER_SIGN_IN, 1, context.getString(R.string.sign_in_to_account),
                     context.getString(R.string.register_sign_in_description), 0, null, null, null
                 )
             )

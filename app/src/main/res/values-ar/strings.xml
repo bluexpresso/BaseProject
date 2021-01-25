@@ -3,11 +3,11 @@
     <string name="choose_a_country">اختر دولة</string>
     <string name="enable_notifications_to_stay_up_to_date_on_latest_collections_and_offers">قم بتفعيل الإشعارات للبقاء على اطلاع دائم بأحدث التشكيلات والعروض</string>
     <string name="text_continue">متابعة</string>
-    <string name="no_internet">No Internet</string>
+    <string name="no_internet">لا يوجد اتصال بالإنترنت</string>
     <string name="no_internet_message">.يبدو أنك غير متصل بالإنترنت</string>
     <string name="retry">إعادة المحاولة</string>
-    <string name="common_error_text">Something is not right</string>
-    <string name="could_not_load_page">The page couldn\'t be loaded because of a technical problem</string>
+    <string name="common_error_text">حدث خطأ ما</string>
+    <string name="could_not_load_page">.تعذر تحميل الصفحة بسبب مشكلة فنية</string>
     <string name="try_again">حاول مرة أخرى</string>
     <string name="go_to_homepage">الذهاب إلى الصفحة الرئيسية</string>
     <string name="women">للنساء</string>
@@ -17,7 +17,7 @@
     <string name="skip_intro">تخطي المقدمة</string>
     <string name="select_a_country">اختر دولة</string>
     <string name="register_sign_in">Register or Sign in</string>
-    <string name="register_sign_in_description">For a more enjoyable experience, faster shopping and tailored recommendations.</string>
+    <string name="register_sign_in_description">!استمتع بعملية دفع أسرع وأسهل وتتبع طلباتك وغير ذلك الكثير</string>
     <string name="lets_go">هيا بنا</string>
     <string name="home">Home</string>
     <string name="AZ">a_z</string>
@@ -39,6 +39,7 @@
     <string name="shipping_and_returns"><![CDATA[Shipping & Returns]]></string>
     <string name="active_filters">Active Filters</string>
     <string name="sort_by">Sort by</string>
-    <string name="sign_in">Sign in</string>
-    <string name="view_all_collection">View all collection</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="view_all_collection">عرض جميع التشكيلات</string>
+    <string name="sign_in_to_account">تسجيل حساب أو تسجيل الدخول</string>
 </resources>

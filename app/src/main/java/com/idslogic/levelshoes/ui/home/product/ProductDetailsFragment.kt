@@ -66,7 +66,7 @@ class ProductDetailsFragment : Fragment() {
     private fun initProductDetails(binding: FragmentProductDetailsBinding) {
         binding.name.text = viewModel.product.source?.name
         binding.price.text = String.format(
-            "%d%s",
+            "%d %s",
             viewModel.product.source?.finalPrice,
             "AED"
         )

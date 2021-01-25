@@ -52,6 +52,6 @@ class ProductPagerItemFragment : Fragment() {
         binding.name.text = viewModel.product.source?.name
         binding.brand.text = viewModel.product.source?.manufacturerName
         binding.price.text =
-            String.format("%d%s", viewModel.product.source?.finalPrice, viewModel.getCurrency())
+            String.format("%d %s", viewModel.product.source?.finalPrice, viewModel.getCurrency())
     }
 }

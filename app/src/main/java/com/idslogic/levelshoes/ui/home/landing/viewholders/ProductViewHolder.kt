@@ -15,7 +15,10 @@ import com.idslogic.levelshoes.ui.home.landing.LandingProductPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class ProductViewHolder(private val binding: ItemLandingProductViewBinding) :
+class ProductViewHolder(
+    private val binding: ItemLandingProductViewBinding,
+    private val selectedCurrency: String
+) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
         activity: FragmentActivity,
@@ -46,7 +49,7 @@ class ProductViewHolder(private val binding: ItemLandingProductViewBinding) :
                 }
             }
         }
-        val pagerAdapter = LandingProductPagerAdapter(onProductSelected)
+        val pagerAdapter = LandingProductPagerAdapter(onProductSelected, selectedCurrency)
         binding.productsPager.adapter = pagerAdapter
         pagerAdapter.setItems(content.productsList)
         TabLayoutMediator(

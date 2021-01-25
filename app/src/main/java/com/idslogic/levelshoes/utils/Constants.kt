@@ -5,6 +5,7 @@ const val GENDER_WOMEN = "mobileapp_landing_women"
 const val GENDER_KIDS = "mobileapp_landing_kids"
 const val LANGUAGE_ENGLISH = "en"
 const val LANGUAGE_ARABIC = "ar"
+const val DEFAULT_STARTUP_LANGUAGE = LANGUAGE_ENGLISH
 const val CONTENT_TYPE_VIDEO = "video"
 const val CONTENT_TYPE_IMAGE = "image"
 const val CONTENT_TYPE_BUTTON = "button"
@@ -34,6 +35,7 @@ const val VIEW_ALL_COLLECTION = "View all collection"
 const val IMAGE_URL = "https://staging-levelshoes-m2.vaimo.net/media/catalog/product"
 fun getStoreCode(country: String?, selectedLanguage: String) =
     MAGNETO.plus("_").plus(country ?: DEFAULT_COUNTRY).plus("_").plus(selectedLanguage)
+
 val productFields = arrayOf(
     "name",
     "final_price",

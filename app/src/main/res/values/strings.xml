@@ -22,6 +22,7 @@
     <string name="shopping_bag">Shopping Bag</string>
     <string name="account">Account</string>
     <string name="register_sign_in">Register or Sign in</string>
+    <string name="sign_in_to_account">Sign in to your account</string>
     <string name="sign_in">Sign in</string>
     <string name="register_sign_in_description">New to Level Shoes? Create an account by clicking below.</string>
     <string name="lets_go">Let\'s go</string>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <merge
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/media_image"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_56"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@id/btn"
+            app:layout_constraintEnd_toEndOf="@id/btn"
+            app:layout_constraintStart_toStartOf="@id/btn"
+            app:layout_constraintTop_toTopOf="@id/btn"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn"
+            style="@style/MediaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/spacing_56"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Shop Now to explore a " />
+    </merge>
+</layout>

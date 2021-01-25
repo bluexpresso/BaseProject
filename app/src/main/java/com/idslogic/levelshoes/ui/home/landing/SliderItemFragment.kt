@@ -129,7 +129,12 @@ class SliderItemFragment : Fragment() {
                     )
                 } catch (e: Exception) {
                 }
-                binding.btnAction.text = btnContent.content ?: buttonTextContent?.content ?: ""
+                if (buttonTextContent?.content.isNullOrEmpty() && btnContent.content.isNullOrEmpty()) {
+                    binding.btnAction.visibility = View.GONE
+                } else {
+                    binding.btnAction.visibility = View.VISIBLE
+                    binding.btnAction.text = btnContent.content ?: buttonTextContent?.content ?: ""
+                }
             }
         }
     }

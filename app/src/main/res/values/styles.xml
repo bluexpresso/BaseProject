@@ -41,6 +41,19 @@
         <!--        <item name="lineHeight">20dp</item>-->
     </style>
 
+    <style name="MediaButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="rippleColor">@color/primaryButtonPressed</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="font">@font/regular</item>
+        <item name="fontFamily">@font/regular</item>
+        <item name="android:letterSpacing">0.107</item>
+        <!--        <item name="lineHeight">20dp</item>-->
+    </style>
+
     <style name="PrimaryButtonOnDark" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/primary_button_on_dark_tint_states</item>
         <item name="android:textColor">@color/primary_button_on_dark_text_colors</item>
@@ -102,6 +115,7 @@
         <item name="android:letterSpacing">0.0</item>
         <!--        <item name="lineHeight">24dp</item>-->
     </style>
+
     <style name="TabTextAppearance" parent="TextBodySmallRegular">
         <item name="android:letterSpacing">0.093</item>
         <item name="textAllCaps">true</item>

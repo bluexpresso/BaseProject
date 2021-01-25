@@ -19,4 +19,6 @@
     <dimen name="plp_image_dimension">140dp</dimen>
     <dimen name="spacing_4">4dp</dimen>
     <dimen name="spacing_60">60dp</dimen>
+    <dimen name="slider_action_button_independent_margin_top">396dp</dimen>
+    <dimen name="spacing_box_heading_gone_margin_bottom">88dp</dimen>
 </resources>

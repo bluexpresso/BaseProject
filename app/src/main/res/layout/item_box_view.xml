@@ -39,6 +39,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <com.idslogic.levelshoes.custom.MediaButton
+            android:id="@+id/box_action_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_24"
+            android:layout_marginBottom="@dimen/spacing_24"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/box_title"
             style="@style/TextHeading1"
@@ -46,12 +61,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_24"
             android:layout_marginBottom="@dimen/spacing_16"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
             android:textAlignment="viewStart"
+            android:textColor="@color/white"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/box_action_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_goneMarginBottom="@dimen/spacing_box_heading_gone_margin_bottom"
             tools:text="WHATS NEW"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>

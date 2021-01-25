@@ -85,7 +85,7 @@ class LandingListAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),selectedCurrency
             )
         }
         if (viewType == viewTypeAdditionalProductsView) {

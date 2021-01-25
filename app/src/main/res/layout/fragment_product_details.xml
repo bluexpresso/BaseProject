@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:leftIcon="@drawable/ic_arrow_left_alt_24dp_black"
-            app:rightIcon="@drawable/ic_baseline_bookmark_border_24" />
+            app:rightIcon="@drawable/ic_wishlist_black_24dp" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/images"

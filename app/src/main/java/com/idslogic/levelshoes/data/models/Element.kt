@@ -15,7 +15,7 @@ data class Element(
     var backgroundColor: String?,
     @Expose
     @SerializedName("background-image")
-    var bakcgroundImage: String,
+    var backgroundImage: String,
     @Expose
     @SerializedName("foreground-color")
     var foregroundColor: String?,

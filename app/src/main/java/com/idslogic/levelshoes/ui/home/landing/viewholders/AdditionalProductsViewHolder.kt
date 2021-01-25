@@ -43,7 +43,7 @@ class AdditionalProductsViewHolder(
                     binding.brand.text = product.manufacturerName
                     binding.price.text =
                         String.format(
-                            "%d%s",
+                            "%d %s",
                             product.finalPrice,
                             selectedCurrency
                         )
