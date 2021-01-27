@@ -191,11 +191,19 @@ class LandingListAdapter(
 
     override fun getItemCount() = landingItems.size
 
-    fun setItems(mapItems: HashMap<String, ArrayList<Content>>?) {
+    fun setItems(mapItems: HashMap<String, ArrayList<Content>>?, selectedGender: String) {
         if (mapItems == null) return
         this.mapItems = mapItems
         landingItems.clear()
-        landingItems.addAll(mapItems[GENDER_WOMEN] ?: arrayListOf())
+        landingItems.addAll(
+            when (selectedGender) {
+                GENDER_WOMEN -> mapItems[GENDER_WOMEN] ?: arrayListOf()
+                GENDER_MEN -> mapItems[GENDER_MEN]
+                    ?: arrayListOf()
+                else -> mapItems[GENDER_KIDS] ?: arrayListOf()
+            }
+        )
+        currentSelectedTab = selectedGender
         notifyDataSetChanged()
     }
 

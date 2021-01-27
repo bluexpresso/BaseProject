@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.idslogic.levelshoes.data.models.Content
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.data.repositories.OnboardingRepository
+import com.idslogic.levelshoes.utils.GENDER_WOMEN
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,6 +21,7 @@ class LandingViewModel @ViewModelInject constructor(
 ) : AndroidViewModel(application) {
 
     fun getSelectedCurrency() = onboardingRepository.getSelectedCountry().currency ?: "AED"
+    fun getSelectedGender() = onboardingRepository.getSelectedGender()?: GENDER_WOMEN
     fun updateCachedLandingData(mapItems: HashMap<String, ArrayList<Content>>) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {

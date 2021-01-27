@@ -106,7 +106,7 @@ class LandingFragment : BaseFragment() {
                         LinearLayoutManager.VERTICAL, false
                     )
                     list_landing.adapter = landingListAdapter
-                    landingListAdapter.setItems(it?.data)
+                    landingListAdapter.setItems(it?.data,viewModel.getSelectedGender())
                 }
                 ERROR -> {
 
