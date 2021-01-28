@@ -16,7 +16,7 @@ interface API {
     fun getOnboardingData(@Url url: String): Call<OnboardingResponse>
 
     @POST
-    fun getLandingProducts(@Url url: String, @Body request: JsonObject): Call<BaseModel<Product>>
+    fun getProducts(@Url url: String, @Body request: JsonObject): Call<BaseModel<Product>>
 
     @POST
     fun getCategoryProducts(
@@ -26,5 +26,14 @@ interface API {
     ): Call<ListingProductResponse>
 
     @POST
-    fun getAttributes(@Url url: String,@Body request:JsonObject): Call<JsonObject>
+    fun getAttributes(@Url url: String, @Body request: JsonObject): Call<JsonObject>
+
+    @GET
+    fun getCategoryDetailFromId(@Url url: String): Call<BaseModel.Hit<CategoryResponse>>
+
+    @GET
+    fun getCategoryBasedProductsFromKlevuIdSearch(
+        @Url url: String,
+        @QueryMap(encoded = false) queryMap: HashMap<String, String>
+    ): Call<ListingProductResponse>
 }

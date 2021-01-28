@@ -17,6 +17,7 @@ import com.idslogic.levelshoes.network.Status
 import com.idslogic.levelshoes.network.Status.*
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
+import com.idslogic.levelshoes.utils.ARG_CATEGORY_ID
 import com.idslogic.levelshoes.utils.CustomToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 class ProductListFragment : BaseFragment() {
     val activityViewModel: MainViewModel by activityViewModels()
     lateinit var viewModel: ProductListViewModel
-    val productListAdapter = ProductListAdapter()
+    lateinit var productListAdapter : ProductListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,21 +36,38 @@ class ProductListFragment : BaseFragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_product_list, container, false)
                     as FragmentProductListBinding
         viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
+        getArgs()
         initToolbar(binding.toolbar)
         initProducts(binding)
+        initCategory(binding)
         return binding.root
     }
 
+    private fun initCategory(binding: FragmentProductListBinding) {
+        viewModel.categoryIdLiveData.observe(viewLifecycleOwner, {
+            if (it > 0) {
+                lifecycleScope.launch {
+                    viewModel.getProductsFromCategory()
+                }
+            }
+        })
+    }
+
+    private fun getArgs() {
+        viewModel.categoryIdLiveData.value = arguments?.getInt(ARG_CATEGORY_ID, 0)
+    }
+
     private fun initProducts(binding: FragmentProductListBinding) {
+        productListAdapter = ProductListAdapter(viewModel.getSelectedCurrency())
         binding.viewProducts.adapter = productListAdapter
-        viewModel.productsList.observe(viewLifecycleOwner, {
+        viewModel.productsLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 LOADING -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-                    productListAdapter.setItems(it.data?.result)
+                    productListAdapter.setItems(it.data)
                     binding.viewProducts.layoutAnimation = AnimationUtils.loadLayoutAnimation(
                         requireContext(),
                         R.anim.product_list_animation
@@ -62,9 +80,6 @@ class ProductListFragment : BaseFragment() {
 
             }
         })
-        lifecycleScope.launch {
-            viewModel.getCategoryProducts("")
-        }
     }
 
     private fun initToolbar(toolbar: CustomToolbar) {

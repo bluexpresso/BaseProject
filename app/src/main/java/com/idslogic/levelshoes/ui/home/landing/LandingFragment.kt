@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -22,6 +23,7 @@ import com.idslogic.levelshoes.network.Status.*
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.ui.home.product.ProductDetailsFragment.Companion.ARG_PRODUCT
+import com.idslogic.levelshoes.utils.ARG_CATEGORY_ID
 import com.idslogic.levelshoes.utils.BOX_TYPE_REGISTER_SIGN_IN
 import com.idslogic.levelshoes.utils.LandingLinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,7 +75,9 @@ class LandingFragment : BaseFragment() {
 
     private fun initProductListNavigation(binding: FragmentLandingBinding) {
         landingListAdapter.onViewAllProducts = {
-            findNavController().navigate(R.id.nav_from_home_to_product_list)
+            findNavController().navigate(R.id.nav_from_home_to_product_list, Bundle().apply {
+                putInt(ARG_CATEGORY_ID, it)
+            })
         }
     }
 
@@ -94,7 +98,7 @@ class LandingFragment : BaseFragment() {
     }
 
     private fun initData() {
-        landingListAdapter = LandingListAdapter(requireActivity(),)
+        landingListAdapter = LandingListAdapter(requireActivity())
         activityViewModel.landingLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 LOADING -> {
@@ -106,7 +110,7 @@ class LandingFragment : BaseFragment() {
                         LinearLayoutManager.VERTICAL, false
                     )
                     list_landing.adapter = landingListAdapter
-                    landingListAdapter.setItems(it?.data,viewModel.getSelectedGender())
+                    landingListAdapter.setItems(it?.data, viewModel.getSelectedGender())
                 }
                 ERROR -> {
 

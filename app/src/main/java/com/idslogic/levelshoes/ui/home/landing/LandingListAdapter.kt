@@ -85,7 +85,7 @@ class LandingListAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ),selectedCurrency
+                ), selectedCurrency
             )
         }
         if (viewType == viewTypeAdditionalProductsView) {
@@ -178,7 +178,7 @@ class LandingListAdapter(
         if (holder is ProductViewHolder) {
             holder.bind(activity, landingItems[position], onProductSelected)
             holder.getNextButton().setOnClickListener {
-                onViewAllProducts?.invoke("")
+                onViewAllProducts?.invoke(landingItems[position].categoryId)
             }
         }
         if (holder is AdditionalProductsViewHolder) {
@@ -223,6 +223,6 @@ class LandingListAdapter(
 
     var onDismissibleCardActioned: ((String) -> Unit)? = null
     var onDismissibleCardDismissed: ((String) -> Unit)? = null
-    var onViewAllProducts: ((Any) -> Unit)? = null
+    var onViewAllProducts: ((Int) -> Unit)? = null
     var onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)? = null
 }

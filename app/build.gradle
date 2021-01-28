@@ -50,6 +50,7 @@ android {
             dimension "primary"
             buildConfigField 'String', 'REST_ENDPOINT', '"https://staginges.levelshoes.com:9202/"'
             buildConfigField 'String', 'IMAGE_URL', '"https://staging-levelshoes-m2.vaimo.net/media/catalog/product"'
+            buildConfigField 'String', 'KLEVU_BASE', '"https://eucs18.ksearchnet.com/"'
 //            buildConfigField 'String', 'REST_ENDPOINT', '"https://lvles.levelshoes.com:9202/"'
         }
         qa {
@@ -57,18 +58,21 @@ android {
             dimension "primary"
             buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
             buildConfigField 'String', 'IMAGE_URL', '"https://staging-levelshoes-m2.vaimo.net/media/catalog/product"'
+            buildConfigField 'String', 'KLEVU_BASE', '"https://eucs18.ksearchnet.com/"'
         }
         uat {
             applicationId "com.staging.levelshoes"
             dimension "primary"
             buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
             buildConfigField 'String', 'IMAGE_URL', '"https://staging-levelshoes-m2.vaimo.net/media/catalog/product"'
+            buildConfigField 'String', 'KLEVU_BASE', '"https://eucs18.ksearchnet.com/"'
         }
         prod {
             applicationId "com.levelshoes"
             dimension "primary"
             buildConfigField 'String', 'REST_ENDPOINT', '"www.example.com"'
             buildConfigField 'String', 'IMAGE_URL', '"https://staging-levelshoes-m2.vaimo.net/media/catalog/product"'
+            buildConfigField 'String', 'KLEVU_BASE', '"https://lscs.ksearchnet.com/"'
         }
     }
 }

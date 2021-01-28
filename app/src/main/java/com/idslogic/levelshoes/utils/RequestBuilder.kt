@@ -168,7 +168,10 @@ class RequestBuilder {
             return json
         }
 
-        fun buildLandingProductSearchRequest(gender: String,productIds: List<String>?): JsonObject {
+        fun buildLandingProductSearchRequest(
+            gender: String,
+            productIds: List<String>?
+        ): JsonObject {
             val parentJson = JsonObject()
             parentJson.addProperty("size", 5)
             parentJson.addProperty("from", 0)
@@ -261,5 +264,69 @@ class RequestBuilder {
         fun getAttributeRequestBody() = JsonParser.parseString(
             "{\"_source\":\"options\",\"query\":{\"bool\":{\"must\":[{\"match\":{\"attribute_code\":\"manufacturer\"}}]}}}"
         ).asJsonObject
+
+        fun getCategoryBasedProductsQueryParams(
+            category: String
+        ): HashMap<String, String> {
+            return linkedMapOf<String, String>().apply {
+                put("category", "KLEVU_PRODUCT $category")
+                put("isCategoryNavigationRequest", "true")
+                put("sortOrder", "rel")
+                put("visibility", "search")
+                put("paginationStartsFrom", "0")
+                put("showOutOfStockProducts", "false")
+                put("ticket", "klevu-158358783414411589")
+                put("noOfResults", "1000")
+                put("enableMultiSelectFilters", "true")
+                put("resultForZero", "1")
+                put("enableFilters", "true")
+                put("responseType", "json")
+                put("term", "*")
+            }
+        }
+        fun buildCategoryBasedProductsSearchRequest(
+            productsFromPosition: Int,
+            productIds: List<String>?
+        ): JsonObject {
+            val parentJson = JsonObject()
+            parentJson.addProperty("size", 20)
+            parentJson.addProperty("from", productsFromPosition)
+
+            val queryParentJson = JsonObject()
+
+            val scoreJson = JsonObject()
+            val queryChildJson = JsonObject()
+            val scriptScoreJson = JsonObject()
+
+            /*query child json*/
+            val boolJson = JsonObject()
+
+            /*bool json*/
+            val mustJson = getMustJsonArray(null)
+            boolJson.add("must", mustJson)
+            queryChildJson.add("bool", boolJson)
+
+
+            /*script_score*/
+            val scriptJson = JsonObject()
+
+            val sortOrderArray = JsonArray()
+            productIds?.forEach {
+                sortOrderArray.add(it)
+            }
+            val paramsJson = JsonObject()
+            paramsJson.add("sortOrder", sortOrderArray)
+            scriptJson.add("params", paramsJson)
+            scriptJson.addProperty("inline", "params.sortOrder.indexOf((int)doc['id'].value)")
+            scriptScoreJson.add("script", scriptJson)
+
+            val sourceArray = getSourceArray(productFields)
+            scoreJson.add("query", queryChildJson)
+            scoreJson.add("script_score", scriptScoreJson)
+            queryParentJson.add("function_score", scoreJson)
+            parentJson.add("query", queryParentJson)
+            parentJson.add("_source", sourceArray)
+            return parentJson
+        }
     }
 }

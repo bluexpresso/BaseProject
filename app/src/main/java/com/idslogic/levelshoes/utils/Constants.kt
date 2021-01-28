@@ -20,6 +20,10 @@ const val BOX_TYPE_ADDITIONAL_PRODUCTS_VIEW = "additionalproduct_view"
 const val GENDER_ID_MEN = 39
 const val GENDER_ID_WOMEN = 61
 const val GENDER_ID_KIDS = 1610
+val GENDER_KIDS_ARRAY = hashMapOf(
+    Pair("KIDS", 1610),
+    Pair("BOYS", 88), Pair("GIRLS", 109), Pair("UNISEX", 1430)
+)
 const val SHORT_ANIMATION_DURATION = 300L
 const val MEDIUM_ANIMATION_DURATION = 500L
 const val LONG_ANIMATION_DURATION = 750L
@@ -33,6 +37,11 @@ const val JSON_FIELD_SOURCE = "_source"
 const val JSON_FIELD_OPTIONS = "options"
 const val VIEW_ALL_COLLECTION = "View all collection"
 const val IMAGE_URL = "https://staging-levelshoes-m2.vaimo.net/media/catalog/product"
+const val CATEGORY_MEN = "Men"
+const val CATEGORY_WOMEN = "Women"
+const val CATEGORY_KIDS = "Kids"
+const val CATEGORY_BOY = "Boy"
+const val CATEGORY_GIRL = "Girl"
 fun getStoreCode(country: String?, selectedLanguage: String) =
     MAGNETO.plus("_").plus(country ?: DEFAULT_COUNTRY).plus("_").plus(selectedLanguage)
 
