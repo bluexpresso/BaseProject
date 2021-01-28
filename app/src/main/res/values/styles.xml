@@ -4,26 +4,31 @@
     <style name="RegularText">
         <item name="fontFamily">@font/regular</item>
         <item name="font">@font/regular</item>
+        <item name="android:fontFamily">@font/regular</item>
     </style>
 
     <style name="BoldText">
         <item name="fontFamily">@font/bold</item>
         <item name="font">@font/bold</item>
+        <item name="android:fontFamily">@font/bold</item>
     </style>
 
     <style name="MediumText">
         <item name="fontFamily">@font/medium</item>
         <item name="font">@font/medium</item>
+        <item name="android:fontFamily">@font/medium</item>
     </style>
 
     <style name="ItalicText">
         <item name="fontFamily">@font/italic</item>
         <item name="font">@font/italic</item>
+        <item name="android:fontFamily">@font/italic</item>
     </style>
 
     <style name="LightText">
         <item name="fontFamily">@font/light</item>
         <item name="font">@font/light</item>
+        <item name="android:fontFamily">@font/light</item>
     </style>
 
     <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
@@ -37,6 +42,7 @@
         <item name="android:insetBottom">0dp</item>
         <item name="font">@font/regular</item>
         <item name="fontFamily">@font/regular</item>
+        <item name="android:fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
         <!--        <item name="lineHeight">20dp</item>-->
     </style>
@@ -50,6 +56,7 @@
         <item name="android:insetBottom">0dp</item>
         <item name="font">@font/regular</item>
         <item name="fontFamily">@font/regular</item>
+        <item name="android:fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
         <!--        <item name="lineHeight">20dp</item>-->
     </style>
@@ -65,6 +72,7 @@
         <item name="android:insetBottom">0dp</item>
         <item name="font">@font/regular</item>
         <item name="fontFamily">@font/regular</item>
+        <item name="android:fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
         <!--        <item name="lineHeight">20dp</item>-->
     </style>
@@ -82,6 +90,7 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="fontFamily">@font/regular</item>
+        <item name="android:fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
         <!--        <item name="lineHeight">20dp</item>-->
     </style>
@@ -97,6 +106,7 @@
         <item name="android:insetBottom">0dp</item>
         <item name="rippleColor">@color/secondaryButtonPressed</item>
         <item name="cornerRadius">1dp</item>
+        <item name="android:fontFamily">@font/regular</item>
         <item name="font">@font/regular</item>
         <item name="fontFamily">@font/regular</item>
         <item name="android:letterSpacing">0.107</item>
@@ -278,10 +288,13 @@
     <style name="DismissibleCardTitleStyle" parent="TextLabelBrandBig">
         <item name="android:letterSpacing">0.107</item>
         <item name="android:textColor">@color/textOnSurfaceReverse</item>
+        <item name="fontFamily">@font/medium</item>
+        <item name="android:fontFamily">@font/medium</item>
     </style>
 
     <style name="TertiaryButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="font">@font/regular</item>
+        <item name="android:fontFamily">@font/regular</item>
+        <item name="fontFamily">@font/regular</item>
         <!--        <item name="lineHeight">20dp</item>-->
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.107</item>

@@ -74,11 +74,14 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
             }
             headingContent?.let { heading ->
                 binding.boxTitle.visibility = View.VISIBLE
-                binding.boxTitle.setTextColor(
-                    Color.parseColor(
-                        heading.foregroundColor ?: "#FFFFFF"
+                try {
+                    binding.boxTitle.setTextColor(
+                        Color.parseColor(
+                            heading.foregroundColor ?: "#FFFFFF"
+                        )
                     )
-                )
+                } catch (e: Exception) {
+                }
                 binding.boxTitle.text = heading.content
             }
         }

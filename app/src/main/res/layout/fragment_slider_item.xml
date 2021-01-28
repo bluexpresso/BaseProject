@@ -64,14 +64,13 @@
             android:layout_marginStart="@dimen/spacing_24"
             android:layout_marginTop="@dimen/spacing_32"
             android:insetLeft="0dp"
+            android:fontFamily="@font/regular"
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.66"
+            app:layout_constraintTop_toBottomOf="@id/sub_heading"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
