@@ -104,12 +104,6 @@ class MainViewModel @ViewModelInject constructor(
                                                     )
                                                 if (!productResponse.data.isNullOrEmpty()) {
                                                     productResponse.data.forEach { product ->
-                                                        product.source?.manufacturer?.let { value ->
-                                                            product.source?.manufacturerName =
-                                                                configurationRepository.getManufacturerName(
-                                                                    value
-                                                                )
-                                                        }
                                                         if (mapProductImages[product.source?.sku].isNullOrEmpty()) {
                                                             product.source?.displayableImage =
                                                                 BuildConfig.IMAGE_URL.plus(

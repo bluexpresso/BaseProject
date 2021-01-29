@@ -35,8 +35,17 @@ data class Product(
     @SerializedName("manufacturer")
     var manufacturer: Long?,
     @Expose
-    @SerializedName("manufacturerName")
+    @SerializedName("manufacturer_label")
     var manufacturerName: String?,
+    @Expose
+    @SerializedName("country_of_manufacture_label")
+    var countryOfManufacturerLabel: String?,
+    @Expose
+    @SerializedName("size_label")
+    var sizeLabel: String?,
+    @Expose
+    @SerializedName("color_label")
+    var colorLabel: String?,
     @Expose
     @SerializedName("size_options")
     var sizeOptions: ArrayList<Int>?,
@@ -171,6 +180,9 @@ data class Product(
     var displayableImage: String?
 ) {
     constructor(name: String?) : this(
+        null,
+        null,
+        null,
         null,
         null,
         null,

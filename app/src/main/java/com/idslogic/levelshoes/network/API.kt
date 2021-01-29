@@ -2,6 +2,7 @@ package com.idslogic.levelshoes.network
 
 import com.google.gson.JsonObject
 import com.idslogic.levelshoes.data.models.*
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -17,6 +18,9 @@ interface API {
 
     @POST
     fun getProducts(@Url url: String, @Body request: JsonObject): Call<BaseModel<Product>>
+
+    @POST
+    suspend fun getProductsAsync(@Url url: String, @Body request: JsonObject): BaseModel<Product>
 
     @POST
     fun getCategoryProducts(

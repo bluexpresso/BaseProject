@@ -1,16 +1,22 @@
 package com.idslogic.levelshoes.data.repositories
 
+import androidx.lifecycle.LiveData
+import androidx.paging.*
 import com.idslogic.levelshoes.data.AppCache
 import com.idslogic.levelshoes.data.AppDatabase
 import com.idslogic.levelshoes.data.models.BaseModel
 import com.idslogic.levelshoes.data.models.CategoryResponse
 import com.idslogic.levelshoes.data.models.ListingProductResponse
 import com.idslogic.levelshoes.data.models.Product
+import com.idslogic.levelshoes.data.source.ProductListPagingDataSource
 import com.idslogic.levelshoes.network.API
 import com.idslogic.levelshoes.network.APIUrl
 import com.idslogic.levelshoes.utils.ProductListingRequestBuilder
 import com.idslogic.levelshoes.utils.RequestBuilder
 import com.idslogic.levelshoes.utils.getStoreCode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 import retrofit2.Call
 import retrofit2.Response
 
@@ -19,13 +25,7 @@ class ProductsRepository(
     private val appCache: AppCache,
     private val appDatabase: AppDatabase
 ) {
-//    fun getCategoryProduct(): Response<ListingProductResponse> {
-//        return api.getCategoryProducts(
-//            APIUrl.getCategoryProducts(),
-//            RequestBuilder.getQueryParamsForKlevuCategoryProducts(),
-//            RequestBuilder.buildKlevuCategoryProductsRequest("", 0, 100)
-//        ).execute()
-//    }
+    var productsPagerLiveData: LiveData<PagingData<BaseModel.Hit<Product>>>? = null
 
     fun getCategoryDetailsFromCategoryId(categoryId: Int): Response<BaseModel.Hit<CategoryResponse>> =
         api.getCategoryDetailFromId(
@@ -42,6 +42,17 @@ class ProductsRepository(
             APIUrl.getCategoryBasedProductsFromKlevuIdSearch(),
             RequestBuilder.getCategoryBasedProductsQueryParams(categoryId)
         ).execute()
+    }
+
+    fun initProductsPagerLiveDataSource(
+        categoryId: Int,
+        productIds: ArrayList<Long>,
+        scope: CoroutineScope
+    ) {
+        if (productsPagerLiveData == null)
+            productsPagerLiveData = Pager(PagingConfig(pageSize = 20)) {
+                ProductListPagingDataSource(api, appCache, categoryId, productIds)
+            }.liveData.cachedIn(scope)
     }
 
     fun getProducts(

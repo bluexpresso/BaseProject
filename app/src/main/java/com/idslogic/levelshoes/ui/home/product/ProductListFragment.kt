@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.databinding.FragmentProductListBinding
-import com.idslogic.levelshoes.network.Status
 import com.idslogic.levelshoes.network.Status.*
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 class ProductListFragment : BaseFragment() {
     val activityViewModel: MainViewModel by activityViewModels()
     lateinit var viewModel: ProductListViewModel
-    lateinit var productListAdapter : ProductListAdapter
+    lateinit var productListAdapter: ProductListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,26 +60,36 @@ class ProductListFragment : BaseFragment() {
     private fun initProducts(binding: FragmentProductListBinding) {
         productListAdapter = ProductListAdapter(viewModel.getSelectedCurrency())
         binding.viewProducts.adapter = productListAdapter
-        viewModel.productsLiveData.observe(viewLifecycleOwner, {
-            when (it.status) {
-                LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
+        viewModel.productIdsLiveData.observe(viewLifecycleOwner, {
+            if (!it.isNullOrEmpty()) {
+                lifecycleScope.launch {
+                    viewModel.getProductPagingLiveData(viewModel.categoryIdLiveData.value ?: -1)
+                        ?.observe(viewLifecycleOwner, { pagingData ->
+                            productListAdapter.submitData(lifecycle, pagingData)
+                        })
                 }
-                SUCCESS -> {
-                    binding.progressBar.visibility = View.GONE
-                    productListAdapter.setItems(it.data)
-                    binding.viewProducts.layoutAnimation = AnimationUtils.loadLayoutAnimation(
-                        requireContext(),
-                        R.anim.product_list_animation
-                    )
-                    binding.viewProducts.scheduleLayoutAnimation()
-                }
-                ERROR -> {
-                    binding.progressBar.visibility = View.GONE
-                }
-
             }
         })
+//        viewModel.productsLiveData.observe(viewLifecycleOwner, {
+//            when (it.status) {
+//                LOADING -> {
+//                    binding.progressBar.visibility = View.VISIBLE
+//                }
+//                SUCCESS -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    productListAdapter.setItems(it.data)
+//                    binding.viewProducts.layoutAnimation = AnimationUtils.loadLayoutAnimation(
+//                        requireContext(),
+//                        R.anim.product_list_animation
+//                    )
+//                    binding.viewProducts.scheduleLayoutAnimation()
+//                }
+//                ERROR -> {
+//                    binding.progressBar.visibility = View.GONE
+//                }
+//
+//            }
+//        })
     }
 
     private fun initToolbar(toolbar: CustomToolbar) {

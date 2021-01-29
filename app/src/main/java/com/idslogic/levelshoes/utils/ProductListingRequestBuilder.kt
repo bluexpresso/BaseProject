@@ -14,8 +14,12 @@ class ProductListingRequestBuilder {
             val request = JsonObject()
 
             val query = JsonObject()
-            query.add("function_score", buildFunctionScoreForKlevuCategoryProducts(category,
-            productIds))
+            query.add(
+                "function_score", buildFunctionScoreForKlevuCategoryProducts(
+                    category,
+                    productIds
+                )
+            )
 
             request.add("_source", getSourceArray())
             request.addProperty("size", 20)
@@ -25,7 +29,10 @@ class ProductListingRequestBuilder {
             return request
         }
 
-        private fun buildFunctionScoreForKlevuCategoryProducts(category: Int,productIds: ArrayList<Long>): JsonObject {
+        private fun buildFunctionScoreForKlevuCategoryProducts(
+            category: Int,
+            productIds: ArrayList<Long>
+        ): JsonObject {
             val functionScore = JsonObject()
             val query = JsonObject()
             val bool = JsonObject()
