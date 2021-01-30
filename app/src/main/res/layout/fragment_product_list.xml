@@ -29,13 +29,24 @@
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+        <com.idslogic.levelshoes.custom.ShimmerLoadingView
+            android:id="@+id/shimmer_loading_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingHorizontal="@dimen/spacing_16"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/view_products"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layoutAnimation="@anim/product_list_animation"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/spacing_16"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,11 +1,14 @@
 package com.idslogic.levelshoes.ui.home.product
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import com.idslogic.levelshoes.BuildConfig
+import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.models.BaseModel
 import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.databinding.ItemProductInListBinding
@@ -24,6 +27,21 @@ class ProductListAdapter(val currency: String) :
                 source.price?.let {
                     binding.price.text =
                         String.format(Locale.getDefault(), source.price!!, currency)
+                }
+
+                val badges = source.badgeName?.split(",")
+                if (badges.isNullOrEmpty()) {
+                    binding.viewTags.visibility = View.GONE
+                } else {
+                    badges.forEach { badge ->
+                        if(badge.isNotEmpty()){
+                            binding.viewTags.visibility = View.VISIBLE
+                            val chip = Chip(binding.viewTags.context)
+                            chip.setTextAppearance(R.style.TextLabelChip)
+                            chip.text = badge
+                            binding.viewTags.addView(chip)
+                        }
+                    }
                 }
                 GlideApp.with(binding.image)
                     .load(BuildConfig.IMAGE_URL.plus(source.image))

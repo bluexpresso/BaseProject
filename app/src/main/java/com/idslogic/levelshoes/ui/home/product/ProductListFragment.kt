@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.PagingData
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.databinding.FragmentProductListBinding
-import com.idslogic.levelshoes.network.Status.*
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.utils.ARG_CATEGORY_ID
@@ -46,6 +42,8 @@ class ProductListFragment : BaseFragment() {
     private fun initCategory(binding: FragmentProductListBinding) {
         viewModel.categoryIdLiveData.observe(viewLifecycleOwner, {
             if (it > 0) {
+                binding.shimmerLoadingView.visibility = View.VISIBLE
+                binding.viewProducts.visibility = View.GONE
                 lifecycleScope.launch {
                     viewModel.getProductsFromCategory()
                 }
@@ -62,6 +60,8 @@ class ProductListFragment : BaseFragment() {
         binding.viewProducts.adapter = productListAdapter
         viewModel.productIdsLiveData.observe(viewLifecycleOwner, {
             if (!it.isNullOrEmpty()) {
+                binding.shimmerLoadingView.visibility = View.GONE
+                binding.viewProducts.visibility = View.VISIBLE
                 lifecycleScope.launch {
                     viewModel.getProductPagingLiveData(viewModel.categoryIdLiveData.value ?: -1)
                         ?.observe(viewLifecycleOwner, { pagingData ->
