@@ -21,7 +21,7 @@ class LandingListAdapter(
     lateinit var selectedCurrency: String
     var landingItems = arrayListOf<Content>()
     var mapItems = HashMap<String, ArrayList<Content>>()
-    var currentSelectedTab = GENDER_WOMEN
+    var currentSelectedTab = ""
     var parent: RecyclerView? = null
 
     companion object {
@@ -141,7 +141,7 @@ class LandingListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is SliderViewHolder) {
-            holder.bind(activity, mapItems = mapItems)
+            holder.bind(activity, mapItems = mapItems,onViewAllProducts)
             this.onSliderPageChanged = holder.onSliderPageChanged
             holder.getSlider().unregisterOnPageChangeCallback(sliderPageChangedCallback)
             holder.getSlider().setCurrentItem(
@@ -173,16 +173,16 @@ class LandingListAdapter(
             }
         }
         if (holder is BoxViewHolder) {
-            holder.bind(landingItems[position])
+            holder.bind(landingItems[position],onViewAllProducts)
         }
         if (holder is ProductViewHolder) {
-            holder.bind(activity, landingItems[position], onProductSelected)
+            holder.bind(activity, landingItems[position], onProductSelected,onViewAllProducts)
             holder.getNextButton().setOnClickListener {
                 onViewAllProducts?.invoke(landingItems[position].categoryId)
             }
         }
         if (holder is AdditionalProductsViewHolder) {
-            holder.bind(landingItems[position], onProductSelected)
+            holder.bind(landingItems[position], onProductSelected,onViewAllProducts)
         }
         if (holder is NoContentViewHolder) {
             holder.bind()

@@ -23,8 +23,10 @@ class ProductViewHolder(
     fun bind(
         activity: FragmentActivity,
         content: Content,
-        onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?
-    ) {
+        onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?,
+        onViewAllProducts: ((Int) -> Unit)?,
+
+        ) {
         binding.contentSubtitle.text = content.subTitle ?: ""
         binding.contentTitle.text = content.title ?: ""
         if (!content.productsList.isNullOrEmpty()) {
@@ -49,9 +51,9 @@ class ProductViewHolder(
                 }
             }
         }
-        val pagerAdapter = LandingProductPagerAdapter(onProductSelected, selectedCurrency)
+        val pagerAdapter = LandingProductPagerAdapter(onViewAllProducts,onProductSelected, selectedCurrency)
         binding.productsPager.adapter = pagerAdapter
-        pagerAdapter.setItems(content.productsList)
+        pagerAdapter.setItems(content)
         TabLayoutMediator(
             binding.productTabs,
             binding.productsPager

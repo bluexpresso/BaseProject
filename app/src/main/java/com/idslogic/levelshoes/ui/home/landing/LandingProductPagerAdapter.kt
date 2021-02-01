@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.idslogic.levelshoes.data.models.BaseModel
+import com.idslogic.levelshoes.data.models.Content
 import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.databinding.ItemProductViewBinding
 import com.idslogic.levelshoes.databinding.ItemViewAllCollectionBinding
@@ -12,6 +13,7 @@ import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.VIEW_ALL_COLLECTION
 
 class LandingProductPagerAdapter(
+    private val onViewAllProducts: ((Int) -> Unit)?,
     private val onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?,
     private val selectedCurrency: String?
 ) :
@@ -21,6 +23,7 @@ class LandingProductPagerAdapter(
         const val VIEW_TYPE_VIEW_ALL_COLLECTION = 2
     }
 
+    private var categoryId: Int = -1
     var products: ArrayList<BaseModel.Hit<Product>>? = null
     override fun getItemCount() = products?.size ?: 0
     override fun getItemViewType(position: Int): Int {
@@ -31,8 +34,9 @@ class LandingProductPagerAdapter(
         return VIEW_TYPE_PRODUCT
     }
 
-    fun setItems(products: ArrayList<BaseModel.Hit<Product>>?) {
-        this.products = products
+    fun setItems(content: Content) {
+        this.categoryId = content.categoryId
+        this.products = content.productsList
         notifyDataSetChanged()
     }
 
@@ -40,7 +44,7 @@ class LandingProductPagerAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
             binding.root.setOnClickListener {
-
+                onViewAllProducts?.invoke(categoryId)
             }
         }
     }
@@ -48,7 +52,7 @@ class LandingProductPagerAdapter(
     inner class ViewHolder(private val binding: ItemProductViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            products!![adapterPosition].source?.let { product ->
+            products!![bindingAdapterPosition].source?.let { product ->
                 GlideApp.with(binding.productImage)
                     .load(product.displayableImage)
                     .into(binding.productImage)
@@ -62,7 +66,7 @@ class LandingProductPagerAdapter(
                     )
             }
             binding.productImage.setOnClickListener {
-                onProductSelected?.invoke(products!![adapterPosition], binding.productImage)
+                onProductSelected?.invoke(products!![bindingAdapterPosition], binding.productImage)
             }
         }
     }
@@ -86,6 +90,8 @@ class LandingProductPagerAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ViewHolder)
+            holder.bind()
+        else if (holder is ViewHolderViewAllCollection)
             holder.bind()
     }
 }

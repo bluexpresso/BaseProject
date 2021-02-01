@@ -24,6 +24,7 @@ import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.ui.home.product.ProductDetailsFragment.Companion.ARG_PRODUCT
 import com.idslogic.levelshoes.utils.ARG_CATEGORY_ID
+import com.idslogic.levelshoes.utils.ARG_GENDER
 import com.idslogic.levelshoes.utils.BOX_TYPE_REGISTER_SIGN_IN
 import com.idslogic.levelshoes.utils.LandingLinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,6 +41,13 @@ class LandingFragment : BaseFragment() {
     private lateinit var viewModel: LandingViewModel
     private val activityViewModel: MainViewModel by activityViewModels()
     private lateinit var landingListAdapter: LandingListAdapter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(LandingViewModel::class.java)
+        landingListAdapter = LandingListAdapter(requireActivity())
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,9 +82,10 @@ class LandingFragment : BaseFragment() {
     }
 
     private fun initProductListNavigation(binding: FragmentLandingBinding) {
-        landingListAdapter.onViewAllProducts = {
+        landingListAdapter.onViewAllProducts = { id ->
             findNavController().navigate(R.id.nav_from_home_to_product_list, Bundle().apply {
-                putInt(ARG_CATEGORY_ID, it)
+                putInt(ARG_CATEGORY_ID, id)
+                putString(ARG_GENDER, landingListAdapter.currentSelectedTab)
             })
         }
     }
@@ -98,7 +107,9 @@ class LandingFragment : BaseFragment() {
     }
 
     private fun initData() {
-        landingListAdapter = LandingListAdapter(requireActivity())
+        val genderToSelect =
+            if (landingListAdapter.landingItems.isNullOrEmpty()) viewModel.getSelectedGender()
+            else landingListAdapter.currentSelectedTab
         activityViewModel.landingLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 LOADING -> {
@@ -110,7 +121,7 @@ class LandingFragment : BaseFragment() {
                         LinearLayoutManager.VERTICAL, false
                     )
                     list_landing.adapter = landingListAdapter
-                    landingListAdapter.setItems(it?.data, viewModel.getSelectedGender())
+                    landingListAdapter.setItems(it?.data, genderToSelect)
                 }
                 ERROR -> {
 
@@ -118,10 +129,4 @@ class LandingFragment : BaseFragment() {
             }
         })
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LandingViewModel::class.java)
-    }
-
 }

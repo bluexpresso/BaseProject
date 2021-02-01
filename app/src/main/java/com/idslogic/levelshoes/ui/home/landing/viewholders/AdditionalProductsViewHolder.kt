@@ -16,14 +16,21 @@ class AdditionalProductsViewHolder(
     val selectedCurrency: String
 ) :
     RecyclerView.ViewHolder(binding.root) {
-    var onProductSelected: ((BaseModel.Hit<Product>,AppCompatImageView) -> Unit)? = null
-    fun bind(content: Content, onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?) {
+    var onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)? = null
+    fun bind(
+        content: Content,
+        onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?,
+        onViewAllProducts: ((Int) -> Unit)?
+    ) {
         this.onProductSelected = onProductSelected
         binding.contentSubtitle.text = content.subTitle ?: ""
         binding.contentTitle.text = content.title ?: ""
         val adapter = AdditionalProductsListAdapter()
         binding.productsList.adapter = adapter
         adapter.setItems(content.productsList)
+        binding.arrowNext.setOnClickListener {
+            onViewAllProducts?.invoke(content.categoryId)
+        }
     }
 
     inner class AdditionalProductsListAdapter :
@@ -35,7 +42,7 @@ class AdditionalProductsViewHolder(
                 binding.root
             ) {
             fun bind() {
-                products!![adapterPosition].source?.let { product->
+                products!![bindingAdapterPosition].source?.let { product ->
                     GlideApp.with(binding.productImage)
                         .load(product.displayableImage)
                         .into(binding.productImage)
@@ -47,10 +54,10 @@ class AdditionalProductsViewHolder(
                             product.finalPrice,
                             selectedCurrency
                         )
-                    binding.serialNumber.text = "0${adapterPosition + 1}"
+                    binding.serialNumber.text = "0${bindingAdapterPosition + 1}"
                 }
                 binding.root.setOnClickListener {
-                    onProductSelected?.invoke(products!![adapterPosition],binding.productImage)
+                    onProductSelected?.invoke(products!![adapterPosition], binding.productImage)
                 }
             }
         }

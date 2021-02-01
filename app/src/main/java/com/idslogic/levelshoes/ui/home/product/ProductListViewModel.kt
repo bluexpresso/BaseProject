@@ -24,6 +24,7 @@ class ProductListViewModel @ViewModelInject constructor(
     application: Application
 ) :
     AndroidViewModel(application) {
+    var gender = GENDER_WOMEN
     var categoryIdLiveData = MutableLiveData<Int>()
     val context = application.applicationContext
     val productIdsLiveData = MutableLiveData<ArrayList<Long>>()

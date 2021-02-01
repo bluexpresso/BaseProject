@@ -18,6 +18,7 @@ import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.*
 
 class SliderItemFragment : Fragment() {
+    var onViewAllProducts: ((Int) -> Unit)? = null
 
     companion object {
         private const val ARG_SLIDER_CONTENT = "arg_slider_content"
@@ -120,6 +121,9 @@ class SliderItemFragment : Fragment() {
 
                     )
                 } catch (e: Exception) {
+                }
+                binding.btnAction.setOnClickListener {
+                    onViewAllProducts?.invoke(buttonContent.categoryId)
                 }
                 if (buttonTextContent?.content.isNullOrEmpty() && btnContent.content.isNullOrEmpty()) {
                     binding.btnAction.visibility = View.GONE

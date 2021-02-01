@@ -14,7 +14,9 @@ import com.idslogic.levelshoes.databinding.FragmentProductListBinding
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.utils.ARG_CATEGORY_ID
+import com.idslogic.levelshoes.utils.ARG_GENDER
 import com.idslogic.levelshoes.utils.CustomToolbar
+import com.idslogic.levelshoes.utils.GENDER_WOMEN
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -52,6 +54,7 @@ class ProductListFragment : BaseFragment() {
     }
 
     private fun getArgs() {
+        viewModel.gender = arguments?.getString(ARG_GENDER, GENDER_WOMEN)?: GENDER_WOMEN
         viewModel.categoryIdLiveData.value = arguments?.getInt(ARG_CATEGORY_ID, 0)
     }
 

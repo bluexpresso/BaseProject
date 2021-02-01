@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.idslogic.levelshoes.data.models.Content
-import kotlin.collections.ArrayList
 
-class SliderAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
+class SliderAdapter(activity: FragmentActivity, private val onViewAllProducts: ((Int) -> Unit)?) :
+    FragmentStateAdapter(activity) {
     private lateinit var items: ArrayList<Content?>
 
     companion object {
@@ -16,7 +16,9 @@ class SliderAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity)
     override fun getItemCount() = ITEM_COUNT
 
     override fun createFragment(position: Int): Fragment {
-        return SliderItemFragment.newInstance(items[position])
+        val fragment = SliderItemFragment.newInstance(items[position])
+        fragment.onViewAllProducts = onViewAllProducts
+        return fragment
     }
 
     fun setItems(items: ArrayList<Content?>) {

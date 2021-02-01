@@ -1,14 +1,7 @@
 package com.idslogic.levelshoes.ui.home.landing.viewholders
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.view.View
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.google.android.material.button.MaterialButton
 import com.idslogic.levelshoes.custom.MediaButton
 import com.idslogic.levelshoes.data.models.Content
@@ -21,7 +14,7 @@ import com.idslogic.levelshoes.utils.parseColorFromString
 
 class BoxViewHolder(private val binding: ItemBoxViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(content: Content) {
+    fun bind(content: Content, onViewAllProducts: ((Int) -> Unit)?) {
         content.data?.forEach {
             GlideApp.with(binding.boxImage.context).load(it.url).into(binding.boxImage)
             val buttonContent =
@@ -70,6 +63,12 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
                         binding.boxActionImageButton.setTextColor(textColor)
                     }
                 }
+                binding.boxActionButton.setOnClickListener {
+                    onViewAllProducts?.invoke(btnContent.categoryId)
+                }
+                binding.boxActionImageButton.setOnClickListener {
+                    onViewAllProducts?.invoke(btnContent.categoryId)
+                }
             }
             headingContent?.let { heading ->
                 binding.boxTitle.visibility = View.VISIBLE
@@ -80,6 +79,5 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
                 binding.boxTitle.text = heading.content
             }
         }
-
     }
 }

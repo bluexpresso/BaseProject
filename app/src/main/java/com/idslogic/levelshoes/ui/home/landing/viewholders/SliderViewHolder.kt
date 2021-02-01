@@ -20,9 +20,10 @@ class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
         activity: FragmentActivity,
-        mapItems: HashMap<String, ArrayList<Content>>
+        mapItems: HashMap<String, ArrayList<Content>>,
+        onViewAllProducts: ((Int) -> Unit)?
     ) {
-        val adapter = SliderAdapter(activity)
+        val adapter = SliderAdapter(activity,onViewAllProducts)
         adapter.setItems(
             arrayListOf(
                 mapItems[GENDER_WOMEN]?.get(0),

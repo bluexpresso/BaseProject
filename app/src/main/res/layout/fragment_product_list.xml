@@ -47,6 +47,7 @@
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/spacing_16"
             android:visibility="gone"
+            android:layoutAnimation="@anim/product_list_animation"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
