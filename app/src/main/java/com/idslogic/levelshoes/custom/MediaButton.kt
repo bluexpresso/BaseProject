@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.di.GlideApp
+import com.idslogic.levelshoes.utils.parseColorFromString
 import kotlinx.android.synthetic.main.view_media_button.view.*
 
 class MediaButton @JvmOverloads constructor(
@@ -26,6 +27,6 @@ class MediaButton @JvmOverloads constructor(
     }
 
     fun setTextColor(textColor: String) {
-        btn.setTextColor(Color.parseColor(textColor))
+        btn.setTextColor(parseColorFromString(textColor))
     }
 }

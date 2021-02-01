@@ -17,6 +17,7 @@ import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.CONTENT_TYPE_BUTTON
 import com.idslogic.levelshoes.utils.CONTENT_TYPE_HEADING
 import com.idslogic.levelshoes.utils.CONTENT_TYPE_TEXT
+import com.idslogic.levelshoes.utils.parseColorFromString
 
 class BoxViewHolder(private val binding: ItemBoxViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -40,9 +41,7 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
                     binding.boxActionImageButton.visibility = View.GONE
                     try {
                         binding.boxActionButton.setBackgroundColor(
-                            Color.parseColor(
-                                btnContent.backgroundColor
-                            )
+                            parseColorFromString(btnContent.backgroundColor)
                         )
                     } catch (e: Exception) {
                     }
@@ -62,7 +61,7 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
                         binding.boxActionButton.visibility = View.VISIBLE
                         binding.boxActionButton.text =
                             btnContent.content ?: textContent?.content ?: ""
-                        binding.boxActionButton.setTextColor(Color.parseColor(textColor))
+                        binding.boxActionButton.setTextColor(parseColorFromString(textColor))
                     } else if (activeView is MediaButton) {
                         binding.boxActionImageButton.visibility = View.VISIBLE
                         binding.boxActionImageButton.setText(
@@ -75,11 +74,7 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
             headingContent?.let { heading ->
                 binding.boxTitle.visibility = View.VISIBLE
                 try {
-                    binding.boxTitle.setTextColor(
-                        Color.parseColor(
-                            heading.foregroundColor ?: "#FFFFFF"
-                        )
-                    )
+                    binding.boxTitle.setTextColor(parseColorFromString(heading.foregroundColor))
                 } catch (e: Exception) {
                 }
                 binding.boxTitle.text = heading.content

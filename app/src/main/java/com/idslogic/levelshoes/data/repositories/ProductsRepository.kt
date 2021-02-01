@@ -40,7 +40,7 @@ class ProductsRepository(
     fun getCategoryBasedProductsFromKlevu(categoryId: String): Response<ListingProductResponse> {
         return api.getCategoryBasedProductsFromKlevuIdSearch(
             APIUrl.getCategoryBasedProductsFromKlevuIdSearch(),
-            RequestBuilder.getCategoryBasedProductsQueryParams(categoryId)
+            ProductListingRequestBuilder.getCategoryBasedProductsQueryParams(categoryId, "*")
         ).execute()
     }
 

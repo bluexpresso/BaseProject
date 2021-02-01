@@ -1,9 +1,7 @@
 package com.idslogic.levelshoes.ui.home.landing
 
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.Fade
-import androidx.transition.Slide
 import com.google.gson.Gson
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.models.Content
@@ -93,7 +90,7 @@ class SliderItemFragment : Fragment() {
                 binding.heading.visibility = View.VISIBLE
                 try {
                     binding.heading.setTextColor(
-                        Color.parseColor(hdngElement.foregroundColor ?: "#000000")
+                        parseColorFromString(hdngElement.foregroundColor)
                     )
                 } catch (e: Exception) {
                 }
@@ -104,10 +101,7 @@ class SliderItemFragment : Fragment() {
                 binding.subHeading.visibility = View.VISIBLE
                 try {
                     binding.subHeading.setTextColor(
-                        Color.parseColor(
-                            subHdngElement.foregroundColor ?: "" +
-                            "#000000"
-                        )
+                        parseColorFromString(subHdngElement.foregroundColor)
                     )
                 } catch (e: Exception) {
                 }
@@ -117,15 +111,13 @@ class SliderItemFragment : Fragment() {
                 binding.btnAction.visibility = View.VISIBLE
                 try {
                     binding.btnAction.setBackgroundColor(
-                        Color.parseColor(
-                            btnContent.backgroundColor ?: "#000000"
-                        )
+                        parseColorFromString(btnContent.backgroundColor)
                     )
                     binding.btnAction.setTextColor(
-                        Color.parseColor(
+                        parseColorFromString(
                             btnContent.foregroundColor ?: buttonTextContent?.foregroundColor
-                            ?: "#000000"
                         )
+
                     )
                 } catch (e: Exception) {
                 }

@@ -1,6 +1,8 @@
 package com.idslogic.levelshoes.utils
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Color.parseColor
 import android.graphics.drawable.PictureDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -41,3 +43,11 @@ fun getNoInternetDialog(context: Context) =
     MaterialAlertDialogBuilder(context, R.style.DialogTheme).setTitle(R.string.no_internet)
         .setCancelable(false)
         .setMessage(R.string.no_internet_message)
+
+private fun isValidColorCode(color: String) = (color.startsWith("#") && color.length == 7)
+
+fun parseColorFromString(color: String?): Int {
+    return if (color.isNullOrEmpty() || !isValidColorCode(color))
+        parseColor("#000000")
+    else parseColor(color)
+}

@@ -157,5 +157,29 @@ class ProductListingRequestBuilder {
             }
             return sourceArray
         }
+
+        fun getCategoryBasedProductsQueryParams(
+            category: String?, searchTerm: String
+        ): HashMap<String, String> {
+            return linkedMapOf<String, String>().apply {
+                if (category != null) {
+                    put("category", "KLEVU_PRODUCT $category")
+                } else {
+                    put("category", "KLEVU_PRODUCT")
+                }
+                put("isCategoryNavigationRequest", "true")
+                put("sortOrder", "rel")
+                put("visibility", "search")
+                put("paginationStartsFrom", "0")
+                put("showOutOfStockProducts", "false")
+                put("ticket", "klevu-158358783414411589")
+                put("noOfResults", "1000")
+                put("enableMultiSelectFilters", "true")
+                put("resultForZero", "1")
+                put("enableFilters", "true")
+                put("responseType", "json")
+                put("term", searchTerm)
+            }
+        }
     }
 }
