@@ -21,10 +21,9 @@ class ProductViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        activity: FragmentActivity,
         content: Content,
         onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?,
-        onViewAllProducts: ((Int) -> Unit)?,
+        onViewAllProducts: ((Int, String?) -> Unit)?,
 
         ) {
         binding.contentSubtitle.text = content.subTitle ?: ""
@@ -51,7 +50,8 @@ class ProductViewHolder(
                 }
             }
         }
-        val pagerAdapter = LandingProductPagerAdapter(onViewAllProducts,onProductSelected, selectedCurrency)
+        val pagerAdapter =
+            LandingProductPagerAdapter(onViewAllProducts, onProductSelected, selectedCurrency)
         binding.productsPager.adapter = pagerAdapter
         pagerAdapter.setItems(content)
         TabLayoutMediator(

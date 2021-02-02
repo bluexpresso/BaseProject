@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.idslogic.levelshoes.data.models.Content
 
-class SliderAdapter(activity: FragmentActivity, private val onViewAllProducts: ((Int) -> Unit)?) :
+class SliderAdapter(activity: FragmentActivity, private val onViewAllProducts: ((Int, String?) -> Unit)?) :
     FragmentStateAdapter(activity) {
     private lateinit var items: ArrayList<Content?>
 

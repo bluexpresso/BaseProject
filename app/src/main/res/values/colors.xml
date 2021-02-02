@@ -22,4 +22,5 @@
     <color name="whiteSmokeColor">#F5F5F5</color>
     <color name="gray_38">#616161</color>
     <color name="shimmerContentColor">#DDDDDD</color>
+    <color name="red">#DE4343</color>
 </resources>

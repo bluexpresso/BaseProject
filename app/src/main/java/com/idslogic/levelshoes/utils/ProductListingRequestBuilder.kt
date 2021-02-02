@@ -1,7 +1,9 @@
 package com.idslogic.levelshoes.utils
 
+import android.util.Log
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import timber.log.Timber
 
 class ProductListingRequestBuilder {
     companion object {

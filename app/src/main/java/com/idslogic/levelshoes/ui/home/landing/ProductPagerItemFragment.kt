@@ -14,6 +14,7 @@ import com.idslogic.levelshoes.databinding.ItemProductViewBinding
 import com.idslogic.levelshoes.di.GlideApp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.idslogic.levelshoes.utils.formatPrice
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,7 +52,11 @@ class ProductPagerItemFragment : Fragment() {
             .into(binding.productImage)
         binding.name.text = viewModel.product.source?.name
         binding.brand.text = viewModel.product.source?.manufacturerName
-        binding.price.text =
-            String.format("%d %s", viewModel.product.source?.finalPrice, viewModel.getCurrency())
+        binding.price.text = formatPrice(
+            binding.root.context,
+            viewModel.getCurrency(),
+            viewModel.product.source?.regularPrice,
+            viewModel.product.source?.finalPrice
+        )
     }
 }

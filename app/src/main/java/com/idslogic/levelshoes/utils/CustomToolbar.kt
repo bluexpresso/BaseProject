@@ -59,6 +59,10 @@ class CustomToolbar @JvmOverloads constructor(
         title_text.setText(title)
     }
 
+    fun setTitle(title: String?) {
+        title_text.text = title?:""
+    }
+
     var onRightIconClick: (() -> Unit)? = null
     var onActionButtonClick: (() -> Unit)? = null
     var onLeftIconClick: (() -> Unit)? = null

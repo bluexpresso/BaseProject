@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.idslogic.levelshoes.data.models.BaseModel
+import com.idslogic.levelshoes.data.models.ListingProduct
 import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.data.repositories.ProductsRepository
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ProductListViewModel @ViewModelInject constructor(
     private val productsRepository: ProductsRepository,
@@ -24,10 +26,11 @@ class ProductListViewModel @ViewModelInject constructor(
     application: Application
 ) :
     AndroidViewModel(application) {
+    var title: String? = null
     var gender = GENDER_WOMEN
     var categoryIdLiveData = MutableLiveData<Int>()
     val context = application.applicationContext
-    val productIdsLiveData = MutableLiveData<ArrayList<Long>>()
+    val productIdsLiveData = MutableLiveData<ArrayList<ListingProduct>>()
     val loadingLiveData = MutableLiveData<Boolean>()
     suspend fun getProductsFromCategory() {
         viewModelScope.launch {
@@ -67,12 +70,7 @@ class ProductListViewModel @ViewModelInject constructor(
                         val productIdsResponse =
                             productsRepository.getCategoryBasedProductsFromKlevu(sBuilder.toString())
                         if (productIdsResponse.isSuccessful && productIdsResponse.body()?.result?.isNotEmpty() == true) {
-                            val productIds = arrayListOf<Long>()
-                            productIdsResponse.body()?.result?.forEachIndexed { index, listingProduct ->
-                                if (listingProduct.itemGroupId != null && index < 10)
-                                    productIds.add(listingProduct.itemGroupId!!.toLong())
-                            }
-                            productIdsLiveData.postValue(productIds)
+                            productIdsLiveData.postValue(productIdsResponse.body()!!.result!!)
                         } else {
                             loadingLiveData.postValue(false)
                         }

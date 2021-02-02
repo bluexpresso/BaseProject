@@ -25,8 +25,8 @@
         <item name="statusBarScrim">@color/white</item>
         <item name="statusBarBackground">@color/white</item>
         <item name="android:windowLightStatusBar">true</item-->
-<!--        <item name="android:windowTranslucentStatus">true</item>-->
-<!--        <item name="android:windowDrawsSystemBarBackgrounds">false</item>-->
+        <!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <!--        <item name="android:windowDrawsSystemBarBackgrounds">false</item>-->
     </style>
 
     <style name="FullScreenTheme" parent="Theme.BaseProject">
@@ -79,9 +79,13 @@
     <color name="dropdownDisabledColor">@color/gray_78</color>
     <color name="dropdownEnabledColor">@color/black</color>
 
+    <color name="priceDiscounted">@color/red</color>
+
     <color name="bottomNavBackground">@color/black</color>
     <color name="bottomNavIconSelected">@color/white</color>
     <color name="bottomNavIconUnselected">@color/gray_62</color>
+
+    <color name="disabledColor">@color/gray_62</color>
 
     <color name="tabIndicatorColor">@color/white</color>
 

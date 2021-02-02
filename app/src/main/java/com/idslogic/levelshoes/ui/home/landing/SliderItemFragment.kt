@@ -18,7 +18,7 @@ import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.*
 
 class SliderItemFragment : Fragment() {
-    var onViewAllProducts: ((Int) -> Unit)? = null
+    var onViewAllProducts: ((Int, String?) -> Unit)? = null
 
     companion object {
         private const val ARG_SLIDER_CONTENT = "arg_slider_content"
@@ -123,7 +123,10 @@ class SliderItemFragment : Fragment() {
                 } catch (e: Exception) {
                 }
                 binding.btnAction.setOnClickListener {
-                    onViewAllProducts?.invoke(buttonContent.categoryId)
+                    onViewAllProducts?.invoke(
+                        buttonContent.categoryId,
+                        content.title ?: heading?.content ?: subHeading?.content
+                    )
                 }
                 if (buttonTextContent?.content.isNullOrEmpty() && btnContent.content.isNullOrEmpty()) {
                     binding.btnAction.visibility = View.GONE

@@ -141,7 +141,7 @@ class LandingListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is SliderViewHolder) {
-            holder.bind(activity, mapItems = mapItems,onViewAllProducts)
+            holder.bind(activity, mapItems = mapItems, onViewAllProducts)
             this.onSliderPageChanged = holder.onSliderPageChanged
             holder.getSlider().unregisterOnPageChangeCallback(sliderPageChangedCallback)
             holder.getSlider().setCurrentItem(
@@ -173,16 +173,19 @@ class LandingListAdapter(
             }
         }
         if (holder is BoxViewHolder) {
-            holder.bind(landingItems[position],onViewAllProducts)
+            holder.bind(landingItems[position], onViewAllProducts)
         }
         if (holder is ProductViewHolder) {
-            holder.bind(activity, landingItems[position], onProductSelected,onViewAllProducts)
+            holder.bind(landingItems[position], onProductSelected, onViewAllProducts)
             holder.getNextButton().setOnClickListener {
-                onViewAllProducts?.invoke(landingItems[position].categoryId)
+                onViewAllProducts?.invoke(
+                    landingItems[position].categoryId,
+                    landingItems[position].title
+                )
             }
         }
         if (holder is AdditionalProductsViewHolder) {
-            holder.bind(landingItems[position], onProductSelected,onViewAllProducts)
+            holder.bind(landingItems[position], onProductSelected, onViewAllProducts)
         }
         if (holder is NoContentViewHolder) {
             holder.bind()
@@ -223,6 +226,6 @@ class LandingListAdapter(
 
     var onDismissibleCardActioned: ((String) -> Unit)? = null
     var onDismissibleCardDismissed: ((String) -> Unit)? = null
-    var onViewAllProducts: ((Int) -> Unit)? = null
+    var onViewAllProducts: ((Int, String?) -> Unit)? = null
     var onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)? = null
 }

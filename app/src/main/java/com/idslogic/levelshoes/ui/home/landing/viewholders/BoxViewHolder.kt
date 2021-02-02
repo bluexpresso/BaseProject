@@ -14,7 +14,7 @@ import com.idslogic.levelshoes.utils.parseColorFromString
 
 class BoxViewHolder(private val binding: ItemBoxViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(content: Content, onViewAllProducts: ((Int) -> Unit)?) {
+    fun bind(content: Content, onViewAllProducts: ((Int, String?) -> Unit)?) {
         content.data?.forEach {
             GlideApp.with(binding.boxImage.context).load(it.url).into(binding.boxImage)
             val buttonContent =
@@ -64,10 +64,13 @@ class BoxViewHolder(private val binding: ItemBoxViewBinding) :
                     }
                 }
                 binding.boxActionButton.setOnClickListener {
-                    onViewAllProducts?.invoke(btnContent.categoryId)
+                    onViewAllProducts?.invoke(
+                        btnContent.categoryId,
+                        content.title ?: headingContent?.content ?: textContent?.content
+                    )
                 }
-                binding.boxActionImageButton.setOnClickListener {
-                    onViewAllProducts?.invoke(btnContent.categoryId)
+                binding.boxActionImageButton.getButton().setOnClickListener {
+                    onViewAllProducts?.invoke(btnContent.categoryId, content.title)
                 }
             }
             headingContent?.let { heading ->

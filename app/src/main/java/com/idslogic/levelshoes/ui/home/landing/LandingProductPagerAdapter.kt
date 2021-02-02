@@ -11,11 +11,12 @@ import com.idslogic.levelshoes.databinding.ItemProductViewBinding
 import com.idslogic.levelshoes.databinding.ItemViewAllCollectionBinding
 import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.VIEW_ALL_COLLECTION
+import com.idslogic.levelshoes.utils.formatPrice
 
 class LandingProductPagerAdapter(
-    private val onViewAllProducts: ((Int) -> Unit)?,
+    private val onViewAllProducts: ((Int, String?) -> Unit)?,
     private val onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?,
-    private val selectedCurrency: String?
+    private val selectedCurrency: String
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -23,6 +24,7 @@ class LandingProductPagerAdapter(
         const val VIEW_TYPE_VIEW_ALL_COLLECTION = 2
     }
 
+    private var title: String? = null
     private var categoryId: Int = -1
     var products: ArrayList<BaseModel.Hit<Product>>? = null
     override fun getItemCount() = products?.size ?: 0
@@ -37,6 +39,7 @@ class LandingProductPagerAdapter(
     fun setItems(content: Content) {
         this.categoryId = content.categoryId
         this.products = content.productsList
+        this.title = content.title
         notifyDataSetChanged()
     }
 
@@ -44,7 +47,7 @@ class LandingProductPagerAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
             binding.root.setOnClickListener {
-                onViewAllProducts?.invoke(categoryId)
+                onViewAllProducts?.invoke(categoryId,title)
             }
         }
     }
@@ -58,12 +61,12 @@ class LandingProductPagerAdapter(
                     .into(binding.productImage)
                 binding.name.text = product.name
                 binding.brand.text = product.manufacturerName
-                binding.price.text =
-                    String.format(
-                        "%d %s",
-                        product.finalPrice,
-                        selectedCurrency
-                    )
+                binding.price.text = formatPrice(
+                    binding.root.context,
+                    selectedCurrency,
+                    product.regularPrice,
+                    product.finalPrice
+                )
             }
             binding.productImage.setOnClickListener {
                 onProductSelected?.invoke(products!![bindingAdapterPosition], binding.productImage)

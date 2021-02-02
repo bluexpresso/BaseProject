@@ -23,10 +23,7 @@ import com.idslogic.levelshoes.network.Status.*
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.ui.home.product.ProductDetailsFragment.Companion.ARG_PRODUCT
-import com.idslogic.levelshoes.utils.ARG_CATEGORY_ID
-import com.idslogic.levelshoes.utils.ARG_GENDER
-import com.idslogic.levelshoes.utils.BOX_TYPE_REGISTER_SIGN_IN
-import com.idslogic.levelshoes.utils.LandingLinearLayoutManager
+import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_landing.*
 import kotlinx.coroutines.launch
@@ -82,10 +79,11 @@ class LandingFragment : BaseFragment() {
     }
 
     private fun initProductListNavigation(binding: FragmentLandingBinding) {
-        landingListAdapter.onViewAllProducts = { id ->
+        landingListAdapter.onViewAllProducts = { id, title ->
             findNavController().navigate(R.id.nav_from_home_to_product_list, Bundle().apply {
                 putInt(ARG_CATEGORY_ID, id)
                 putString(ARG_GENDER, landingListAdapter.currentSelectedTab)
+                putString(ARG_TITLE, title)
             })
         }
     }

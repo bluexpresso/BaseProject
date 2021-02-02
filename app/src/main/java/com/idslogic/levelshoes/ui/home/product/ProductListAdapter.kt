@@ -1,8 +1,14 @@
 package com.idslogic.levelshoes.ui.home.product
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +19,7 @@ import com.idslogic.levelshoes.data.models.BaseModel
 import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.databinding.ItemProductInListBinding
 import com.idslogic.levelshoes.di.GlideApp
+import com.idslogic.levelshoes.utils.formatPrice
 import java.util.*
 
 class ProductListAdapter(val currency: String) :
@@ -24,17 +31,14 @@ class ProductListAdapter(val currency: String) :
             getItem(bindingAdapterPosition)?.source?.let { source ->
                 binding.name.text = source.name
                 binding.brand.text = source.manufacturerName ?: ""
-                source.price?.let {
-                    binding.price.text =
-                        String.format(Locale.getDefault(), source.price!!, currency)
-                }
+                binding.price.text = formatPrice(binding.root.context,currency,source.regularPrice,source.finalPrice)
 
                 val badges = source.badgeName?.split(",")
                 if (badges.isNullOrEmpty()) {
                     binding.viewTags.visibility = View.GONE
                 } else {
                     badges.forEach { badge ->
-                        if(badge.isNotEmpty()){
+                        if (badge.isNotEmpty()) {
                             binding.viewTags.visibility = View.VISIBLE
                             val chip = Chip(binding.viewTags.context)
                             chip.setTextAppearance(R.style.TextLabelChip)

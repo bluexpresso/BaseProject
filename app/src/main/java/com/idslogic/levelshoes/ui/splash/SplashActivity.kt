@@ -22,7 +22,6 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(SplashViewModel::class.java)
         checkVersion()
-        getAttributes()
         viewModel.versionInfoLiveData.observe(this@SplashActivity, {
             when (it.status) {
                 LOADING -> {
@@ -43,13 +42,6 @@ class SplashActivity : BaseActivity() {
             }
         })
     }
-
-    private fun getAttributes() {
-        GlobalScope.launch {
-            viewModel.getAttributes()
-        }
-    }
-
 
     private fun checkVersion() {
         if (isInternetAvailable(this)) {

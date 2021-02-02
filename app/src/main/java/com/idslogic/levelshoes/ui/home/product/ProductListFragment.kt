@@ -13,10 +13,7 @@ import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.databinding.FragmentProductListBinding
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
-import com.idslogic.levelshoes.utils.ARG_CATEGORY_ID
-import com.idslogic.levelshoes.utils.ARG_GENDER
-import com.idslogic.levelshoes.utils.CustomToolbar
-import com.idslogic.levelshoes.utils.GENDER_WOMEN
+import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -54,8 +51,9 @@ class ProductListFragment : BaseFragment() {
     }
 
     private fun getArgs() {
-        viewModel.gender = arguments?.getString(ARG_GENDER, GENDER_WOMEN)?: GENDER_WOMEN
+        viewModel.gender = arguments?.getString(ARG_GENDER, GENDER_WOMEN) ?: GENDER_WOMEN
         viewModel.categoryIdLiveData.value = arguments?.getInt(ARG_CATEGORY_ID, 0)
+        viewModel.title = arguments?.getString(ARG_TITLE, "")
     }
 
     private fun initProducts(binding: FragmentProductListBinding) {
@@ -73,29 +71,10 @@ class ProductListFragment : BaseFragment() {
                 }
             }
         })
-//        viewModel.productsLiveData.observe(viewLifecycleOwner, {
-//            when (it.status) {
-//                LOADING -> {
-//                    binding.progressBar.visibility = View.VISIBLE
-//                }
-//                SUCCESS -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    productListAdapter.setItems(it.data)
-//                    binding.viewProducts.layoutAnimation = AnimationUtils.loadLayoutAnimation(
-//                        requireContext(),
-//                        R.anim.product_list_animation
-//                    )
-//                    binding.viewProducts.scheduleLayoutAnimation()
-//                }
-//                ERROR -> {
-//                    binding.progressBar.visibility = View.GONE
-//                }
-//
-//            }
-//        })
     }
 
     private fun initToolbar(toolbar: CustomToolbar) {
+        toolbar.setTitle(viewModel.title)
         toolbar.onLeftIconClick = {
             findNavController().navigateUp()
         }

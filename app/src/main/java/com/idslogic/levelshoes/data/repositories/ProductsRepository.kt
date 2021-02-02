@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.*
 import com.idslogic.levelshoes.data.AppCache
 import com.idslogic.levelshoes.data.AppDatabase
-import com.idslogic.levelshoes.data.models.BaseModel
-import com.idslogic.levelshoes.data.models.CategoryResponse
-import com.idslogic.levelshoes.data.models.ListingProductResponse
-import com.idslogic.levelshoes.data.models.Product
+import com.idslogic.levelshoes.data.models.*
 import com.idslogic.levelshoes.data.source.ProductListPagingDataSource
 import com.idslogic.levelshoes.network.API
 import com.idslogic.levelshoes.network.APIUrl
@@ -46,7 +43,7 @@ class ProductsRepository(
 
     fun initProductsPagerLiveDataSource(
         categoryId: Int,
-        productIds: ArrayList<Long>,
+        productIds: ArrayList<ListingProduct>,
         scope: CoroutineScope
     ) {
         if (productsPagerLiveData == null)

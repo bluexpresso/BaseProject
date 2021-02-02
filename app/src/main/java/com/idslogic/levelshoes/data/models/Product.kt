@@ -54,7 +54,7 @@ data class Product(
     var metaDescription: String?,
     @Expose
     @SerializedName("regular_price")
-    var regularPrice: Long?,
+    var regularPrice: Double?,
     @Expose
     @SerializedName("country_of_mamnufacture")
     var countryOfManufacture: String?,
@@ -117,7 +117,7 @@ data class Product(
     var consignmentFlag: String?,
     @Expose
     @SerializedName("final_price")
-    var finalPrice: Long?,
+    var finalPrice: Double?,
     @Expose
     @SerializedName("zone")
     var zone: Long?,
@@ -168,7 +168,7 @@ data class Product(
     var size: Int?,
     @Expose
     @SerializedName("special_price")
-    var specialPrice: Any?,
+    var specialPrice: Double?,
     @Expose
     @SerializedName("subcategory")
     var subCategory: Long?,

@@ -10,6 +10,7 @@ import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.databinding.ItemAdditionalProductBinding
 import com.idslogic.levelshoes.databinding.ItemLandingAdditionalProductsViewBinding
 import com.idslogic.levelshoes.di.GlideApp
+import com.idslogic.levelshoes.utils.formatPrice
 
 class AdditionalProductsViewHolder(
     val binding: ItemLandingAdditionalProductsViewBinding,
@@ -20,7 +21,7 @@ class AdditionalProductsViewHolder(
     fun bind(
         content: Content,
         onProductSelected: ((BaseModel.Hit<Product>, AppCompatImageView) -> Unit)?,
-        onViewAllProducts: ((Int) -> Unit)?
+        onViewAllProducts: ((Int, String?) -> Unit)?
     ) {
         this.onProductSelected = onProductSelected
         binding.contentSubtitle.text = content.subTitle ?: ""
@@ -29,7 +30,7 @@ class AdditionalProductsViewHolder(
         binding.productsList.adapter = adapter
         adapter.setItems(content.productsList)
         binding.arrowNext.setOnClickListener {
-            onViewAllProducts?.invoke(content.categoryId)
+            onViewAllProducts?.invoke(content.categoryId,content.title)
         }
     }
 
@@ -48,12 +49,12 @@ class AdditionalProductsViewHolder(
                         .into(binding.productImage)
                     binding.name.text = product.name
                     binding.brand.text = product.manufacturerName
-                    binding.price.text =
-                        String.format(
-                            "%d %s",
-                            product.finalPrice,
-                            selectedCurrency
-                        )
+                    binding.price.text = formatPrice(
+                        binding.root.context,
+                        selectedCurrency,
+                        product.regularPrice,
+                        product.finalPrice
+                    )
                     binding.serialNumber.text = "0${bindingAdapterPosition + 1}"
                 }
                 binding.root.setOnClickListener {

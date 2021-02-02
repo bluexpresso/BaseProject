@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.button.MaterialButton
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.parseColorFromString
@@ -25,6 +26,8 @@ class MediaButton @JvmOverloads constructor(
     fun setText(text: String) {
         btn.text = text
     }
+
+    fun getButton(): MaterialButton = btn
 
     fun setTextColor(textColor: String) {
         btn.setTextColor(parseColorFromString(textColor))

@@ -21,7 +21,7 @@ class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
     fun bind(
         activity: FragmentActivity,
         mapItems: HashMap<String, ArrayList<Content>>,
-        onViewAllProducts: ((Int) -> Unit)?
+        onViewAllProducts: ((Int, String?) -> Unit)?
     ) {
         val adapter = SliderAdapter(activity,onViewAllProducts)
         adapter.setItems(
