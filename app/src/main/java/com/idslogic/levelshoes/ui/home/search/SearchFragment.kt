@@ -1,29 +1,36 @@
 package com.idslogic.levelshoes.ui.home.search
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.transition.Slide
+import com.google.android.material.tabs.TabLayout
+import com.google.gson.Gson
 import com.idslogic.levelshoes.R
+import com.idslogic.levelshoes.data.models.CategorySearch
 import com.idslogic.levelshoes.databinding.FragmentSearchBinding
+import com.idslogic.levelshoes.network.Status
 import com.idslogic.levelshoes.ui.BaseFragment
+import com.idslogic.levelshoes.ui.MainViewModel
+import com.idslogic.levelshoes.utils.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SearchFragment : BaseFragment() {
-
-    companion object {
-        fun newInstance() = SearchFragment()
-    }
-
-    private lateinit var viewModel: SearchViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-    }
+    private val activityViewModel: MainViewModel by activityViewModels()
+    private val viewModel: SearchViewModel by viewModels()
+    private val adapter = SearchCategoryAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,17 +40,117 @@ class SearchFragment : BaseFragment() {
             inflater, R.layout.fragment_search, container,
             false
         ) as FragmentSearchBinding
+        initToolbar(binding)
+        initTabs(binding)
         initSearch(binding)
+        changeStatusBarColor(R.color.secondaryBackground)
         return binding.root
     }
 
-    override fun onStop() {
-        super.onStop()
-        activity?.window?.apply {
-            statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+    private fun initToolbar(binding: FragmentSearchBinding) {
+        binding.toolbar.onLeftIconClick = {
+            requireActivity().onBackPressed()
         }
     }
 
     private fun initSearch(binding: FragmentSearchBinding) {
+        binding.recyclerviewSearch.adapter = adapter
+        viewModel.categoryFetcherLiveData.observe(viewLifecycleOwner, {
+            when (it.status) {
+                Status.LOADING -> {
+                }
+                Status.SUCCESS -> {
+                    val controller =
+                        AnimationUtils.loadLayoutAnimation(context, R.anim.search_categories_layout_animation);
+
+                    binding.recyclerviewSearch.layoutAnimation = controller
+                    adapter.setItems(viewModel.mapCategories[viewModel.gender])
+                    binding.recyclerviewSearch.scheduleLayoutAnimation()
+                }
+                Status.ERROR -> {
+                }
+            }
+        })
+        binding.viewMaskSearch.setOnClickListener {
+            val activityViewModel: MainViewModel by activityViewModels()
+            activityViewModel.searchCategories = viewModel.mapCategories
+            findNavController().navigate(R.id.navigateFromCategoryToSearch)
+        }
+        adapter.onCategorySelected =
+            { category: CategorySearch, categories: ArrayList<CategorySearch>? ->
+                if (categories != null && !categories.isNullOrEmpty()) {
+                    activityViewModel.disableSearchAnimation = true
+                    findNavController().navigate(R.id.navigateToSubCategory, Bundle().apply {
+                        putString(ARG_CATEGORIES, Gson().toJson(categories))
+                        putString(ARG_CATEGORY, Gson().toJson(category))
+                        putString(ARG_GENDER, viewModel.gender)
+                    })
+                } else {
+//                    Toast.makeText(requireContext(), "GO TO PLP", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun initTabs(binding: FragmentSearchBinding) {
+        binding.categorySliderTabLayout.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    formatTabFonts(
+                        binding.root.context,
+                        binding.categorySliderTabLayout,
+                        tab.position,
+                        3
+                    )
+                    loadCategories(
+                        when (tab.position) {
+                            0 -> {
+                                viewModel.gender = GENDER_WOMEN
+                                GENDER_WOMEN
+                            }
+                            1 -> {
+                                viewModel.gender = GENDER_MEN
+                                GENDER_MEN
+                            }
+                            2 -> {
+                                viewModel.gender = GENDER_KIDS
+                                GENDER_KIDS
+                            }
+                            else -> GENDER_WOMEN
+                        }
+                    )
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+
+        when (viewModel.gender) {
+            GENDER_WOMEN -> {
+                binding.categorySliderTabLayout.selectTab(binding.categorySliderTabLayout.getTabAt(0))
+                loadCategories(GENDER_WOMEN)
+                formatTabFonts(requireContext(), binding.categorySliderTabLayout, 0, 3)
+            }
+            GENDER_MEN -> {
+                binding.categorySliderTabLayout.selectTab(binding.categorySliderTabLayout.getTabAt(1))
+                loadCategories(GENDER_MEN)
+                formatTabFonts(requireContext(), binding.categorySliderTabLayout, 0, 3)
+            }
+            GENDER_KIDS -> {
+                binding.categorySliderTabLayout.selectTab(binding.categorySliderTabLayout.getTabAt(2))
+                loadCategories(GENDER_KIDS)
+                formatTabFonts(requireContext(), binding.categorySliderTabLayout, 0, 3)
+            }
+        }
+    }
+
+    fun loadCategories(gender: String) {
+        lifecycleScope.launch {
+            viewModel.getCategory(gender)
+        }
     }
 }

@@ -5,17 +5,20 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.idslogic.levelshoes.R
-import com.idslogic.levelshoes.data.AppCache
-import com.idslogic.levelshoes.data.models.*
-import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
-import com.idslogic.levelshoes.network.Resource
-import com.idslogic.levelshoes.network.Status
-import com.idslogic.levelshoes.utils.*
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import com.idslogic.levelshoes.BuildConfig
+import com.idslogic.levelshoes.R
+import com.idslogic.levelshoes.data.AppCache
+import com.idslogic.levelshoes.data.models.BaseModel
+import com.idslogic.levelshoes.data.models.CategorySearch
+import com.idslogic.levelshoes.data.models.Content
+import com.idslogic.levelshoes.data.models.Product
+import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
+import com.idslogic.levelshoes.network.Resource
+import com.idslogic.levelshoes.network.Status
+import com.idslogic.levelshoes.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,6 +29,9 @@ class MainViewModel @ViewModelInject constructor(
     application: Application
 ) :
     AndroidViewModel(application) {
+    var disableSearchAnimation = false
+    var searchCategories: HashMap<String, LinkedHashMap<CategorySearch, ArrayList<CategorySearch>?>>? = null
+    var searchTerm : MutableLiveData<String> = MutableLiveData()
     private val context = application.applicationContext
     val landingLiveData = MutableLiveData<Resource<HashMap<String, ArrayList<Content>>>>()
     suspend fun getLandingData() {
@@ -104,6 +110,12 @@ class MainViewModel @ViewModelInject constructor(
                                                     )
                                                 if (!productResponse.data.isNullOrEmpty()) {
                                                     productResponse.data.forEach { product ->
+                                                        product.source?.manufacturer?.let { value ->
+                                                            product.source?.manufacturerName =
+                                                                configurationRepository.getManufacturerName(
+                                                                    value
+                                                                )
+                                                        }
                                                         if (mapProductImages[product.source?.sku].isNullOrEmpty()) {
                                                             product.source?.displayableImage =
                                                                 BuildConfig.IMAGE_URL.plus(

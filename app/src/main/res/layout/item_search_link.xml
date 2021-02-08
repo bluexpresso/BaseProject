@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/link_text"
+        style="@style/TertiaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_40"
+        app:rippleColor="@color/nero"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:paddingHorizontal="@dimen/spacing_32"
+        android:textAlignment="viewStart"
+        app:backgroundTint="@color/black"
+        tools:text="View ALl shoes">
+
+    </com.google.android.material.button.MaterialButton>
+</layout>

@@ -25,7 +25,7 @@ class Resource<T> constructor(
 
     companion object {
         @JvmStatic
-        fun <T> success(data: T?, code: Int?): Resource<T> =
+        fun <T> success(data: T?, code: Int = 200): Resource<T> =
                 Resource(Status.SUCCESS, data, null, code)
         @JvmStatic
         fun <T> error(message: String?, data: T?, code: Int = -1): Resource<T> =

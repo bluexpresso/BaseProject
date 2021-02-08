@@ -131,5 +131,9 @@ class ConfigurationRepository(
 
     fun getManufacturerName(value: Long) = appDatabase.getConfigurationDao().getLabel(value)
 
-    fun getCurrency() = appCache.getSelectedCountry().currency?:"AED"
+    fun getCurrency() = appCache.getSelectedCountry().currency ?: "AED"
+    fun getRecentSearches() = appCache.getRecentSearches()
+    fun addRecentSearch(text: String) {
+        appCache.saveRecentSearch(text)
+    }
 }

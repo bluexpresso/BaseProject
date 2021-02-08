@@ -42,4 +42,12 @@
     <string name="active_filters">Active Filters</string>
     <string name="sort_by">Sort by</string>
     <string name="view_all_collection">View all collection</string>
+    <string name="no_search_results_title">No results found</string>
+    <string name="no_search_results_body">Sorry, we couldn\'t find any item matching your search</string>
+    <string name="searchresult">Search results</string>
+    <string name="recent_items">RECENT ITEMS</string>
+    <string name="trending_items">TRENDING NOW</string>
+    <string name="menu">Menu</string>
+    <string name="number_of_products">%d products</string>
+    <string name="category_search_result_placeholder">%s > %s</string>
 </resources>

@@ -9,5 +9,45 @@
         android:id="@+id/searchScreen"
         android:name="com.idslogic.levelshoes.ui.home.search.SearchFragment"
         android:label="search_fragment"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/navigateToSubCategory"
+            app:destination="@id/subCategoryScreen"
+            app:exitAnim="@anim/fragment_exit_slide" />
+        <action
+            android:id="@+id/navigateFromCategoryToSearch"
+            app:exitAnim="@anim/fragment_exit_fade"
+            app:enterAnim="@anim/fragment_enter_fade"
+            app:destination="@id/searchResultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultsFragment"
+        android:name="com.idslogic.levelshoes.ui.home.search.SearchResultsFragment"
+        android:label="SearchResultsFragment">
+        <action
+            android:id="@+id/action_searchResultsFragment_to_searchScreen"
+            app:destination="@id/searchScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/subCategoryScreen"
+        android:name="com.idslogic.levelshoes.ui.home.search.SubCategoryFragment"
+        android:label="SubCategoryFragment"
+        tools:layout="@layout/fragment_sub_category">
+        <action
+            android:id="@+id/nav_from_search_to_product_list"
+            app:destination="@id/productListScreen"
+            app:exitAnim="@anim/fragment_exit_slide" />
+    </fragment>
+    <fragment
+        android:id="@+id/productListScreen"
+        android:name="com.idslogic.levelshoes.ui.home.product.ProductListFragment"
+        android:label="ProductsListFragment"
+        tools:layout="@layout/fragment_product_list">
+        <action
+            android:id="@+id/action_to_filters"
+            app:destination="@id/filtersScreen" />
+        <action
+            android:id="@+id/action_to_product_details"
+            app:destination="@id/productDetailsScreen" />
+    </fragment>
 </navigation>

@@ -8,9 +8,15 @@ data class CategoryResponse(
     @SerializedName("_index")
     var parentId: Int,
     @Expose
+    @SerializedName("id")
+    var id: Int,
+    @Expose
     @SerializedName("name")
     var name: String,
     @Expose
     @SerializedName("url_path")
     var urlPath: String,
+    @Expose
+    @SerializedName("children_data")
+    var childrenData: ArrayList<CategoryResponse>
 )

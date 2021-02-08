@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/whiteSmokeColor">
+        android:background="@color/background">
 
         <com.idslogic.levelshoes.utils.CustomToolbar
             android:id="@+id/toolbar"
@@ -44,10 +44,10 @@
             android:id="@+id/view_products"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layoutAnimation="@anim/product_list_animation"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/spacing_16"
             android:visibility="gone"
-            android:layoutAnimation="@anim/product_list_animation"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

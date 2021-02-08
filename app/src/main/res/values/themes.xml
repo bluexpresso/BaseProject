@@ -13,6 +13,7 @@
         <!-- Status bar color. -->
         <item name="android:windowBackground">@color/light_gray</item>
         <item name="android:statusBarColor">@color/light_gray</item>
+        <item name="android:colorEdgeEffect">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -74,6 +75,8 @@
     <color name="iconTintOnSurface">@color/black</color>
     <color name="iconTintOnSurfaceReverse">@color/white</color>
 
+    <color name="hintTextColorOnDark">@color/gray_78</color>
+
     <color name="dropdownTextDefault">@color/black</color>
     <color name="dropdownTextUnselected">@color/charcoal</color>
     <color name="dropdownDisabledColor">@color/gray_78</color>
@@ -92,9 +95,11 @@
     <color name="tabIndicatorColorOnSurface">@color/black</color>
     <color name="plpLabelBackgroundColor">@color/whiteSmokeColor</color>
     <color name="toolbarColor">@color/white</color>
+    <color name="toolbarColorDark">@color/black</color>
+    <color name="toolbarContentOnDark">@color/white</color>
     <color name="toolbarContentColor">@color/black</color>
     <color name="dialogBackground">@color/white</color>
-    <color name="secondaryBackground">@color/black</color>
+    <color name="secondaryBackground">@color/almost_black</color>
     <color name="switchTextUnchecked">@color/gray_38</color>
     <color name="switchTextChecked">@color/black</color>
 </resources>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/secondaryBackground">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_search_results"
+            style="@style/TextBodySmallMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_24"
+            android:layout_marginTop="@dimen/spacing_24"
+            android:text="@string/searchresult"
+            android:textColor="@color/textOnSurfaceReverse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginTop="@dimen/spacing_40"
+            tools:visibility="visible" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/product_count"
+            style="@style/TextBodySmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_40"
+            android:layout_marginStart="@dimen/spacing_12"
+            android:layout_marginTop="@dimen/spacing_24"
+            android:layout_marginEnd="@dimen/spacing_16"
+            android:textColor="@color/textOnSurfaceReverse"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginTop="@dimen/spacing_40"
+            tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_search_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_32"
+            android:paddingBottom="@dimen/spacing_96"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="always"
+            android:fadingEdgeLength="@dimen/spacing_40"
+            android:fadingEdge="vertical"
+            android:requiresFadingEdge="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_search_results"
+            app:spanCount="2"
+            app:tabIndicatorColor="@color/tabIndicatorColor"
+            tools:listitem="@layout/item_product_in_search"
+            tools:visibility="visible" />
+
+        <include
+            android:id="@+id/no_results"
+            layout="@layout/layout_no_search_result"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateBehavior="cycle"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

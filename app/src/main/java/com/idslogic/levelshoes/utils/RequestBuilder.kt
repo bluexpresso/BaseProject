@@ -89,28 +89,6 @@ class RequestBuilder {
             return aggs
         }
 
-        //category=KLEVU_PRODUCT%20Women;the%20occasion%20wear%20edit&sortOrder=rel&visibility=search
-        // &paginationStartsFrom=0&
-        // showOutOfStockProducts=false&ticket=klevu-158676873614211589&noOfResults=10000&
-        // enableMultiSelectFilters=true&resultForZero=1&enableFilters=true&term=*&responseType=json
-        fun getQueryParamsForKlevuCategoryProducts(): HashMap<String, String> {
-            val hashMap = hashMapOf<String, String>()
-            hashMap["category"] = "KLEVU_PRODUCT Women;the occasion wear edit"
-            hashMap["isCategoryNavigationRequest"] = "true"
-            hashMap["sortOrder"] = "rel"
-            hashMap["visibility"] = "search"
-            hashMap["paginationStartsFrom"] = "0"
-            hashMap["showOutOfStockProducts"] = "false"
-            hashMap["ticket"] = APIUrl.getKlevuSkuCode("", "")
-            hashMap["noOfResults"] = "10000"
-            hashMap["enableMultiSelectFilters"] = "true"
-            hashMap["resultForZero"] = "1"
-            hashMap["enableFilters"] = "true"
-            hashMap["term"] = "*"
-            hashMap["responseType"] = "json"
-            return hashMap
-        }
-
         private fun buildFunctionScoreForKlevuCategoryProducts(): JsonObject {
             val functionScore = JsonObject()
             val query = JsonObject()
@@ -261,5 +239,97 @@ class RequestBuilder {
         fun getAttributeRequestBody() = JsonParser.parseString(
             "{\"_source\":\"options\",\"query\":{\"bool\":{\"must\":[{\"match\":{\"attribute_code\":\"manufacturer\"}}]}}}"
         ).asJsonObject
+
+
+
+        fun buildCategorySearchRequest(categorySearchGender: String):JsonObject{
+            val parenCategorytJson = JsonObject()
+            parenCategorytJson.addProperty("size", 500)
+
+            val queryParentJson = JsonObject()
+
+            /*Sort json*/
+            val sortPositionParent = JsonObject()
+            val sortPositionChildren = JsonObject()
+            sortPositionChildren.addProperty("order", "asc")
+            sortPositionParent.add("position", sortPositionChildren)
+
+            /*query child json*/
+            val boolJson = JsonObject()
+
+            val mustJson =getMustCategorySearchJsonArray(categorySearchGender)
+            boolJson.add("must", mustJson)
+
+
+
+            val sourceArray = JsonArray()
+            categorySearchFields.forEach {
+                sourceArray.add(it)
+            }
+            queryParentJson.add("bool", boolJson)
+            parenCategorytJson.add( "query", queryParentJson)
+            parenCategorytJson.add("_source", sourceArray)
+            parenCategorytJson.add( "sort", sortPositionParent)
+            return parenCategorytJson
+        }
+        private fun getMustCategorySearchJsonArray(categorySearchGender: String): JsonArray {
+            val mustJsonArray = JsonArray()
+
+            val matchLevelParent = JsonObject()
+            val matchLevelChildren = JsonObject()
+            matchLevelChildren.addProperty("level", "3")
+            matchLevelParent.add("match", matchLevelChildren)
+            mustJsonArray.add(matchLevelParent)
+
+
+            val matchParentIdParent = JsonObject()
+            val matchParentIdChildren = JsonObject()
+            matchParentIdChildren.addProperty(
+                "parent_id", when {
+                    categorySearchGender.equals(
+                        GENDER_MEN, true
+                    ) -> GENDER_ID_MEN_SEARCH
+                    categorySearchGender.equals(GENDER_WOMEN, true) -> GENDER_ID_WOMEN_SEARCH
+                    else -> GENDER_ID_KIDS_SEARCH
+                }
+            )
+            matchParentIdParent.add("match", matchParentIdChildren)
+//                matchConfigurableGenderParent.add("match", matchConfigurableGender)
+            mustJsonArray.add(matchParentIdParent)
+
+
+            val matchisActiveParent = JsonObject()
+            val matchisActiveChildren = JsonObject()
+            matchisActiveChildren.addProperty("is_active", true)
+            matchisActiveParent.add("match", matchisActiveChildren)
+            mustJsonArray.add(matchisActiveParent)
+
+            val matchIncludeMenuParent = JsonObject()
+            val matchIncludeMenuChildren = JsonObject()
+            matchIncludeMenuChildren.addProperty("include_in_menu", 1)
+            matchIncludeMenuParent.add("match", matchIncludeMenuChildren)
+            mustJsonArray.add(matchIncludeMenuParent)
+
+            return mustJsonArray
+        }
+
+        fun getQueryParamsForKlevuPopulerProducts(): HashMap<String, String> {
+            val hashMap = hashMapOf<String, String>()
+            hashMap["category"] = "KLEVU_PRODUCT Women;the occasion wear edit"
+            hashMap["isCategoryNavigationRequest"] = "true"
+            hashMap["sortOrder"] = "rel"
+            hashMap["visibility"] = "search"
+            hashMap["paginationStartsFrom"] = "0"
+            hashMap["showOutOfStockProducts"] = "false"
+            hashMap["ticket"] = APIUrl.getKlevuSkuCode("", "")
+            hashMap["noOfResults"] = "10000"
+            hashMap["enableMultiSelectFilters"] = "true"
+            hashMap["resultForZero"] = "1"
+            hashMap["enableFilters"] = "true"
+            hashMap["term"] = "srinivas_ankur"
+            hashMap["responseType"] = "json"
+            return hashMap
+        }
+
     }
 }

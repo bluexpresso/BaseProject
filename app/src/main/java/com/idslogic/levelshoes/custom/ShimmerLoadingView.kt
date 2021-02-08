@@ -1,5 +1,6 @@
 package com.idslogic.levelshoes.custom
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.idslogic.levelshoes.R
 import kotlinx.android.synthetic.main.view_shimmer_loading.view.*
 
+@SuppressLint("ClickableViewAccessibility")
 class ShimmerLoadingView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
@@ -24,6 +26,7 @@ class ShimmerLoadingView @JvmOverloads constructor(
         inflate(context, R.layout.view_shimmer_loading, this)
         view_shimmer.layoutManager = GridLayoutManager(context, 2)
         view_shimmer.adapter = ShimmerLoadingAdapter(20, TYPE_PRODUCT_GRID)
+        view_shimmer.setOnTouchListener { view, motionEvent -> return@setOnTouchListener true }
     }
 
     class ShimmerLoadingAdapter(private val size: Int, private val type: Int) :

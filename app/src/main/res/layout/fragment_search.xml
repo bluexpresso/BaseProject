@@ -13,40 +13,77 @@
         android:background="@color/secondaryBackground"
         tools:context=".ui.home.search.SearchFragment">
 
+        <com.idslogic.levelshoes.utils.CustomToolbarCompact
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:background="@color/toolbarColorDark"
+            app:contentColor="@color/toolbarContentOnDark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftIcon="@drawable/ic_baseline_close_24"
+            app:titleText="@string/menu" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/search_box"
             style="@style/SearchBoxStyleDark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/spacing_20"
-            android:layout_marginTop="@dimen/spacing_56"
+            android:layout_marginHorizontal="@dimen/spacing_32"
+            android:layout_marginTop="@dimen/spacing_24"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            app:boxBackgroundColor="@color/black_11"
+            app:hintAnimationEnabled="false"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:startIconTint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textinputedittext_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="true"
                 android:hint="@string/search_here"
-                android:textAppearance="@style/TextBodySmallRegular"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/TextBodySmall2"
                 android:textColor="@color/white"
+                android:textColorHint="@color/hintTextColorOnDark"
                 android:textCursorDrawable="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <View
+            android:id="@+id/view_mask_search"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/search_box"
+            app:layout_constraintEnd_toEndOf="@id/search_box"
+            app:layout_constraintStart_toStartOf="@id/search_box"
+            app:layout_constraintTop_toTopOf="@id/search_box" />
+
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/slider_tab_layout"
+            android:id="@+id/category_slider_tab_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/spacing_40"
-            android:layout_marginTop="@dimen/spacing_32"
+            android:layout_marginHorizontal="@dimen/spacing_48"
+            android:layout_marginStart="@dimen/spacing_12"
+            android:layout_marginTop="@dimen/spacing_20"
+            android:layout_marginEnd="@dimen/spacing_12"
             android:backgroundTint="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_box"
             app:tabIndicatorColor="@color/tabIndicatorColor"
             app:tabIndicatorFullWidth="false"
-            app:tabTextColor="@color/tabIndicatorColor">
+            app:tabPaddingBottom="@dimen/spacing_neg_20"
+            app:tabTextAppearance="@style/TabTextAppearance"
+            app:tabTextColor="@color/white"
+
+            >
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_women"
@@ -65,7 +102,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/kids" />
-
         </com.google.android.material.tabs.TabLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_56"
+            android:layoutAnimation="@anim/search_categories_layout_animation"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/category_slider_tab_layout"
+            app:tabIndicatorColor="@color/tabIndicatorColor"
+            tools:listitem="@layout/item_category_search" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

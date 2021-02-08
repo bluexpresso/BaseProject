@@ -1,10 +1,12 @@
 package com.idslogic.levelshoes.ui.home.landing
 
+import android.animation.Animator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -52,7 +54,7 @@ class LandingFragment : BaseFragment() {
         val binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_landing, container, false)
                     as FragmentLandingBinding
-        initData()
+        initData(binding)
         initDismissibleCard(binding)
         initProductListNavigation(binding)
         initProductDetailsNavigation(binding)
@@ -65,17 +67,17 @@ class LandingFragment : BaseFragment() {
     }
 
     private fun initProductDetailsNavigation(binding: FragmentLandingBinding) {
-        landingListAdapter.onProductSelected =
-            { product: BaseModel.Hit<Product>, transitionImage: AppCompatImageView ->
-                findNavController().navigate(
-                    R.id.action_to_product_details, Bundle().apply {
-                        putString(ARG_PRODUCT, Gson().toJson(product))
-                    }, null, FragmentNavigatorExtras(
-                        transitionImage to
-                                transitionImage.transitionName
-                    )
-                )
-            }
+//        landingListAdapter.onProductSelected =
+//            { product: BaseModel.Hit<Product>, transitionImage: AppCompatImageView ->
+//                findNavController().navigate(
+//                    R.id.action_to_product_details, Bundle().apply {
+//                        putString(ARG_PRODUCT, Gson().toJson(product))
+//                    }, null, FragmentNavigatorExtras(
+//                        transitionImage to
+//                                transitionImage.transitionName
+//                    )
+//                )
+//            }
     }
 
     private fun initProductListNavigation(binding: FragmentLandingBinding) {
@@ -104,15 +106,17 @@ class LandingFragment : BaseFragment() {
         }
     }
 
-    private fun initData() {
+    private fun initData(binding: FragmentLandingBinding) {
         val genderToSelect =
             if (landingListAdapter.landingItems.isNullOrEmpty()) viewModel.getSelectedGender()
             else landingListAdapter.currentSelectedTab
         activityViewModel.landingLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 LOADING -> {
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
                     landingListAdapter.selectedCurrency = viewModel.getSelectedCurrency()
                     list_landing.layoutManager = LandingLinearLayoutManager(
                         requireContext(),
@@ -122,7 +126,7 @@ class LandingFragment : BaseFragment() {
                     landingListAdapter.setItems(it?.data, genderToSelect)
                 }
                 ERROR -> {
-
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         })

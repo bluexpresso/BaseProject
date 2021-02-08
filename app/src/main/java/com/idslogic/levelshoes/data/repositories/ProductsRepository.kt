@@ -34,10 +34,10 @@ class ProductsRepository(
             )
         ).execute()
 
-    fun getCategoryBasedProductsFromKlevu(categoryId: String): Response<ListingProductResponse> {
+    fun getCategoryBasedProductsFromKlevu(categoryId: String,gender:String? = null): Response<ListingProductResponse> {
         return api.getCategoryBasedProductsFromKlevuIdSearch(
             APIUrl.getCategoryBasedProductsFromKlevuIdSearch(),
-            ProductListingRequestBuilder.getCategoryBasedProductsQueryParams(categoryId, "*")
+            ProductListingRequestBuilder.getCategoryBasedProductsQueryParams(categoryId, "*",gender = gender)
         ).execute()
     }
 

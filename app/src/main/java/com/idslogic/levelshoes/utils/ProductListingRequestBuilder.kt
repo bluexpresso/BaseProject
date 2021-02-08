@@ -1,9 +1,8 @@
 package com.idslogic.levelshoes.utils
 
-import android.util.Log
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import timber.log.Timber
+import com.idslogic.levelshoes.network.APIUrl
 
 class ProductListingRequestBuilder {
     companion object {
@@ -44,11 +43,13 @@ class ProductListingRequestBuilder {
             val typeId = JsonObject()
             typeId.addProperty("type_id", "configurable")
             matchTypeId.add("match", typeId)
-
-            val matchCategoryId = JsonObject()
-            val categoryId = JsonObject()
-            categoryId.addProperty("category_ids", category)
-            matchCategoryId.add("match", categoryId)
+            var matchCategoryId: JsonObject? = null
+            if (category > 0) {
+                matchCategoryId = JsonObject()
+                val categoryId = JsonObject()
+                categoryId.addProperty("category_ids", category)
+                matchCategoryId.add("match", categoryId)
+            }
 
             val termsVisibility = JsonObject()
             val visibility = JsonArray()
@@ -76,7 +77,8 @@ class ProductListingRequestBuilder {
             range.add("range", configQty)
 
             must.add(matchTypeId)
-            must.add(matchCategoryId)
+            if (matchCategoryId != null)
+                must.add(matchCategoryId)
             must.add(termsVisibility)
             must.add(matchStatus)
             must.add(matchIsInStock)
@@ -161,7 +163,58 @@ class ProductListingRequestBuilder {
         }
 
         fun getCategoryBasedProductsQueryParams(
-            category: String?, searchTerm: String
+            category: String?, searchTerm: String,
+            languageCode: String = "en", storeCode: String? = "ae",
+            gender: String? = null
+        ): HashMap<String, String> {
+            return linkedMapOf<String, String>().apply {
+                if (category != null) {
+                    put("category", "KLEVU_PRODUCT $category")
+                } else {
+                    put("category", "KLEVU_PRODUCT")
+                }
+                put("isCategoryNavigationRequest", "true")
+                put("sortOrder", "rel")
+                put("visibility", "search")
+                put("paginationStartsFrom", "0")
+                put("showOutOfStockProducts", "false")
+                put("ticket", APIUrl.getKlevuSkuCode(languageCode, storeCode ?: "ae"))
+                put("noOfResults", "1000")
+                put("enableMultiSelectFilters", "true")
+                put("resultForZero", "1")
+                put("enableFilters", "true")
+                put("responseType", "json")
+                if (gender != null && (category?.contains(
+                        "designer",
+                        true
+                    ) == true || category?.contains(
+                        "العلامة", true
+                    ) == true ||
+                            category?.contains(
+                                "collections",
+                                true
+                            ) == true || category?.contains(
+                        "التشكيلات", true
+                    ) == true
+                            )
+                ) {
+                    put(
+                        "applyFilters", when {
+                            gender.equals(
+                                GENDER_MEN, true
+                            ) -> "gender:Men"
+                            gender.equals(GENDER_WOMEN, true) -> "gender:Women"
+                            else -> gender
+                        }
+                    )
+                }
+                put("term", searchTerm)
+            }
+        }
+
+        fun getSearchProductsQueryParams(
+            category: String?, searchTerm: String, gender: String,
+            languageCode: String = "en", storeCode: String? = "ae"
         ): HashMap<String, String> {
             return linkedMapOf<String, String>().apply {
                 if (category != null) {
@@ -180,6 +233,16 @@ class ProductListingRequestBuilder {
                 put("resultForZero", "1")
                 put("enableFilters", "true")
                 put("responseType", "json")
+                if (gender != GENDER_KIDS)
+                    put(
+                        "applyFilters", when {
+                            gender.equals(
+                                GENDER_MEN, true
+                            ) -> "gender:Men"
+                            gender.equals(GENDER_WOMEN, true) -> "gender:Women"
+                            else -> gender
+                        }
+                    )
                 put("term", searchTerm)
             }
         }

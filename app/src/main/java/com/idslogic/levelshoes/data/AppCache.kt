@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.idslogic.levelshoes.data.models.Country
 import com.idslogic.levelshoes.utils.*
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
 
 class AppCache @Inject constructor(context: Context) {
@@ -18,6 +19,7 @@ class AppCache @Inject constructor(context: Context) {
         const val KEY_GENDER = "key_gender"
         const val SHARED_PREFERENCE = "level_shoes_cache"
         const val KEY_ONBOARDING_COMPLETED = "key_onboarding_completed"
+        const val KEY_RECENT_SEARCHES = "key_recent_searches"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -80,4 +82,23 @@ class AppCache @Inject constructor(context: Context) {
     }
 
     fun isOnboardingCompleted() = sharedPreferences.getBoolean(KEY_ONBOARDING_COMPLETED, false)
+
+
+    fun saveRecentSearch(text: String) {
+        var searches = getRecentSearches()
+        if (searches == null) searches = arrayListOf()
+        if (searches.contains(text)) searches.remove(text)
+        searches.add(0, text)
+        if (searches.size > 2) searches.removeLast()
+        sharedPreferences.edit().putString(KEY_RECENT_SEARCHES, Gson().toJson(searches)).apply()
+    }
+
+    fun getRecentSearches(): ArrayList<String>? {
+        val searches = sharedPreferences.getString(KEY_RECENT_SEARCHES, "") ?: ""
+        return if (searches.isNotEmpty()) {
+            Gson().fromJson(searches, object : TypeToken<ArrayList<String>>() {}.type)
+        } else {
+            null
+        }
+    }
 }

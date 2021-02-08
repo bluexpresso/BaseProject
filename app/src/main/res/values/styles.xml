@@ -126,6 +126,12 @@
         <!--        <item name="lineHeight">24dp</item>-->
     </style>
 
+    <style name="TextBodySmallMedium" parent="RegularText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.0</item>
+        <!--        <item name="lineHeight">24dp</item>-->
+    </style>
+
     <style name="TabTextAppearance" parent="TextBodySmallRegular">
         <item name="android:letterSpacing">0.093</item>
         <item name="textAllCaps">true</item>
@@ -143,6 +149,10 @@
         <item name="android:textSize">18sp</item>
         <!--        <item name="lineHeight">24dp</item>-->
         <item name="android:textColor">@color/textOnSurface</item>
+    </style>
+
+    <style name="TextBodySmall2" parent="TextBodySmall">
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextPriceSmall" parent="LightText">
@@ -343,12 +353,9 @@
         <item name="backgroundTint">@color/language_button_background_colors</item>
     </style>
 
-    <style name="SearchBoxStyleDark" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+    <style name="SearchBoxStyleDark" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="hintTextAppearance">@style/TextBodySmall</item>
         <item name="hintTextColor">@color/gray_78</item>
-        <item name="endIconTint">@color/white</item>
-        <item name="endIconDrawable">@drawable/ic_baseline_close_24</item>
-        <item name="endIconMode">clear_text</item>
         <item name="boxBackgroundColor">@color/black_11</item>
         <item name="startIconDrawable">@drawable/ic_baseline_search_24</item>
         <item name="startIconTint">@color/white</item>
@@ -360,5 +367,11 @@
         <item name="android:indeterminate">true</item>
         <item name="android:indeterminateBehavior">repeat</item>
         <item name="android:indeterminateTint">@color/black</item>
+    </style>
+
+    <style name="ProgressBarLight" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+        <item name="android:indeterminateTint">@color/white</item>
     </style>
 </resources>

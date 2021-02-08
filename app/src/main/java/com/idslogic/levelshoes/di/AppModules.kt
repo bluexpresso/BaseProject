@@ -12,6 +12,7 @@ import com.idslogic.levelshoes.network.API
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.idslogic.levelshoes.data.repositories.CategoryRepository
 import com.idslogic.levelshoes.data.repositories.ProductsRepository
 import dagger.Module
 import dagger.Provides
@@ -133,5 +134,13 @@ class AppModules {
         appCache: AppCache,
         appDatabase: AppDatabase
     ) = ProductsRepository(api, appCache, appDatabase)
+
+    @Provides
+    @Singleton
+    internal fun providesCategoryRepository(
+        api: API,
+        appCache: AppCache,
+        appDatabase: AppDatabase
+    ) = CategoryRepository(api, appCache)
 
 }

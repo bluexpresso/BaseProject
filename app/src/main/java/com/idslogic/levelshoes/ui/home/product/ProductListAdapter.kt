@@ -1,14 +1,9 @@
 package com.idslogic.levelshoes.ui.home.product
 
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +15,6 @@ import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.databinding.ItemProductInListBinding
 import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.formatPrice
-import java.util.*
 
 class ProductListAdapter(val currency: String) :
     PagingDataAdapter<BaseModel.Hit<Product>, ProductListAdapter.ViewHolder>(DiffUtils) {
@@ -48,7 +42,7 @@ class ProductListAdapter(val currency: String) :
                     }
                 }
                 GlideApp.with(binding.image)
-                    .load(BuildConfig.IMAGE_URL.plus(source.image))
+                    .load(BuildConfig.IMAGE_URL_LIVE.plus(source.image))
                     .into(binding.image)
             }
         }

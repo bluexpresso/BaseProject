@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/secondaryBackground"
+        tools:context=".ui.home.search.SearchResultsFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.home.search.SearchResultsFragment">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/search_box"
+                    style="@style/SearchBoxStyleDark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_24"
+                    android:layout_marginTop="@dimen/spacing_56"
+                    android:layout_marginEnd="@dimen/spacing_12"
+                    app:boxBackgroundColor="@color/black_11"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toStartOf="@id/right_close_icon_result"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:focusable="true"
+                        android:hint="@string/search_here"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textAlignment="viewStart"
+                        android:textAppearance="@style/TextBodySmall2"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/hintTextColorOnDark"
+                        android:textCursorDrawable="@color/white" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/right_close_icon_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_32"
+                    android:backgroundTint="@android:color/transparent"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@id/search_box"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/search_box"
+                    app:srcCompat="@drawable/ic_baseline_close_24" />
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/category_slider_tab_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_40"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    android:backgroundTint="@android:color/transparent"
+                    android:paddingBottom="@dimen/spacing_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_box"
+                    app:tabIndicatorColor="@color/tabIndicatorColor"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabTextAppearance="@style/TabTextAppearance"
+                    app:tabTextColor="@color/white">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tab_women"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/women" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tab_men"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/men" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/tab_kids"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kids" />
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/search_item_pager"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/list_category_search" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_recent_trending"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_24"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/category_slider_tab_layout" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_category_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_24"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/category_slider_tab_layout"
+                    tools:listitem="@layout/item_recent_trending_values"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

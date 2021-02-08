@@ -30,7 +30,11 @@ interface API {
     ): Call<ListingProductResponse>
 
     @POST
-    fun getAttributes(@Url url: String, @Body request: JsonObject): Call<JsonObject>
+    fun getAttributes(@Url url: String,@Body request:JsonObject): Call<JsonObject>
+
+
+    @POST
+    fun getCategory(@Url url: String,@Body request: JsonObject):Call<BaseModel<CategorySearch>> //returns check   //@Body request: JsonObject
 
     @GET
     fun getCategoryDetailFromId(@Url url: String): Call<BaseModel.Hit<CategoryResponse>>
@@ -40,4 +44,5 @@ interface API {
         @Url url: String,
         @QueryMap(encoded = false) queryMap: HashMap<String, String>
     ): Call<ListingProductResponse>
+
 }

@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.transition.Slide
+import com.idslogic.levelshoes.R
 
 open class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,11 +19,17 @@ open class BaseFragment : Fragment() {
             if (it != "LandingFragment") {
                 showStatusBar()
             }
-            if (it == "ProductsListFragment") {
+            if (it == "ProductsListFragment" || it == "SubCategoryFragment") {
                 enterTransition = Slide().apply {
-                    slideEdge = Gravity.RIGHT
+                    slideEdge = Gravity.END
                 }
             }
+        }
+    }
+
+    fun changeStatusBarColor(color: Int) {
+        activity?.window?.apply {
+            statusBarColor = ContextCompat.getColor(requireContext(), color)
         }
     }
 

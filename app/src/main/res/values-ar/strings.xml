@@ -31,7 +31,7 @@
     <string name="english">English</string>
     <string name="arabic">عربى</string>
     <string name="something_is_not_right">Something is not right</string>
-    <string name="search_here">Search here</string>
+    <string name="search_here">البحث هنا</string>
     <string name="add_to_bag">Add To Bag</string>
     <string name="product_details">Product Details</string>
     <string name="editorial_notes">Editorial Notes</string>
@@ -42,4 +42,13 @@
     <string name="sign_in">تسجيل الدخول</string>
     <string name="view_all_collection">عرض جميع التشكيلات</string>
     <string name="sign_in_to_account">تسجيل حساب أو تسجيل الدخول</string>
+    <string name="no_search_results_title">لا توجد نتائج</string>
+    <string name="no_search_results_body"> عذرًا، لم نتمكن من العثور على أي منتج يطابق بحثك</string>
+    <string name="searchresult">نتائج البحث</string>
+    <string name="recent_items">عمليات البحث الأخيرة</string>
+    <string name="trending_items">عمليات البحث الشائعة</string>
+    <string name="menu">قائمة طعام</string>
+    <string name="number_of_products">%d products</string>
+    <string name="category_search_result_placeholder">%s > %s</string>
+
 </resources>

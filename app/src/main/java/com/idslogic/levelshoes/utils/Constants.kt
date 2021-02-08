@@ -3,6 +3,9 @@ package com.idslogic.levelshoes.utils
 const val GENDER_MEN = "mobileapp_landing_men"
 const val GENDER_WOMEN = "mobileapp_landing_women"
 const val GENDER_KIDS = "mobileapp_landing_kids"
+const val GENDER_BOYS = "mobileapp_landing_boys"
+const val GENDER_GIRLS = "mobileapp_landing_girls"
+const val GENDER_UNISEX = "mobileapp_landing_unisex"
 const val LANGUAGE_ENGLISH = "en"
 const val LANGUAGE_ARABIC = "ar"
 const val DEFAULT_STARTUP_LANGUAGE = LANGUAGE_ENGLISH
@@ -20,6 +23,7 @@ const val BOX_TYPE_ADDITIONAL_PRODUCTS_VIEW = "additionalproduct_view"
 const val GENDER_ID_MEN = 39
 const val GENDER_ID_WOMEN = 61
 const val GENDER_ID_KIDS = 1610
+const val TERM_VAL = "srinivas_ankur_android"
 val GENDER_KIDS_ARRAY = hashMapOf(
     Pair("KIDS", 1610),
     Pair("BOYS", 88), Pair("GIRLS", 109), Pair("UNISEX", 1430)
@@ -42,6 +46,21 @@ const val CATEGORY_WOMEN = "Women"
 const val CATEGORY_KIDS = "Kids"
 const val CATEGORY_BOY = "Boy"
 const val CATEGORY_GIRL = "Girl"
+const val CATEGORY_UNISEX = "Unisex"
+const val CATEGORY_BABY = "Baby"
+const val GENDER_ID_MEN_SEARCH = 122
+const val GENDER_ID_WOMEN_SEARCH = 3
+const val GENDER_ID_KIDS_SEARCH = 209
+const val DESIGNERS = "Designers"
+const val COLLECTIONS = "Collections"
+const val VIEW_ALL_DESIGNERS_MEN_ID = "1671"
+const val VIEW_ALL_DESIGNERS_WOMEN_ID = "1655"
+const val VIEW_ALL_DESIGNERS_KID_ID = "1684"
+
+const val MENU_ITEM_TYPE_LINK = "link"
+const val MENU_ITEM_TYPE_DEFAULT = "default"
+const val MENU_ITEM_TYPE_TITLE = "title"
+const val NO_CATEGORY = -1
 fun getStoreCode(country: String?, selectedLanguage: String) =
     MAGNETO.plus("_").plus(country ?: DEFAULT_COUNTRY).plus("_").plus(selectedLanguage)
 
@@ -78,4 +97,16 @@ val productFields = arrayOf(
     "special_to_date",
     "lvl_non_purchasable",
     "special_from_date"
+)
+
+
+val categorySearchFields = arrayOf(
+    "name",
+    "id",
+    "menu_item_type",
+    "column_breakpoint",
+    "parent_id",
+    "is_active",
+    "include_in_menu",
+    "children_data.name"
 )
