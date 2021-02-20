@@ -41,7 +41,8 @@ class CountryDropdownView @JvmOverloads constructor(
         choose_country_autocomplete.setOnItemClickListener { adapterView, view, i, l ->
             selectedCountry = adapter.objects[i]
             icon.visibility = View.VISIBLE
-            loadSVG(context, selectedCountry?.flag ?: "").into(icon)
+//            loadSVG(context, selectedCountry?.flag ?: "").into(icon)
+            icon.setImageResource(getCountryFlag(selectedCountry?.storeCode))
             choose_country_autocomplete.setText(selectedCountry?.name)
             onCountrySelected?.invoke(selectedCountry)
         }
@@ -60,5 +61,18 @@ class CountryDropdownView @JvmOverloads constructor(
         text_input.isEnabled = isEnabled
         choose_country_autocomplete.isEnabled = isEnabled
         underline.isEnabled = isEnabled
+    }
+
+    companion object {
+        fun getCountryFlag(countryCode: String?): Int {
+            return when (countryCode) {
+                "ae" -> R.drawable.ic_flag_ae
+                "bh" -> R.drawable.ic_flag_bh
+                "kw" -> R.drawable.ic_flag_kw
+                "om" -> R.drawable.ic_flag_om
+                "sa" -> R.drawable.ic_flag_sa
+                else -> 0
+            }
+        }
     }
 }

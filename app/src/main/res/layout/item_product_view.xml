@@ -16,7 +16,7 @@
             android:layout_width="@dimen/pager_product_image_dimension"
             android:layout_height="@dimen/pager_product_image_dimension"
             android:scaleType="centerCrop"
-            android:transitionName="transition_image"
+            android:transitionName="product_transition_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />

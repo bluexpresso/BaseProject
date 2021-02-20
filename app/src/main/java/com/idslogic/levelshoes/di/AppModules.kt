@@ -3,41 +3,42 @@ package com.idslogic.levelshoes.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.idslogic.levelshoes.BuildConfig
-import com.idslogic.levelshoes.data.AppCache
-import com.idslogic.levelshoes.data.AppDatabase
-import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
-import com.idslogic.levelshoes.data.repositories.OnboardingRepository
-import com.idslogic.levelshoes.network.API
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.idslogic.levelshoes.BuildConfig
+import com.idslogic.levelshoes.R
+import com.idslogic.levelshoes.data.AppCache
+import com.idslogic.levelshoes.data.AppDatabase
 import com.idslogic.levelshoes.data.repositories.CategoryRepository
+import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
+import com.idslogic.levelshoes.data.repositories.OnboardingRepository
 import com.idslogic.levelshoes.data.repositories.ProductsRepository
+import com.idslogic.levelshoes.network.API
+import com.idslogic.levelshoes.utils.isInternetAvailable
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import java.net.HttpURLConnection
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
-class AppModules {
-    companion object {
-        private const val CACHE_SIZE = 10L * 1024 * 1024   //10MB
-        private const val TIMEOUT = 30L    // Seconds
-        private const val DATABASE_NAME = "app_database"
-    }
-
+@InstallIn(SingletonComponent::class)
+object AppModules {
+    private const val CACHE_SIZE = 10L * 1024 * 1024   //10MB
+    private const val TIMEOUT = 30L    // Seconds
+    private const val DATABASE_NAME = "app_database"
 
     @Provides
     @Singleton
@@ -49,17 +50,22 @@ class AppModules {
             if (!token.isNullOrBlank()) {
                 builder.addHeader("Authorization", String.format("Token %s", token))
             }
-            val response = it.proceed(builder.build())
-            if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            if (!isInternetAvailable(context)) {
+                throw NoInternetException(context)
+            } else {
+                val response = it.proceed(builder.build())
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
 //                logOutUser(context,appCache)
+                }
+                response
             }
-            response
         }
     }
 
 
-    @Singleton
+    
     @Provides
+    @Singleton
     fun provideAPI(gson: Gson, okHttpClient: OkHttpClient) = Retrofit.Builder()
         .client(okHttpClient)
         .baseUrl(BuildConfig.REST_ENDPOINT)
@@ -109,38 +115,10 @@ class AppModules {
     internal fun provideAppDatabase(@ApplicationContext context: Context) =
         Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
 
-    @Provides
-    @Singleton
-    internal fun providesConfigurationRepository(
-        api: API,
-        appCache: AppCache,
-        appDatabase: AppDatabase
-    ) =
-        ConfigurationRepository(api, appCache, appDatabase)
-
-    @Provides
-    @Singleton
-    internal fun providesOnboardingRepository(
-        api: API,
-        appCache: AppCache,
-        appDatabase: AppDatabase
-    ) =
-        OnboardingRepository(api, appCache, appDatabase)
-
-    @Provides
-    @Singleton
-    internal fun providesProductsRepository(
-        api: API,
-        appCache: AppCache,
-        appDatabase: AppDatabase
-    ) = ProductsRepository(api, appCache, appDatabase)
-
-    @Provides
-    @Singleton
-    internal fun providesCategoryRepository(
-        api: API,
-        appCache: AppCache,
-        appDatabase: AppDatabase
-    ) = CategoryRepository(api, appCache)
+    class NoInternetException(private val context: Context) : IOException() {
+        override fun getLocalizedMessage(): String {
+            return context.getString(R.string.no_internet_message)
+        }
+    }
 
 }

@@ -5,17 +5,21 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import com.idslogic.levelshoes.data.models.BaseModel
 import com.idslogic.levelshoes.data.models.Product
+import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.data.repositories.OnboardingRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProductDetailsViewModel @ViewModelInject constructor(
-    private val onboardingRepository: OnboardingRepository,
+@HiltViewModel
+class ProductDetailsViewModel @Inject constructor(
+    private val configurationRepository: ConfigurationRepository,
     application: Application
 ) : AndroidViewModel(application) {
     private var selectedCurrency: String? = null
-    lateinit var product: BaseModel.Hit<Product>
+    var product: BaseModel.Hit<Product>? = null
     fun getCurrency(): String {
         if (selectedCurrency == null) {
-            selectedCurrency = onboardingRepository.getSelectedCountry().currency ?: "AED"
+            configurationRepository.getCurrency().also { selectedCurrency = it }
         }
         return selectedCurrency!!
     }

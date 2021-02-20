@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:animateLayoutChanges="true"
+        tools:context="ui.home.myaccount.MyAccountBeforeLoginFragment">
+
+        <com.idslogic.levelshoes.utils.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftIcon="@drawable/ic_baseline_close_24"
+            app:titleText="@string/my_account" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.home.myaccount.MyAccountBeforeLoginFragment">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/register_sign_in"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_56"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:text="@string/my_account"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+             />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/register_sign_in_text"
+            style="@style/TextBodyRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_16"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:layout_marginEnd="@dimen/spacing_40"
+            android:text="@string/register_signin_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/register_sign_in" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/register"
+            style="@style/SecondaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_32"
+            android:text="@string/register"
+            android:textColor="@color/textOnSurface"
+            app:layout_constraintEnd_toStartOf="@id/sign_in"
+            app:layout_constraintStart_toStartOf="@id/register_sign_in_text"
+            app:layout_constraintTop_toBottomOf="@id/register_sign_in_text" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sign_in"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_8"
+            android:layout_marginTop="@dimen/spacing_32"
+            android:layout_marginEnd="@dimen/spacing_20"
+            android:textAllCaps="true"
+            android:text="@string/sign_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/register"
+            app:layout_constraintTop_toBottomOf="@id/register_sign_in_text" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/select_gender"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_72"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:text="@string/account_category"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/register" />
+
+        <com.idslogic.levelshoes.custom.CustomGenderSelection
+            android:id="@+id/select_gender_custom_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_20"
+            android:layout_marginHorizontal="@dimen/spacing_20"
+            android:text="@string/account_category"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/select_gender"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/my_location"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_72"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:text="@string/account_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/select_gender_custom_view" />
+
+        <com.idslogic.levelshoes.custom.CountryDropdownView
+            android:id="@+id/select_location_country"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_20"
+            android:layout_marginTop="@dimen/spacing_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/my_location"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/choose_language"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_72"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:text="@string/my_language"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/select_location_country" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/language_english"
+            style="@style/LanguageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_32"
+            android:text="@string/english"
+            app:layout_constraintEnd_toStartOf="@id/language_arabic"
+            app:layout_constraintStart_toStartOf="@id/choose_language"
+            app:layout_constraintTop_toBottomOf="@id/choose_language" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/language_arabic"
+            style="@style/LanguageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_8"
+            android:layout_marginTop="@dimen/spacing_32"
+            android:layout_marginEnd="@dimen/spacing_20"
+            android:text="@string/arabic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/language_english"
+            app:layout_constraintTop_toBottomOf="@id/choose_language" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/push_notification"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_72"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:text="@string/account_push_notification"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/language_english" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/push_notification_description"
+            style="@style/TextBodyRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_16"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:text="@string/account_push_notification_description"
+            android:maxLines="2"
+            android:layout_marginHorizontal="@dimen/spacing_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/push_notification" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    app:srcCompat="@drawable/ic_switch_thumb"
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_marginEnd="@dimen/spacing_12"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:layout_constraintTop_toBottomOf="@id/push_notification"
+                   app:layout_constraintEnd_toEndOf="parent">
+
+                </androidx.appcompat.widget.AppCompatImageButton>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/information_help"
+            style="@style/TextHeading4.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_72"
+            android:layout_marginStart="@dimen/spacing_20"
+            android:text="@string/information_help"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/push_notification_description" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_20"
+            android:layout_marginTop="@dimen/spacing_32"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/information_help"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

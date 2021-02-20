@@ -15,11 +15,17 @@ data class CategorySearch(
     @SerializedName("menu_item_type")
     var menuItemType: String?,
     @Expose
+    @SerializedName("menu_item_link")
+    var menuItemLink: String?,
+    @Expose
     @SerializedName("id")
     var id: Int?,
     @SerializedName("children_data")
     @Expose
     var childrenData: ArrayList<CategorySearch>?,
+    @SerializedName("include_in_menu")
+    @Expose
+    var includeInMenu: Int?
 ) : Serializable
 
 

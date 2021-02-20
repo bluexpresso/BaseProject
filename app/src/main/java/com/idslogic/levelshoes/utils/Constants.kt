@@ -51,7 +51,7 @@ const val CATEGORY_BABY = "Baby"
 const val GENDER_ID_MEN_SEARCH = 122
 const val GENDER_ID_WOMEN_SEARCH = 3
 const val GENDER_ID_KIDS_SEARCH = 209
-const val DESIGNERS = "Designers"
+const val DESIGNERS = "designers"
 const val COLLECTIONS = "Collections"
 const val VIEW_ALL_DESIGNERS_MEN_ID = "1671"
 const val VIEW_ALL_DESIGNERS_WOMEN_ID = "1655"
@@ -108,5 +108,15 @@ val categorySearchFields = arrayOf(
     "parent_id",
     "is_active",
     "include_in_menu",
+    "menu_item_link",
     "children_data.name"
+)
+val gender_val= arrayOf(
+    "Male",
+    "Female"
+)
+val title_val= arrayOf(
+    "Mr.",
+    "Ms.",
+    "Mrs."
 )

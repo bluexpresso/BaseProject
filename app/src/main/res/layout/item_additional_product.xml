@@ -28,7 +28,7 @@
             android:layout_width="@dimen/additional_product_width"
             android:layout_height="@dimen/additional_product_height"
             android:layout_marginStart="@dimen/spacing_24"
-            android:transitionName="transition_image"
+            android:transitionName="product_transition_image"
             app:layout_constraintStart_toEndOf="@id/serial_number"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />

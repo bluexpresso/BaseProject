@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/white"
+        tools:context="ui.home.shoppingbag.OrderDetailsFragment">
+
+        <com.idslogic.levelshoes.utils.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftIcon="@drawable/ic_arrow_left_alt_24dp_black"
+            app:rightIcon="@drawable/ic_baseline_close_24"
+            app:titleText="@string/order_details" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.home.shoppingbag.OrderDetailsFragment">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/order_status"
+                    style="@style/TextHeading4.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_40"
+                    android:text="@string/order_status"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/delivered"
+                    style="@style/MediumText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    android:layout_marginEnd="@dimen/spacing_32"
+                    android:text="@string/delivered"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/order_status" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/your_order_number"
+                    style="@style/TextHeading4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    android:text="@string/your_order_number"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/delivered" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/order_number"
+                    style="@style/TextHeading4.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    tools:text="01786354"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/your_order_number" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/shipping_address"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    android:text="@string/shipping_add"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/order_number" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/home"
+                    style="@style/TextHeading4.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    android:text="@string/home"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shipping_address" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/address_edit_input"
+                    style="@style/InputEditTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_32"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    app:hintAnimationEnabled="false"
+                    app:hintTextAppearance="@style/TextBodySmall"
+                    app:hintTextColor="@color/hintTextColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/address_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:cursorVisible="true"
+                        android:inputType="textMultiLine"
+                        android:textAlignment="viewStart"
+                        android:textAppearance="@style/TextBodySmall2"
+                        android:textColor="@color/black"
+                        android:textCursorDrawable="@color/black"
+
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/order_date"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    tools:text="09 Feb 2020"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/address_edit_input" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/order_type"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    tools:text="Online Order"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/order_date" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/billing_address"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    android:text="@string/billing_add"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/order_type" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/home_second"
+                    style="@style/TextHeading4.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    android:text="@string/home"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/billing_address" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/billing_address_edit_input"
+                    style="@style/InputEditTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_32"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    app:hintAnimationEnabled="false"
+                    app:hintTextAppearance="@style/TextBodySmall"
+                    app:hintTextColor="@color/hintTextColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_second">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/billing_address_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:cursorVisible="true"
+                        android:inputType="textMultiLine"
+                        android:textAlignment="viewStart"
+                        android:textAppearance="@style/TextBodySmall2"
+                        android:textColor="@color/black"
+                        android:textCursorDrawable="@color/black"
+
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/billing_order_date"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    tools:text="09 Feb 2020"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/billing_address_edit_input" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/your_items"
+                    style="@style/TextBodySmallMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_64"
+                    android:text="@string/your_items"
+                    android:textColor="@color/textOnSurface"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/billing_order_date"
+                    app:layout_goneMarginTop="@dimen/spacing_40"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/item_count"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_40"
+                    android:layout_marginTop="@dimen/spacing_64"
+                    tools:text="2 Items"
+                    android:layout_marginEnd="@dimen/spacing_20"
+                    android:textColor="@color/textOnSurfaceReverse"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/billing_order_date"
+                    app:layout_goneMarginTop="@dimen/spacing_40"
+                     />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/your_items_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/your_items"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/order_summary"
+                    style="@style/TextBodySmallMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_64"
+                    android:text="@string/order_summary"
+                    android:textColor="@color/textOnSurface"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/your_items_recyclerview"
+                    app:layout_goneMarginTop="@dimen/spacing_40"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/summary_item_count"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_64"
+                    tools:text="2 Items"
+                    android:layout_marginEnd="@dimen/spacing_20"
+                    android:textColor="@color/textOnSurfaceReverse"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/order_summary"
+                    app:layout_goneMarginTop="@dimen/spacing_40"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/order_summary_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_32"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/order_summary"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/need_help"
+                    style="@style/SecondaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_64"
+                    android:text="@string/register"
+                    android:layout_marginBottom="@dimen/spacing_32"
+                    android:textColor="@color/textOnSurface"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/order_summary_recyclerview" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

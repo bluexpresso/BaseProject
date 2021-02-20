@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/spacing_8"
+        android:paddingBottom="@dimen/spacing_8"
+        android:background="@color/white">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/women"
+            style="@style/LanguageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_8"
+            android:text="@string/women"
+            app:cornerRadius="@dimen/corner_radius"
+            app:layout_constraintEnd_toStartOf="@+id/men"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/men"
+            style="@style/LanguageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/men"
+            android:textAllCaps="true"
+            app:cornerRadius="@dimen/corner_radius"
+            app:layout_constraintEnd_toEndOf="@id/kids"
+            app:layout_constraintStart_toEndOf="@+id/women"
+            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/kids"
+            style="@style/LanguageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/kids"
+            android:textAllCaps="true"
+            app:cornerRadius="@dimen/corner_radius"
+            android:layout_marginStart="@dimen/spacing_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/men"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

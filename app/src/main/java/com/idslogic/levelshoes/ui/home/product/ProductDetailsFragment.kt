@@ -15,6 +15,8 @@ import com.idslogic.levelshoes.databinding.FragmentProductDetailsBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.idslogic.levelshoes.utils.ARG_PRODUCT
+import com.idslogic.levelshoes.utils.formatPrice
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 
@@ -23,7 +25,6 @@ class ProductDetailsFragment : Fragment() {
     private lateinit var viewModel: ProductDetailsViewModel
 
     companion object {
-        const val ARG_PRODUCT = "arg_product"
         fun newInstance() = ProductDetailsFragment()
     }
 
@@ -47,7 +48,6 @@ class ProductDetailsFragment : Fragment() {
         val binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_product_details, container, false)
                     as FragmentProductDetailsBinding
-        initImages(binding)
         initProductDetails(binding)
         return binding.root
     }
@@ -64,13 +64,15 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun initProductDetails(binding: FragmentProductDetailsBinding) {
-        binding.name.text = viewModel.product.source?.name
-        binding.price.text = String.format(
-            "%d%s",
-            viewModel.product.source?.finalPrice,
-            "AED"
-        )
-        binding.brand.text = viewModel.product.source?.name
+        viewModel.product?.source?.let { product ->
+            binding.name.text = product.name
+            binding.price.text = formatPrice(
+                requireContext(), viewModel.getCurrency(),
+                product.regularPrice, product.finalPrice
+            )
+            binding.brand.text = product.manufacturerName
+            initImages(product, binding)
+        }
         binding.editorialNotes.setHeader(getString(R.string.editorial_notes))
         binding.editorialNotes.setBody(
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
@@ -85,7 +87,7 @@ class ProductDetailsFragment : Fragment() {
         )
     }
 
-    private fun initImages(binding: FragmentProductDetailsBinding) {
+    private fun initImages(product: Product, binding: FragmentProductDetailsBinding) {
         val adapter = ProductImagesPagerAdapter()
         binding.images.adapter = adapter
         TabLayoutMediator(
@@ -94,5 +96,6 @@ class ProductDetailsFragment : Fragment() {
         ) { _, _ ->
 
         }.attach()
+        adapter.setItems(product.mediaGallery)
     }
 }

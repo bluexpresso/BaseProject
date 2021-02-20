@@ -1,15 +1,14 @@
 package com.idslogic.levelshoes.ui
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import com.idslogic.levelshoes.BuildConfig
-import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.AppCache
 import com.idslogic.levelshoes.data.models.BaseModel
 import com.idslogic.levelshoes.data.models.CategorySearch
@@ -17,56 +16,65 @@ import com.idslogic.levelshoes.data.models.Content
 import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.network.Resource
-import com.idslogic.levelshoes.network.Status
+import com.idslogic.levelshoes.network.Status.SUCCESS
 import com.idslogic.levelshoes.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val configurationRepository: ConfigurationRepository,
-    private val appCache: AppCache,
-    application: Application
+    private val appCache: AppCache, application: Application
 ) :
     AndroidViewModel(application) {
+    val clearSearchFocusLiveData = MutableLiveData<Boolean>()
     var disableSearchAnimation = false
-    var searchCategories: HashMap<String, LinkedHashMap<CategorySearch, ArrayList<CategorySearch>?>>? = null
-    var searchTerm : MutableLiveData<String> = MutableLiveData()
-    private val context = application.applicationContext
+    var searchCategories: HashMap<String, LinkedHashMap<CategorySearch, ArrayList<CategorySearch>?>>? =
+        null
+    val filterAppliedLiveData = MutableLiveData(false)
+    var searchTerm: MutableLiveData<String> = MutableLiveData()
+    var selectedSearchTab: Int = -1
     val landingLiveData = MutableLiveData<Resource<HashMap<String, ArrayList<Content>>>>()
     suspend fun getLandingData() {
         val mapLandingData = HashMap<String, ArrayList<Content>>()
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 landingLiveData.postValue(Resource.loading())
-                val cachedLandingData = configurationRepository.getLandingData()
-                if (!BuildConfig.DEBUG && !cachedLandingData.isNullOrEmpty()) {
-                    landingLiveData.postValue(
-                        Resource.success(
-                            cachedLandingData,
-                            200
-                        )
+//                val cachedLandingData = configurationRepository.getLandingData()
+//                if (!BuildConfig.DEBUG && !cachedLandingData.isNullOrEmpty()) {
+//                    landingLiveData.postValue(
+//                        Resource.success(
+//                            cachedLandingData,
+//                            200
+//                        )
+//                    )
+//                }
+
+                val responseMen = configurationRepository.getLandingData(
+                    RequestBuilder.buildGetVersionInfoRequest(
+                        GENDER_MEN
                     )
-                } else {
-                    val responseMen = configurationRepository.getLandingData(
-                        RequestBuilder.buildGetVersionInfoRequest(
-                            GENDER_MEN
-                        )
+                )
+                val responseWomen = configurationRepository.getLandingData(
+                    RequestBuilder.buildGetVersionInfoRequest(
+                        GENDER_WOMEN
                     )
-                    val responseWomen = configurationRepository.getLandingData(
-                        RequestBuilder.buildGetVersionInfoRequest(
-                            GENDER_WOMEN
-                        )
+                )
+                val responseKids = configurationRepository.getLandingData(
+                    RequestBuilder.buildGetVersionInfoRequest(
+                        GENDER_KIDS
                     )
-                    val responseKids = configurationRepository.getLandingData(
-                        RequestBuilder.buildGetVersionInfoRequest(
-                            GENDER_KIDS
-                        )
-                    )
+                )
+                if (responseMen.status == SUCCESS && responseWomen.status == SUCCESS
+                    && responseKids.status == SUCCESS
+                ) {
                     for (i in 0..3) {
                         val response =
                             if (i == 0) responseWomen else if (i == 1) responseMen else responseKids
-                        if (response.status == Status.SUCCESS && response.data?.body() != null) {
+                        if (response.status == SUCCESS && response.data?.body() != null) {
                             if (!response.data.body()?.hits?.hits.isNullOrEmpty()) {
                                 val content =
                                     response.data.body()?.hits?.hits?.get(0)?.source?.content
@@ -155,8 +163,15 @@ class MainViewModel @ViewModelInject constructor(
                             200
                         )
                     )
-                    configurationRepository.saveLandingData(mapLandingData)
+                } else {
+                    landingLiveData.postValue(
+                        Resource.error(
+                            responseMen.message ?: "",
+                            code = responseMen.code ?: -1
+                        )
+                    )
                 }
+//                configurationRepository.saveLandingData(mapLandingData)
             }
         }
     }
@@ -170,8 +185,8 @@ class MainViewModel @ViewModelInject constructor(
         if (contentList.size > 1 && appCache.getAuthToken().isEmpty()) {
             contentList.add(
                 1, Content(
-                    BOX_TYPE_REGISTER_SIGN_IN, 1, context.getString(R.string.sign_in_to_account),
-                    context.getString(R.string.register_sign_in_description), 0, null, null, null
+                    BOX_TYPE_REGISTER_SIGN_IN, 1, "context.getString(R.string.sign_in_to_account)",
+                    "context.getString(R.string.register_sign_in_description)", 0, null, null, null
                 )
             )
         }

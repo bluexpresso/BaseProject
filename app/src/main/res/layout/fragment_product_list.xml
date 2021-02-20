@@ -44,7 +44,6 @@
             android:id="@+id/view_products"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layoutAnimation="@anim/product_list_animation"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/spacing_16"
             android:visibility="gone"

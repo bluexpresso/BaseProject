@@ -6,8 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 import com.idslogic.levelshoes.data.models.BaseModel
 import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.data.repositories.OnboardingRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProductPagerItemViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ProductPagerItemViewModel @Inject constructor(
     application: Application,
     private val onboardingRepository: OnboardingRepository
 ) : AndroidViewModel(application) {

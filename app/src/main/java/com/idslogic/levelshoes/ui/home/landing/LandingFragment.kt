@@ -1,30 +1,22 @@
 package com.idslogic.levelshoes.ui.home.landing
 
-import android.animation.Animator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.idslogic.levelshoes.R
-import com.idslogic.levelshoes.data.models.BaseModel
-import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.databinding.FragmentLandingBinding
 import com.idslogic.levelshoes.network.Status.*
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
-import com.idslogic.levelshoes.ui.home.product.ProductDetailsFragment.Companion.ARG_PRODUCT
+import com.idslogic.levelshoes.ui.home.product.ProductListViewModel
 import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_landing.*
@@ -39,6 +31,7 @@ class LandingFragment : BaseFragment() {
 
     private lateinit var viewModel: LandingViewModel
     private val activityViewModel: MainViewModel by activityViewModels()
+    private val productListViewModel: ProductListViewModel by activityViewModels<ProductListViewModel>()
     private lateinit var landingListAdapter: LandingListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +51,7 @@ class LandingFragment : BaseFragment() {
         initDismissibleCard(binding)
         initProductListNavigation(binding)
         initProductDetailsNavigation(binding)
+        productListViewModel.filterData.value = null
         return binding.root
     }
 

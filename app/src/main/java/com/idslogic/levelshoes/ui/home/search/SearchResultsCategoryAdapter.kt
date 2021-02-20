@@ -7,7 +7,6 @@ import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.models.CategorySearch
 import com.idslogic.levelshoes.databinding.ItemRecentTrendingValuesBinding
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SearchResultsCategoryAdapter :
     RecyclerView.Adapter<SearchResultsCategoryAdapter.ViewHolder>() {
@@ -22,6 +21,10 @@ class SearchResultsCategoryAdapter :
                 listItems[bindingAdapterPosition].first.name,
                 listItems[bindingAdapterPosition].second.name
             )
+            binding.root.setOnClickListener {
+                onCategoryItemClick?.invoke(listItems[bindingAdapterPosition])
+            }
+
         }
     }
 
@@ -43,5 +46,7 @@ class SearchResultsCategoryAdapter :
     }
 
     override fun getItemCount() = listItems.size
+
+    var onCategoryItemClick: ((Pair<CategorySearch, CategorySearch>) -> Unit)? = null
 
 }

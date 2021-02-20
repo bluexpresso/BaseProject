@@ -9,5 +9,13 @@
         android:id="@+id/aToZScreen"
         android:name="com.idslogic.levelshoes.ui.home.atoz.AToZFragment"
         android:label="AtoZFragment"
-        tools:layout="@layout/fragment_a_to_z" />
+        tools:layout="@layout/fragment_a_to_z" >
+        <action
+            android:id="@+id/action_aToZScreen_to_myAccountBeforeLoginFragment"
+            app:destination="@id/myAccountBeforeLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myAccountBeforeLoginFragment"
+        android:name="com.idslogic.levelshoes.ui.home.myaccount.MyAccountBeforeLoginFragment"
+        android:label="MyAccountBeforeLoginFragment" />
 </navigation>

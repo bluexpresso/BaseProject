@@ -19,7 +19,8 @@ class ProductListPagingDataSource(
     private val api: API,
     private val appCache: AppCache,
     private val category: Int,
-    private val productIdsList: ArrayList<ListingProduct>
+    private val productIdsList: ArrayList<ListingProduct>,
+    private val genderFilter : String
 ) :
     PagingSource<Int, BaseModel.Hit<Product>>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BaseModel.Hit<Product>> {
@@ -43,7 +44,8 @@ class ProductListPagingDataSource(
                     ProductListingRequestBuilder.buildCategoryBasedProductListingRequest(
                         0,
                         category,
-                        productIds
+                        productIds,
+                        genderFilter
                     )
                 )
                 if (response.hits.hits.isNullOrEmpty())

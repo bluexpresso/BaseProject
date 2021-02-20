@@ -20,11 +20,14 @@
         android:id="@+id/icon"
         android:layout_width="@dimen/icon_default"
         android:layout_height="@dimen/icon_default"
+        android:layout_marginEnd="@dimen/spacing_12"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/text_input"
+        app:layout_constraintEnd_toStartOf="@id/text_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_input"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        tools:visibility="visible" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input"

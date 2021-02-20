@@ -9,11 +9,14 @@ import com.idslogic.levelshoes.data.models.Country
 import com.idslogic.levelshoes.data.models.Source
 import com.idslogic.levelshoes.data.repositories.OnboardingRepository
 import com.idslogic.levelshoes.network.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class OnboardingViewModel @ViewModelInject constructor(
+@HiltViewModel
+class OnboardingViewModel @Inject constructor(
     private val onboardingRepository: OnboardingRepository, application: Application
 ) : AndroidViewModel(application) {
     val skipIntroLiveData = MutableLiveData<Boolean>()

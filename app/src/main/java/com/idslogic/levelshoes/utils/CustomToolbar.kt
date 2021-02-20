@@ -2,14 +2,14 @@ package com.idslogic.levelshoes.utils
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.AttributeSet
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginLeft
-import com.idslogic.levelshoes.R
 import com.google.android.material.appbar.AppBarLayout
+import com.idslogic.levelshoes.R
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 
 class CustomToolbar @JvmOverloads constructor(
@@ -22,12 +22,15 @@ class CustomToolbar @JvmOverloads constructor(
     private val contentColor: Int
     private val actionButtonEnabled: Boolean
     private val contentInset: Float
+    private val actionText: String?
 
     init {
         context.theme.obtainStyledAttributes(
             attrs, R.styleable.CustomToolbar, 0, 0
         ).apply {
             try {
+                actionText = getString(R.styleable.CustomToolbar_actionText)
+                    ?: ""
                 title = getString(R.styleable.CustomToolbar_titleText)
                     ?: ""
                 leftIcon =
@@ -63,11 +66,30 @@ class CustomToolbar @JvmOverloads constructor(
         title_text.setTextColor(contentColor)
         right_icon.setImageDrawable(rightIcon)
         title_text.text = title
+
         left_icon.setOnClickListener {
             onLeftIconClick?.invoke()
         }
         right_icon.setOnClickListener {
             onRightIconClick?.invoke()
+        }
+
+        if (actionText.isNullOrEmpty()) {
+            right_icon.visibility = VISIBLE
+        } else {
+            right_icon.visibility = GONE
+            action_text.visibility = VISIBLE
+            action_text.text = SpannableString(actionText).apply {
+                setSpan(
+                    UnderlineSpan(),
+                    0,
+                    actionText.length,
+                    SpannableString.SPAN_INCLUSIVE_INCLUSIVE
+                )
+            }
+            action_text.setOnClickListener {
+                onActionButtonClick?.invoke()
+            }
         }
     }
 

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_home"
     app:startDestination="@id/homeScreen">
-
+    <action
+        android:id="@+id/action_to_product_details"
+        app:destination="@id/productDetailsScreen" />
     <fragment
         android:id="@+id/homeScreen"
         android:name="com.idslogic.levelshoes.ui.home.landing.LandingFragment"
@@ -13,9 +15,6 @@
         <action
             android:id="@+id/nav_from_home_to_product_list"
             app:destination="@id/productListScreen" />
-        <action
-            android:id="@+id/action_to_product_details"
-            app:destination="@id/productDetailsScreen" />
     </fragment>
 
     <fragment
@@ -25,14 +24,16 @@
         tools:layout="@layout/fragment_product_list">
         <action
             android:id="@+id/action_to_filters"
-            app:destination="@id/filtersScreen" />
+            app:destination="@id/filtersScreen"
+            app:exitAnim="@anim/fragment_enter_slide"
+            app:popExitAnim="@anim/fragment_exit_slide"/>
         <action
             android:id="@+id/action_to_product_details"
             app:destination="@id/productDetailsScreen" />
     </fragment>
     <fragment
         android:id="@+id/filtersScreen"
-        android:name="com.idslogic.levelshoes.ui.home.filters.FiltersFragment"
+        android:name="com.idslogic.levelshoes.ui.home.product.filters.FiltersFragment"
         android:label="FiltersFragment"
         tools:layout="@layout/fragment_filters" />
     <fragment

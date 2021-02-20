@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.home.product.filters.FiltersPriceFragment">
+
+        <com.idslogic.levelshoes.utils.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftIcon="@drawable/ic_arrow_left_alt_24dp_black"
+            app:actionText="@string/clear"
+            app:titleText="@string/price_lbl"/>
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/rangeslider_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_56"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            android:layout_marginHorizontal="@dimen/spacing_32"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:valueFrom="0.0"
+            android:valueTo="100"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_start_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="250 AED"
+            style="@style/TextBodyRegular"
+            android:layout_marginStart="@dimen/spacing_32"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/rangeslider_price"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_max_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2,300 AED"
+            style="@style/TextBodyRegular"
+            android:layout_marginEnd="@dimen/spacing_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/rangeslider_price"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/apply_filter_button"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_32"
+            android:textAllCaps="true"
+            android:text="@string/aply_filt"
+            android:layout_marginBottom="@dimen/spacing_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

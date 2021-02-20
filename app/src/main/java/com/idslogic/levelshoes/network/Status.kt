@@ -18,18 +18,21 @@ enum class Status {
  * Created by eduardsdenisjonoks  on 8/14/18.
  */
 class Resource<T> constructor(
-        val status: Status,
-        val data: T?,
-        val message: String?,
-        val code: Int?) {
+    val status: Status,
+    val data: T?,
+    val message: String?,
+    val code: Int?
+) {
 
     companion object {
         @JvmStatic
         fun <T> success(data: T?, code: Int = 200): Resource<T> =
-                Resource(Status.SUCCESS, data, null, code)
+            Resource(Status.SUCCESS, data, null, code)
+
         @JvmStatic
-        fun <T> error(message: String?, data: T?, code: Int = -1): Resource<T> =
-                Resource(Status.ERROR, data, message, code)
+        fun <T> error(message: String?, data: T? = null, code: Int = -1): Resource<T> =
+            Resource(status = Status.ERROR, data = data, message = message, code = code)
+
         @JvmStatic
         fun <T> error(): Resource<T> =
             Resource(Status.ERROR, null, null, 401)

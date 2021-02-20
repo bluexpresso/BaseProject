@@ -12,11 +12,14 @@ import com.idslogic.levelshoes.utils.GENDER_KIDS
 import com.idslogic.levelshoes.utils.GENDER_MEN
 import com.idslogic.levelshoes.utils.GENDER_WOMEN
 import com.idslogic.levelshoes.utils.RequestBuilder
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class SplashViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SplashViewModel @Inject constructor(
     var configurationRepository: ConfigurationRepository,
     application: Application
 ) : AndroidViewModel(application) {
@@ -83,7 +86,13 @@ class SplashViewModel @ViewModelInject constructor(
                         }
                     }
                 }
-                versionInfoLiveData.postValue(Resource.success(true, 200))
+                if (responseMen.status == SUCCESS && responseWomen.status == SUCCESS &&
+                    responseKids.status == SUCCESS
+                ) {
+                    versionInfoLiveData.postValue(Resource.success(true, 200))
+                } else {
+                    versionInfoLiveData.postValue(Resource.error())
+                }
             }
         }
     }

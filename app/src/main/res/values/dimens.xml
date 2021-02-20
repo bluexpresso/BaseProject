@@ -9,6 +9,7 @@
     <dimen name="spacing_12">12dp</dimen>
     <dimen name="spacing_64">64dp</dimen>
     <dimen name="text_20">20sp</dimen>
+    <dimen name="corner_radius">22sp</dimen>
     <dimen name="pager_product_image_dimension">312dp</dimen>
     <dimen name="spacing_8">8dp</dimen>
     <dimen name="spacing_20">20dp</dimen>
@@ -16,6 +17,8 @@
     <dimen name="spacing_10">10dp</dimen>
     <dimen name="additional_product_width">112dp</dimen>
     <dimen name="additional_product_height">64dp</dimen>
+    <dimen name="ordered_product_width">144dp</dimen>
+    <dimen name="ordered_product_height">200dp</dimen>
     <dimen name="plp_image_dimension">140dp</dimen>
     <dimen name="spacing_4">4dp</dimen>
     <dimen name="spacing_60">60dp</dimen>
@@ -28,6 +31,7 @@
     <dimen name="spacing_25">25dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="spacing_72">72dp</dimen>
+    <dimen name="large_toolbar_spacing_from_top">32dp</dimen>
 
 
     <!--in Negative-->

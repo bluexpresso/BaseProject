@@ -2,6 +2,7 @@ package com.idslogic.levelshoes.ui.home.landing.viewholders
 
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,7 @@ class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
         mapItems: HashMap<String, ArrayList<Content>>,
         onViewAllProducts: ((Int, String?) -> Unit)?
     ) {
-        val adapter = SliderAdapter(activity,onViewAllProducts)
+        val adapter = SliderAdapter(activity, onViewAllProducts)
         adapter.setItems(
             arrayListOf(
                 mapItems[GENDER_WOMEN]?.get(0),
@@ -51,7 +52,7 @@ class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
                 }
             }
         }.attach()
-        binding.sliderPager.offscreenPageLimit = 3
+        binding.sliderPager.offscreenPageLimit = 2
         initSliderTransition()
     }
 
@@ -80,17 +81,32 @@ class SliderViewHolder(private val binding: ItemLandingSliderBinding) :
         binding.sliderPager.setPageTransformer { page, position ->
             Timber.d("POSITION->$position")
             page.apply {
-                translationX = when {
-                    position <= 0f -> {
-                        -width * position
+                translationX =
+                    if (ViewCompat.getLayoutDirection(binding.sliderPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                        when {
+                            position <= 0f -> {
+                                width * position
+                            }
+                            position <= 1 -> {
+                                1f
+                            }
+                            else -> {
+                                1f
+                            }
+                        }
+                    } else {
+                        when {
+                            position <= 0f -> {
+                                -width * position
+                            }
+                            position <= 1 -> {
+                                1f
+                            }
+                            else -> {
+                                1f
+                            }
+                        }
                     }
-                    position <= 1 -> {
-                        1f
-                    }
-                    else -> {
-                        1f
-                    }
-                }
             }
 
         }

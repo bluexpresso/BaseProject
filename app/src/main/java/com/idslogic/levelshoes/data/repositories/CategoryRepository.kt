@@ -6,26 +6,16 @@ import com.idslogic.levelshoes.data.models.CategorySearch
 import com.idslogic.levelshoes.data.models.ListingProductResponse
 import com.idslogic.levelshoes.network.API
 import com.idslogic.levelshoes.network.APIUrl
-import com.idslogic.levelshoes.utils.ProductListingRequestBuilder
-import com.idslogic.levelshoes.utils.RequestBuilder
-import com.idslogic.levelshoes.utils.TERM_VAL
-import com.idslogic.levelshoes.utils.getStoreCode
+import com.idslogic.levelshoes.utils.*
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 
 
-class CategoryRepository(
+class CategoryRepository @Inject constructor(
     private val api: API,
     private val appCache: AppCache,
 ) {
-    /* fun getCategory() =
-             api.getCategory(APIUrl.getCategorySearch())*/
-
-
-
-    /*fun saveCategorysearch(body: Source?) {
-        appDatabase.getOnboardingDao().insertOnbaordingData(body)
-    }*/
 
     fun getCategorySearch(gender: String): Response<BaseModel<CategorySearch>> {
         return api.getCategory(
@@ -61,14 +51,8 @@ class CategoryRepository(
                 termval,
                 gender,
                 appCache.getSelectedLanguage(),
-                appCache.getSelectedCountry().storeCode
+                appCache.getSelectedCountry().storeCode?: DEFAULT_COUNTRY
             )
         )
     }
-
-
-
-
-
-
 }

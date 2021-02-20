@@ -10,12 +10,15 @@ import com.idslogic.levelshoes.data.repositories.CategoryRepository
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.network.Resource
 import com.idslogic.levelshoes.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class SearchViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     application: Application,
     private val categoryRepository: CategoryRepository,
     private val configurationRepository: ConfigurationRepository
@@ -55,35 +58,39 @@ class SearchViewModel @ViewModelInject constructor(
                                 list?.forEachIndexed { index, hit ->
 
                                     list[index].source?.let { source ->
-                                        if (source.columnBreakpoint == 1 && source.menuItemType == MENU_ITEM_TYPE_DEFAULT) {
-                                            source.childrenData?.forEach { sourceChildrenData ->
-                                                val categoryTemp = deepCopy(sourceChildrenData)
-                                                if (categoryTemp != null)
-                                                    categoriesHashMap[source]?.add(categoryTemp)
+                                        if (source.includeInMenu == 1) {
+                                            if (source.columnBreakpoint == 1 && source.menuItemType ==
+                                                MENU_ITEM_TYPE_DEFAULT
+                                            ) {
+                                                source.childrenData?.forEach { sourceChildrenData ->
+                                                    val categoryTemp = deepCopy(sourceChildrenData)
+                                                    if (categoryTemp != null && sourceChildrenData.includeInMenu == 1)
+                                                        categoriesHashMap[source]?.add(categoryTemp)
+                                                }
+                                                categoriesHashMap[source] = source.childrenData
+                                            } else if ((source.columnBreakpoint == 0 &&
+                                                        source.menuItemType == MENU_ITEM_TYPE_TITLE &&
+                                                        source.includeInMenu == 1)
+                                            ) {
+                                                categoriesHashMap[source] = null
+                                                val categoryTemp = deepCopy(source)
+                                                lastAddedCategoryToMap = categoryTemp
+                                            } else if ((source.includeInMenu == 1 && source.columnBreakpoint == 0 &&
+                                                        (source.menuItemType == MENU_ITEM_TYPE_DEFAULT ||
+                                                                source.menuItemType == MENU_ITEM_TYPE_LINK) ||
+                                                        source.columnBreakpoint == 1 && source.menuItemType == MENU_ITEM_TYPE_LINK)
+                                            ) {
+                                                var categoriesList =
+                                                    categoriesHashMap[lastAddedCategoryToMap]
+                                                if (categoriesList.isNullOrEmpty()) categoriesList =
+                                                    arrayListOf()
+                                                val categoryTemp = deepCopy(source)
+                                                if (categoryTemp != null && categoryTemp.includeInMenu == 1)
+                                                    categoriesList.add(categoryTemp)
+                                                lastAddedCategoryToMap?.let { lastAddedCat ->
+                                                    categoriesHashMap[lastAddedCat] = categoriesList
+                                                }
                                             }
-                                            categoriesHashMap[source] = source.childrenData
-                                        } else if ((source.columnBreakpoint == 0 &&
-                                                    source.menuItemType == MENU_ITEM_TYPE_TITLE)
-                                        ) {
-                                            categoriesHashMap[source] = null
-                                            val categoryTemp = deepCopy(source)
-                                            lastAddedCategoryToMap = categoryTemp
-                                        } else if ((source.columnBreakpoint == 0 &&
-                                                    (source.menuItemType == MENU_ITEM_TYPE_DEFAULT ||
-                                                            source.menuItemType == MENU_ITEM_TYPE_LINK) ||
-                                                    source.columnBreakpoint == 1 && source.menuItemType == MENU_ITEM_TYPE_LINK)
-                                        ) {
-                                            var categoriesList =
-                                                categoriesHashMap[lastAddedCategoryToMap]
-                                            if (categoriesList.isNullOrEmpty()) categoriesList =
-                                                arrayListOf()
-                                            val categoryTemp = deepCopy(source)
-                                            if (categoryTemp != null)
-                                                categoriesList.add(categoryTemp)
-                                            lastAddedCategoryToMap?.let { lastAddedCat ->
-                                                categoriesHashMap[lastAddedCat] = categoriesList
-                                            }
-
                                         }
                                     }
                                 }

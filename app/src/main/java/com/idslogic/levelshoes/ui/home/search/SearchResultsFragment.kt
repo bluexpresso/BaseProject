@@ -1,16 +1,16 @@
 package com.idslogic.levelshoes.ui.home.search
 
-import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,20 +18,28 @@ import com.google.android.material.tabs.TabLayout
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.databinding.FragmentSearchResultsBinding
 import com.idslogic.levelshoes.network.Status.*
+import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchResultsFragment : Fragment() {
+class SearchResultsFragment : BaseFragment() {
     private val viewModel: SearchResultsViewModel by viewModels()
     private val recentTrendingAdapter = SearchRecentTrendingAdapter()
     private val activityViewModel: MainViewModel by activityViewModels()
+    private var searchEditText: EditText? = null
     private lateinit var searchPagerAdapter: SearchItemsPagerAdapter
+    private var isSearchEnabled = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.gender = viewModel.getSelectedGender()
+        viewModel.gender = when (activityViewModel.selectedSearchTab) {
+            0 -> GENDER_WOMEN
+            1 -> GENDER_MEN
+            2 -> GENDER_KIDS
+            else -> viewModel.getSelectedGender()
+        }
         viewModel.categories = activityViewModel.searchCategories
     }
 
@@ -43,47 +51,33 @@ class SearchResultsFragment : Fragment() {
             inflater, R.layout.fragment_search_results, container,
             false
         ) as FragmentSearchResultsBinding
+        changeStatusBarColor(R.color.secondaryBackground)
+        isSearchEnabled = !activityViewModel.searchTerm.value.isNullOrEmpty()
         viewModel.recentTrendingList.clear()
-        binding.searchBox.editText?.requestFocus()
-        openSoftInput(requireContext(), binding.searchBox.editText)
-        initTrendingItems(binding)
+        Handler(Looper.myLooper()!!).postDelayed(
+            {
+                showSoftKeyboard(binding.searchBox.editText)
+            }, 500
+        )
+        if (!isSearchEnabled) {
+            initTrendingItems(binding)
+            lifecycleScope.launch {
+                viewModel.getTendingItems()
+            }
+        }
         initTabs(binding)
         initCloseButton(binding)
         initSearch(binding)
-        initCategorySearch(binding)
-        lifecycleScope.launch {
-            viewModel.getTendingItems()
-        }
-        return binding.root
-    }
-
-    private fun initCategorySearch(binding: FragmentSearchResultsBinding) {
-        val adapter = SearchResultsCategoryAdapter()
-        binding.listCategorySearch.adapter = adapter
-        viewModel.categorySearchLiveData.observe(viewLifecycleOwner, {
-            when (it.status) {
-                SUCCESS -> {
-                    binding.listCategorySearch.visibility = View.VISIBLE
-                    adapter.setItems(it.data ?: arrayListOf())
-                }
-                ERROR -> {
-                    binding.listCategorySearch.visibility = View.GONE
-                }
-                else -> {
-                    binding.listCategorySearch.visibility = View.GONE
-                }
-
-            }
+        activityViewModel.clearSearchFocusLiveData.observe(viewLifecycleOwner, {
+            hideSoftKeyboard(binding.searchBox.editText)
         })
+        return binding.root
     }
 
     private fun initCloseButton(binding: FragmentSearchResultsBinding) {
         binding.rightCloseIconResult.setOnClickListener {
-            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-                view?.windowToken,
-                0
-            )
-            requireActivity().onBackPressed()
+            hideSoftKeyboard(binding.searchBox.editText)
+            activity?.onBackPressed()
         }
     }
 
@@ -105,8 +99,10 @@ class SearchResultsFragment : Fragment() {
             }
         })
         recentTrendingAdapter.onRecentItemClick = {
-            if (!it.isNullOrBlank())
+            if (!it.isNullOrBlank()) {
                 binding.searchBox.editText?.setText(it.toString())
+                binding.searchBox.editText?.setSelection(binding.searchBox.editText?.length() ?: 0)
+            }
         }
         binding.searchBox.editText?.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -131,6 +127,8 @@ class SearchResultsFragment : Fragment() {
 
 
     private fun initSearch(binding: FragmentSearchResultsBinding) {
+        searchEditText = binding.searchBox.editText
+        binding.searchBox.editText?.setSelection(binding.searchBox.editText?.text?.length ?: 0)
         binding.searchBox.editText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -138,7 +136,7 @@ class SearchResultsFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s?.trim()?.length ?: 0 >= 3) {
                     getSearchResults(binding)
-                    getCategorySearchResults(s.toString())
+//                    getCategorySearchResults(viewModel.gender, binding)
                     binding.listRecentTrending.visibility = View.GONE
                     binding.searchItemPager.visibility = View.VISIBLE
                 } else if (s?.trim()?.length ?: 0 <= 2) {
@@ -149,18 +147,17 @@ class SearchResultsFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
             }
-
         })
-    }
-
-    private fun getCategorySearchResults(searchTerm: String) {
-        lifecycleScope.launch {
-            viewModel.getCategoriesSearchResults(searchTerm)
+        if (!activityViewModel.searchTerm.value.isNullOrEmpty()) {
+            binding.searchBox.editText?.setText(activityViewModel.searchTerm.value ?: "")
+            binding.searchBox.editText?.setSelection(
+                activityViewModel.searchTerm.value?.length ?: 0
+            )
         }
     }
 
-
     private fun initTabs(binding: FragmentSearchResultsBinding) {
+        binding.searchItemPager.offscreenPageLimit = 3
         binding.categorySliderTabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -173,18 +170,24 @@ class SearchResultsFragment : Fragment() {
                     )
                     viewModel.gender = when (tab.position) {
                         0 -> {
-                            binding.searchItemPager.setCurrentItem(0, false)
+                            hideSoftKeyboard(binding.searchBox.editText)
+                            binding.searchItemPager.setCurrentItem(0, true)
                             getSearchResults(binding)
+                            activityViewModel.selectedSearchTab = 0
                             GENDER_WOMEN
                         }
                         1 -> {
-                            binding.searchItemPager.setCurrentItem(1, false)
+                            hideSoftKeyboard(binding.searchBox.editText)
+                            binding.searchItemPager.setCurrentItem(1, true)
                             getSearchResults(binding)
+                            activityViewModel.selectedSearchTab = 1
                             GENDER_MEN
                         }
                         2 -> {
-                            binding.searchItemPager.setCurrentItem(2, false)
+                            hideSoftKeyboard(binding.searchBox.editText)
+                            binding.searchItemPager.setCurrentItem(2, true)
                             getSearchResults(binding)
+                            activityViewModel.selectedSearchTab = 2
                             GENDER_KIDS
                         }
                         else -> {
@@ -203,12 +206,15 @@ class SearchResultsFragment : Fragment() {
         when (viewModel.gender) {
             GENDER_WOMEN -> {
                 binding.categorySliderTabLayout.selectTab(binding.categorySliderTabLayout.getTabAt(0))
+                formatTabFonts(requireContext(), binding.categorySliderTabLayout, 0, 3)
             }
             GENDER_MEN -> {
                 binding.categorySliderTabLayout.selectTab(binding.categorySliderTabLayout.getTabAt(1))
+                formatTabFonts(requireContext(), binding.categorySliderTabLayout, 1, 3)
             }
             GENDER_KIDS -> {
                 binding.categorySliderTabLayout.selectTab(binding.categorySliderTabLayout.getTabAt(2))
+                formatTabFonts(requireContext(), binding.categorySliderTabLayout, 2, 3)
             }
         }
         searchPagerAdapter = SearchItemsPagerAdapter(this)
@@ -216,9 +222,4 @@ class SearchResultsFragment : Fragment() {
         binding.searchItemPager.adapter = searchPagerAdapter
         binding.searchItemPager.isUserInputEnabled = false
     }
-
-    private fun loadCategories(binding: FragmentSearchResultsBinding, gender: String) {
-
-    }
-
 }

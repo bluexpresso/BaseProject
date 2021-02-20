@@ -8,5 +8,7 @@
         <attr name="background" format="reference" />
         <attr name="contentColor" format="reference" />
         <attr name="contentInset" format="dimension" />
+        <attr name="actionText" format="reference"/>
+        <attr name="showOnlyTitle" format="boolean" />
     </declare-styleable>
 </resources>

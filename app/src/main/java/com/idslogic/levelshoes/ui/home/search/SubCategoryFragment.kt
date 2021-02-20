@@ -1,12 +1,10 @@
 package com.idslogic.levelshoes.ui.home.search
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -21,13 +19,14 @@ import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class SubCategoryFragment : BaseFragment() {
     private val viewModel: SubCategoryViewModel by viewModels()
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val activityViewModel: MainViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         exitTransition = Fade(Fade.MODE_OUT)
@@ -43,11 +42,102 @@ class SubCategoryFragment : BaseFragment() {
             false
         ) as FragmentSubCategoryBinding
         changeStatusBarColor(R.color.secondaryBackground)
-        mainViewModel.disableSearchAnimation = true
         readArguments()
         initToolbar(binding)
         initCategories(binding)
         return binding.root
+    }
+
+    override fun onStop() {
+        super.onStop()
+        activityViewModel.disableSearchAnimation = true
+    }
+
+    private fun navigateToPLP(parentCategory: CategorySearch?, categorySearch: CategorySearch) {
+        findNavController().navigate(R.id.nav_from_search_to_product_list, Bundle().apply {
+            val categoryId: Int
+            var genderFilter = ""
+            val sbCategoryPath = StringBuilder()
+            if (isDesignerCategory(parentCategory?.name)) {
+                sbCategoryPath.append(DESIGNERS)
+                if (!isViewAllCategory(categorySearch.name)) {
+                    sbCategoryPath.append(";${categorySearch.name?.toLowerCase(Locale.getDefault())}")
+                }
+            } else if (isCollectionsCategory(parentCategory?.name)) {
+                sbCategoryPath.append(COLLECTIONS)
+                if (!isViewAllCategory(categorySearch.name)) {
+                    sbCategoryPath.append(";${categorySearch.name?.toLowerCase(Locale.getDefault())}")
+                }
+            } else if (viewModel.gender == GENDER_KIDS) {
+                if (parentCategory?.name == CATEGORY_BABY || parentCategory?.name == CATEGORY_GIRL
+                    || parentCategory?.name == CATEGORY_UNISEX || parentCategory?.name == CATEGORY_BOY
+                ) {
+                    //KIDS->BABY->SNEAKERS
+                    sbCategoryPath.append("$CATEGORY_KIDS;")
+                        .append(
+                            "${
+                                parentCategory.name?.toLowerCase(Locale.getDefault())
+                                    ?.toLowerCase(Locale.getDefault())
+                            }"
+                        )
+                    if (!isViewAllCategory(categorySearch.name)) {
+                        sbCategoryPath.append(
+                            ";${
+                                categorySearch.name?.toLowerCase(
+                                    Locale.getDefault()
+                                )
+                            }"
+                        )
+                    }
+                } else {
+                    sbCategoryPath.append("$CATEGORY_KIDS;")
+                        .append(parentCategory?.name?.toLowerCase(Locale.getDefault()))
+                    if (!isViewAllCategory(categorySearch.name)) {
+                        sbCategoryPath.append(";${categorySearch.name?.toLowerCase(Locale.getDefault())}")
+                    }
+                }
+            } else if (viewModel.gender == GENDER_WOMEN || viewModel.gender == GENDER_MEN) {
+                sbCategoryPath.append(if (viewModel.gender == GENDER_WOMEN) CATEGORY_WOMEN else CATEGORY_MEN)
+                if (categorySearch.id == null || isViewAllCategory(categorySearch.name))
+                    sbCategoryPath.append(";${parentCategory?.name?.toLowerCase(Locale.getDefault())}")
+                if (!isViewAllCategory(categorySearch.name)) {
+                    sbCategoryPath.append(";${categorySearch.name?.toLowerCase(Locale.getDefault())}")
+                }
+            }
+            if (!categorySearch.menuItemLink.isNullOrEmpty()) {
+                categoryId =
+                    getCategoryIdFromLink(categorySearch.menuItemLink!!) ?: NO_CATEGORY
+                genderFilter = getGenderIdFromLink(categorySearch.menuItemLink!!) ?: ""
+            } else {
+                categoryId =
+                    if (isDesignerCategory(parentCategory?.name) || isCollectionsCategory(
+                            parentCategory?.name
+                        )
+                    ) {
+                        when (viewModel.gender) {
+                            GENDER_WOMEN -> GENDER_ID_WOMEN_SEARCH
+                            GENDER_MEN -> GENDER_ID_MEN_SEARCH
+                            else -> categorySearch.id ?: NO_CATEGORY
+                        }
+                    } else if (!isViewAllCategory(categorySearch.name)) {
+                        categorySearch.id ?: NO_CATEGORY
+                    } else {
+                        parentCategory?.id ?: NO_CATEGORY
+                    }
+            }
+            val parentCategoryId: Int = parentCategory?.id ?: NO_CATEGORY
+            putString(
+                ARG_GENDER,
+                if (parentCategory?.name == CATEGORY_BABY || parentCategory?.name == CATEGORY_GIRL
+                    || parentCategory?.name == CATEGORY_UNISEX || parentCategory?.name == CATEGORY_BOY
+                ) parentCategory.name ?: "" else viewModel.gender ?: GENDER_WOMEN
+            )
+            putString(ARG_GENDER_FILTER, genderFilter)
+            putString(ARG_TITLE, categorySearch.name)
+            putString(ARG_CATEGORY_PATH, sbCategoryPath.toString())
+            putInt(ARG_CATEGORY_ID, categoryId)
+            putInt(ARG_PARENT_CATEGORY_ID, parentCategoryId)
+        })
     }
 
     private fun initCategories(binding: FragmentSubCategoryBinding) {
@@ -56,71 +146,13 @@ class SubCategoryFragment : BaseFragment() {
         binding.viewSubCategories.adapter = subCategoryAdapter
         subCategoryAdapter.onCategorySelected =
             { categorySearch: CategorySearch, _: ArrayList<CategorySearch>? ->
-                findNavController().navigate(R.id.nav_from_search_to_product_list, Bundle().apply {
-                    var gender: String? = ""
-                    var categoryPath = ""
-                    var categoryId = NO_CATEGORY
-                    var parentCategoryId = NO_CATEGORY
-                    //create gender logic here
-                    //then append the category path
-                    //applyFilters -> leave gender blank
-                    if (isViewAllCategory(categorySearch.name)) {
-                        categoryPath = getCategoryPathForSearch(
-                            viewModel.gender,
-                            viewModel.category?.name,
-                            null
-                        )
-
-                        categoryId = viewModel.category?.id ?: NO_CATEGORY
-                        parentCategoryId = viewModel.category?.id ?: NO_CATEGORY
-                    } else if (isDesignerCategory(viewModel.category?.name)) {
-                        categoryPath = getCategoryPathForSearch(
-                            DESIGNERS,
-                            categorySearch.name,
-                            null
-                        )
-                        categoryId = categorySearch.id ?: NO_CATEGORY
-                    } else if (isCollectionsCategory(categorySearch.name)) {
-                        categoryPath = getCategoryPathForSearch(
-                            COLLECTIONS,
-                            categorySearch.name,
-                            null
-                        )
-                        categoryId = categorySearch.id ?: NO_CATEGORY
-                    } else {
-                        if (viewModel.gender == GENDER_KIDS) {
-                            categoryPath = getCategoryPathForSearch(
-                                "$CATEGORY_KIDS;${
-                                    viewModel.category?.name?.toLowerCase(Locale.getDefault())
-                                }",
-                                categorySearch.name,
-                                null
-                            )
-                            gender =
-                                if (viewModel.category?.name == CATEGORY_BABY ||
-                                    viewModel.category?.name === CATEGORY_BOY ||
-                                    viewModel.category?.name == CATEGORY_GIRL ||
-                                    viewModel.category?.name == CATEGORY_UNISEX
-                                ) {
-                                    viewModel.category?.name
-                                } else {
-                                    viewModel.gender
-                                }
-                        } else {
-                            categoryPath = getCategoryPathForSearch(
-                                viewModel.gender,
-                                categorySearch.name,
-                                null
-                            )
-                        }
-                        categoryId = categorySearch.id ?: NO_CATEGORY
-                    }
-                    putString(ARG_GENDER, gender ?: GENDER_WOMEN)
-                    putString(ARG_TITLE, categorySearch.name)
-                    putString(ARG_CATEGORY_PATH, categoryPath)
-                    putInt(ARG_CATEGORY_ID, categoryId)
-                    putInt(ARG_PARENT_CATEGORY_ID, parentCategoryId)
-                })
+                getCategoryToPLPNavigation(
+                    findNavController(),
+                    R.id.nav_from_search_to_product_list,
+                    viewModel.gender,
+                    viewModel.category,
+                    categorySearch
+                )
             }
     }
 

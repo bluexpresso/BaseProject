@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.transition.Fade
 import com.google.gson.Gson
 import com.idslogic.levelshoes.R
@@ -28,8 +27,6 @@ class SliderItemFragment : Fragment() {
             }
         }
     }
-
-    private lateinit var viewModel: SliderItemViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,10 +134,4 @@ class SliderItemFragment : Fragment() {
             }
         }
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SliderItemViewModel::class.java)
-    }
-
 }

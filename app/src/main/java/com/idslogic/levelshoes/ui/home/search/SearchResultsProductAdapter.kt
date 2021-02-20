@@ -2,6 +2,8 @@ package com.idslogic.levelshoes.ui.home.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.dynamicanimation.animation.SpringAnimation
+import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.models.ListingProduct
@@ -32,13 +34,18 @@ class SearchResultsProductAdapter(val currency: String) :
         holder.bind()
     }
 
-
-    override fun getItemCount(): Int {
-        return searchedProducts?.size ?: 0
-    }
-
+    override fun getItemCount() = searchedProducts?.size ?: 0
     inner class ViewHolder(val binding: ItemProductInSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        val translationY: SpringAnimation =
+            SpringAnimation(binding.root, SpringAnimation.TRANSLATION_Y)
+                .setSpring(
+                    SpringForce()
+                        .setFinalPosition(0f)
+                        .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
+                        .setStiffness(SpringForce.STIFFNESS_LOW)
+                )
+
         fun bind() {
             searchedProducts?.get(bindingAdapterPosition)?.let { listingProduct ->
 
@@ -51,20 +58,25 @@ class SearchResultsProductAdapter(val currency: String) :
                         )
                     )
                     .into(binding.image)
-
                 binding.name.text = listingProduct.name
                 binding.brand.text = listingProduct.manufacturer ?: ""
-                binding.price.text =
-                    formatPrice(
-                        binding.root.context, currency, 0.0,
-                        listingProduct.price?.toDouble()
-                    )
+                if (!listingProduct.price.isNullOrEmpty())
+                    binding.price.text =
+                        formatPrice(
+                            binding.root.context, currency, 0.0,
+                            listingProduct.startPrice?.toDouble()
+                        )
             }
         }
     }
 
     fun setItems(items: ArrayList<ListingProduct>?) {
         this.searchedProducts = items
+        notifyDataSetChanged()
+    }
+
+    fun clear() {
+        searchedProducts?.clear()
         notifyDataSetChanged()
     }
 }

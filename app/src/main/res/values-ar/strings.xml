@@ -26,8 +26,8 @@
     <string name="account">Account</string>
     <string name="not_available">N/A</string>
     <string name="filters">Filters</string>
-    <string name="my_account">My Account</string>
-    <string name="my_language">My Language</string>
+    <string name="my_account">حسابي</string>
+    <string name="my_language">لغتي</string>
     <string name="english">English</string>
     <string name="arabic">عربى</string>
     <string name="something_is_not_right">Something is not right</string>
@@ -37,8 +37,8 @@
     <string name="editorial_notes">Editorial Notes</string>
     <string name="about_the_product">About the product</string>
     <string name="shipping_and_returns"><![CDATA[Shipping & Returns]]></string>
-    <string name="active_filters">Active Filters</string>
-    <string name="sort_by">Sort by</string>
+    <string name="active_filters">المرشحات الفعالة</string>
+    <string name="sort_by">تصنيف حسب</string>
     <string name="sign_in">تسجيل الدخول</string>
     <string name="view_all_collection">عرض جميع التشكيلات</string>
     <string name="sign_in_to_account">تسجيل حساب أو تسجيل الدخول</string>
@@ -50,5 +50,51 @@
     <string name="menu">قائمة طعام</string>
     <string name="number_of_products">%d products</string>
     <string name="category_search_result_placeholder">%s > %s</string>
+    <string name="register_signin_description">استمتع بسداد أسرع وأسهل وتتبع طلباتك\n وغير ذلك الكثير!</string>
+    <string name="register">تسجيل حساب جديد</string>
+    <string name="sign_in_caps">تسجيل الدخول</string>
+    <string name="information_help">المعلومات والمساعدة</string>
+    <string name="account_category">اختر الفئة</string>
+    <string name="account_location">مكاني</string>
+    <string name="account_push_notification">دفع الإخطار</string>
+    <string name="account_push_notification_description">تلقي إشعارات من ليفيل شوز</string>
+    <string name="personal_details">التفاصيل الشخصية</string>
+    <string name="title"><font color='red'>*</font>اللقب</string>
+    <string name="first_name"><font color='red'>*</font>الاسم الأول</string>
+    <string name="last_name"><font color='red'>*</font>اسم العائلة</string>
+    <string name="mobile_number"><font color='red'>*</font>رقم الهاتف المتحرك</string>
+    <string name="email"><font color='red'>*</font>عنوان البريد الإلكتروني</string>
+    <string name="gender"><font color='red'>*</font>الجنس</string>
+    <string name="birthday"><font color='red'>*</font>عيد الميلاد</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="security_information">Security information</string>
+    <string name="change_password">تغيير كلمة المرور</string>
+    <string name="address_book">Address book</string>
+    <string name="default_button">DEFAULT</string>
+    <string name="edit_address"><u>تعديل عنوانك</u></string>
+    <string name="remove"><u>إزالة</u></string>
+    <string name="add_new_address">إضافة عنوان جديد</string>
+    <string name="colours">اللون</string>
+    <string name="aply_filt">تطبيق عامل الترشيح</string>
+    <string name="size">المقاس</string>
+    <string name="price_lbl">السعر</string>
+    <string name="show">عرض</string>
+    <string name="results">النتائج</string>
+    <string name="desig_lbl">العلامات الفاخرة</string>
+    <string name="clear"><u>مسح</u></string>
+    <string name="filter_by">الترشيح حسب</string>
+    <string name="order_details">تفاصيل الطلب</string>
+    <string name="order_status">حالة الطلب</string>
+    <string name="delivered">تم التوصيل</string>
+    <string name="your_order_number">:رقم طلبك هو</string>
+    <string name="shipping_add">عنوان الشحن</string>
+    <string name="billing_add">عنوان الفاتورة</string>
+    <string name="your_items">المنتجات الخاصة بك</string>
+    <string name="order_summary">ملخّص الطلب</string>
+    <string name="need_help">بحاجة لمساعدة؟</string>
+    <string name="relevance">Relevance</string>
+    <string name="highest_price">Highest price</string>
+    <string name="lowest_price">Lowest price</string>
+    <string name="newest_first">Newest first</string>
 
 </resources>

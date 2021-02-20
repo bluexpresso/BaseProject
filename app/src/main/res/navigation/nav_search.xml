@@ -13,20 +13,21 @@
         <action
             android:id="@+id/navigateToSubCategory"
             app:destination="@id/subCategoryScreen"
-            app:exitAnim="@anim/fragment_exit_slide" />
+            app:exitAnim="@anim/fragment_exit_fade" />
         <action
             android:id="@+id/navigateFromCategoryToSearch"
-            app:exitAnim="@anim/fragment_exit_fade"
+            app:destination="@id/searchResultsFragment"
             app:enterAnim="@anim/fragment_enter_fade"
-            app:destination="@id/searchResultsFragment" />
+            app:exitAnim="@anim/fragment_exit_fade" />
     </fragment>
     <fragment
         android:id="@+id/searchResultsFragment"
         android:name="com.idslogic.levelshoes.ui.home.search.SearchResultsFragment"
         android:label="SearchResultsFragment">
         <action
-            android:id="@+id/action_searchResultsFragment_to_searchScreen"
-            app:destination="@id/searchScreen" />
+            android:id="@+id/nav_from_search_results_to_product_list"
+            app:destination="@id/productListScreen"
+            app:exitAnim="@anim/fragment_exit_slide" />
     </fragment>
     <fragment
         android:id="@+id/subCategoryScreen"
@@ -45,7 +46,9 @@
         tools:layout="@layout/fragment_product_list">
         <action
             android:id="@+id/action_to_filters"
-            app:destination="@id/filtersScreen" />
+            app:destination="@id/filtersScreen"
+            app:enterAnim="@anim/fragment_enter_slide"
+            app:popExitAnim="@anim/fragment_exit_slide" />
         <action
             android:id="@+id/action_to_product_details"
             app:destination="@id/productDetailsScreen" />

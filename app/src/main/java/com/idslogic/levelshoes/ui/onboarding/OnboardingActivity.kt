@@ -26,6 +26,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
 import com.google.android.exoplayer2.video.VideoRendererEventListener
 import com.idslogic.levelshoes.App
+import com.idslogic.levelshoes.custom.CountryDropdownView
 import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -144,6 +145,11 @@ class OnboardingActivity : BaseActivity(), VideoRendererEventListener {
 
     private fun setLanguage() {
         group_selected_country.visibility = View.VISIBLE
+        country_language.setCompoundDrawablesWithIntrinsicBounds(
+            CountryDropdownView.getCountryFlag(
+                viewModel.getSelectedCountry().storeCode
+            ), 0, 0, 0
+        )
         country_language.text = String.format(
             "%s | %s",
             viewModel.getSelectedCountry().name, Locale.getDefault().displayLanguage

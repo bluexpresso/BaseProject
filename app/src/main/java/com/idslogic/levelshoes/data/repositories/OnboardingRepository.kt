@@ -7,8 +7,9 @@ import com.idslogic.levelshoes.data.models.Country
 import com.idslogic.levelshoes.data.models.Source
 import com.idslogic.levelshoes.network.API
 import com.idslogic.levelshoes.network.APIUrl
+import javax.inject.Inject
 
-class OnboardingRepository(
+class OnboardingRepository @Inject constructor(
     private val api: API,
     private val appCache: AppCache,
     private val appDatabase: AppDatabase

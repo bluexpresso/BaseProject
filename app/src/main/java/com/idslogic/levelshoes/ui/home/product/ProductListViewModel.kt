@@ -1,59 +1,57 @@
 package com.idslogic.levelshoes.ui.home.product
 
-import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.PagingData
 import com.idslogic.levelshoes.data.models.BaseModel
+import com.idslogic.levelshoes.data.models.FilterData
 import com.idslogic.levelshoes.data.models.ListingProduct
 import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.data.repositories.ProductsRepository
-import com.idslogic.levelshoes.network.Resource
 import com.idslogic.levelshoes.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
-import kotlin.collections.ArrayList
+import javax.inject.Inject
 
-class ProductListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ProductListViewModel @Inject constructor(
     private val productsRepository: ProductsRepository,
     private val configurationRepository: ConfigurationRepository,
-    application: Application
-) :
-    AndroidViewModel(application) {
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
+
+    var genderFilter: String = ""
     var categoryPath: String? = null
     var title: String? = null
     var gender = GENDER_WOMEN
     var categoryId: Int = NO_CATEGORY
-    val context = application.applicationContext
     val productIdsLiveData = MutableLiveData<ArrayList<ListingProduct>>()
     val loadingLiveData = MutableLiveData<Boolean>()
     var parentCategoryId: Int = NO_CATEGORY
+    var filterData = MutableLiveData<Event<FilterData>>()
     suspend fun getProductsFromCategory() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 loadingLiveData.postValue(true)
                 if (!categoryPath.isNullOrEmpty()) {
-//                    if (categoryId == NO_CATEGORY) {
-//                        val categoryResponse =
-//                            productsRepository.getCategoryDetailsFromCategoryId(parentCategoryId)
-//                        if (!categoryResponse.body()?.source?.childrenData.isNullOrEmpty()) {
-//                            categoryId =
-//                                categoryResponse.body()?.source?.childrenData?.find { thisCat ->
-//                                    thisCat.name.equals(
-//                                        title,
-//                                        true
-//                                    )
-//                                }?.id ?: NO_CATEGORY
-//                        }
-//                    }
+                    if (categoryId == NO_CATEGORY) {
+                        val categoryResponse =
+                            productsRepository.getCategoryDetailsFromCategoryId(parentCategoryId)
+                        if (!categoryResponse.body()?.source?.childrenData.isNullOrEmpty()) {
+                            categoryId =
+                                categoryResponse.body()?.source?.childrenData?.find { thisCat ->
+                                    thisCat.name.equals(
+                                        title,
+                                        true
+                                    )
+                                }?.id ?: NO_CATEGORY
+                        }
+                    }
                     val productIdsResponse =
-                        productsRepository.getCategoryBasedProductsFromKlevu(categoryPath!!,gender)
+                        productsRepository.getCategoryBasedProductsFromKlevu(categoryPath!!, gender)
                     if (productIdsResponse.isSuccessful && productIdsResponse.body()?.result?.isNotEmpty() == true) {
                         productIdsLiveData.postValue(productIdsResponse.body()!!.result!!)
                     } else {
@@ -108,9 +106,9 @@ class ProductListViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getProductPagingLiveData(categoryId: Int): LiveData<PagingData<BaseModel.Hit<Product>>>? {
+    fun getProductPagingLiveData(): LiveData<PagingData<BaseModel.Hit<Product>>>? {
         productsRepository.initProductsPagerLiveDataSource(
-            if (parentCategoryId > 0) parentCategoryId else categoryId, productIdsLiveData.value!!,
+            categoryId, genderFilter, productIdsLiveData.value!!,
             viewModelScope
         )
         return productsRepository.productsPagerLiveData

@@ -353,6 +353,21 @@
         <item name="backgroundTint">@color/language_button_background_colors</item>
     </style>
 
+    <style name="RegisterButton" parent="Widget.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="font">@font/regular</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:contentInsetStart">0dp</item>
+        <item name="android:shape">rectangle</item>
+        <item name="android:contentInsetEnd">0dp</item>
+        <item name="fontFamily">@font/regular</item>
+        <item name="android:textColor">@color/language_button_text_colors</item>
+        <item name="strokeColor">@color/language_button_text_colors</item>
+        <item name="backgroundTint">@color/language_button_background_colors</item>
+    </style>
+
     <style name="SearchBoxStyleDark" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="hintTextAppearance">@style/TextBodySmall</item>
         <item name="hintTextColor">@color/gray_78</item>
@@ -361,6 +376,14 @@
         <item name="startIconTint">@color/white</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="InputEditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="hintTextAppearance">@style/TextBodySmall</item>
+        <item name="hintTextColor">@color/gray_78</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/black_11</item>
     </style>
 
     <style name="ProgressBarDark" parent="Widget.AppCompat.ProgressBar.Horizontal">
@@ -373,5 +396,18 @@
         <item name="android:indeterminate">true</item>
         <item name="android:indeterminateBehavior">repeat</item>
         <item name="android:indeterminateTint">@color/white</item>
+    </style>
+
+    <style name="FilterButton" parent="PrimaryButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/regular</item>
+        <item name="fontFamily">@font/regular</item>
+        <item name="font">@font/regular</item>
+        <item name="iconGravity">end</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/textOnSurfaceReverse</item>
+        <item name="cornerRadius">22dp</item>
+        <item name="iconTint">@color/iconTintOnSurfaceReverse</item>
+        <item name="icon">@drawable/ic_baseline_close_24</item>
     </style>
 </resources>

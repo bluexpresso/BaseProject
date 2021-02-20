@@ -12,8 +12,9 @@ import com.google.gson.reflect.TypeToken
 import com.idslogic.levelshoes.utils.*
 import retrofit2.Response
 import java.io.IOException
+import javax.inject.Inject
 
-class ConfigurationRepository(
+class ConfigurationRepository @Inject constructor(
     private val api: API,
     private val appCache: AppCache,
     private val appDatabase: AppDatabase
@@ -32,11 +33,11 @@ class ConfigurationRepository(
             if (response.isSuccessful) {
                 Resource.success(response, response.code())
             } else {
-                Resource.error("", null, response.code())
+                Resource.error("", data = null, code = response.code())
             }
         } catch (e: IOException) {
             e.printStackTrace()
-            Resource.error(e.message, null, 401)
+            Resource.error(message = e.message, null, 401)
         }
     }
 
@@ -131,7 +132,12 @@ class ConfigurationRepository(
 
     fun getManufacturerName(value: Long) = appDatabase.getConfigurationDao().getLabel(value)
 
-    fun getCurrency() = appCache.getSelectedCountry().currency ?: "AED"
+    fun getCurrency() = getCurrency(
+        appCache.getSelectedLanguage(),
+        appCache.getSelectedCountry().storeCode?.toLowerCase() ?: "ae"
+    )
+
+
     fun getRecentSearches() = appCache.getRecentSearches()
     fun addRecentSearch(text: String) {
         appCache.saveRecentSearch(text)

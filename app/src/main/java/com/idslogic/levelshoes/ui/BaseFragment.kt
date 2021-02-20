@@ -17,7 +17,7 @@ open class BaseFragment : Fragment() {
         val fragmentLabel = findNavController().currentDestination?.label
         fragmentLabel?.let {
             if (it != "LandingFragment") {
-                showStatusBar()
+                showStatusBar(false)
             }
             if (it == "ProductsListFragment" || it == "SubCategoryFragment") {
                 enterTransition = Slide().apply {
@@ -31,19 +31,29 @@ open class BaseFragment : Fragment() {
         activity?.window?.apply {
             statusBarColor = ContextCompat.getColor(requireContext(), color)
         }
+        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        showStatusBar(color != R.color.background)
     }
 
     fun hideStatusBar() {
         activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+//        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         activity?.window?.statusBarColor = Color.TRANSPARENT
+        activity?.window?.navigationBarColor = Color.BLACK
     }
 
-    fun showStatusBar(isLightStatus: Boolean = true) {
+    private fun showStatusBar(isLightStatus: Boolean = true) {
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        activity?.window?.statusBarColor = Color.TRANSPARENT
-        if (isLightStatus) {
+//        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        activity?.window?.decorView?.apply {
+            // Calling setSystemUiVisibility() with a value of 0 clears
+            // all flags.
+            systemUiVisibility = 0
+        }
+        if (!isLightStatus) {
             activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }

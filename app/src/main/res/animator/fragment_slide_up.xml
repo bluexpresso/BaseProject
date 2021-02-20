@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:anim/accelerate_decelerate_interpolator"
     android:propertyName="translationY"
-    android:valueType="floatType"
+    android:valueType="pathType"
     android:valueFrom="1280"
     android:valueTo="0"
     android:duration="@android:integer/config_mediumAnimTime"/>

@@ -10,15 +10,106 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.filters.FiltersFragment">
+        android:background="@color/background"
+        tools:context=".ui.home.product.filters.FiltersFragment">
 
         <com.idslogic.levelshoes.utils.CustomToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:actionText="@string/clear"
             app:layout_constraintTop_toTopOf="parent"
             app:leftIcon="@drawable/ic_arrow_left_alt_24dp_black"
             app:titleText="@string/filters" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                tools:context=".ui.home.product.filters.FiltersFragment">
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group_active_filters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="active_filters,active_filters_list,active_filters_count" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/active_filters"
+                    style="@style/TextHeading4.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    android:layout_marginTop="@dimen/spacing_40"
+                    android:text="@string/active_filters"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/active_filters_count"
+                    style="@style/TextBodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_32"
+                    android:text="@string/active_filters"
+                    app:layout_constraintBottom_toBottomOf="@id/active_filters"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/active_filters"
+                    tools:text="4 filters" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/active_filters_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_20"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/active_filters"
+                    app:tabIndicatorColor="@color/tabIndicatorColor"
+                    tools:listitem="@layout/item_filters_selected_filters" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/sort_by"
+                    style="@style/TextHeading4.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    android:layout_marginTop="@dimen/spacing_56"
+                    android:text="@string/sort_by"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/active_filters_list"
+                    app:layout_goneMarginTop="@dimen/spacing_40" />
+
+                <com.idslogic.levelshoes.custom.SortView
+                    android:id="@+id/sort_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    app:layout_constraintTop_toBottomOf="@id/sort_by" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_apply_filter"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_32"
+            android:text="@string/aply_filt"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

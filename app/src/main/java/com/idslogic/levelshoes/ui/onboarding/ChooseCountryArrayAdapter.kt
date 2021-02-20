@@ -11,6 +11,7 @@ import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.models.Country
 import com.idslogic.levelshoes.utils.loadSVG
 import com.google.android.material.textview.MaterialTextView
+import com.idslogic.levelshoes.custom.CountryDropdownView
 
 class ChooseCountryArrayAdapter(
     context: Context,
@@ -23,8 +24,9 @@ class ChooseCountryArrayAdapter(
             .inflate(R.layout.item_country_dropdown, parent, false)
         val iconFlag = view.findViewById<AppCompatImageView>(R.id.icon_flag)
         val countryName = view.findViewById<MaterialTextView>(R.id.text_country)
-        loadSVG(parent.context, objects[position]?.flag ?: "").into(iconFlag)
-        countryName.text = objects[position]?.name
+//        loadSVG(parent.context, objects[position]?.flag ?: "").into(iconFlag)
+        iconFlag.setImageResource(CountryDropdownView.getCountryFlag(objects[position].storeCode))
+        countryName.text = objects[position].name
         return view
     }
 
@@ -33,7 +35,7 @@ class ChooseCountryArrayAdapter(
     }
 
     override fun getItem(position: Int): Country {
-        return objects[position]!!
+        return objects[position]
     }
 
     override fun getCount(): Int {

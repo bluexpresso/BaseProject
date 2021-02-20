@@ -1,14 +1,22 @@
 package com.idslogic.levelshoes.ui
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.databinding.ActivityMainBinding
+import com.idslogic.levelshoes.utils.getNoInternetDialog
+import com.idslogic.levelshoes.utils.hideSoftInput
+import com.idslogic.levelshoes.utils.isInternetAvailable
 import com.idslogic.levelshoes.utils.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,8 +26,9 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
-    private lateinit var viewModel: MainViewModel
+    private val viewModel by viewModels<MainViewModel>()
     private var currentNavController: LiveData<NavController>? = null
+    private var viewRoot: View? = null
 
     companion object {
         fun startActivity(context: Context) {
@@ -31,7 +40,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         val binding =
             DataBindingUtil.setContentView(this, R.layout.activity_main) as ActivityMainBinding
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewRoot = binding.root
         if (savedInstanceState == null) {
             initBottomNavigation()
         }
@@ -53,6 +62,11 @@ class MainActivity : BaseActivity() {
             ), supportFragmentManager, R.id.nav_host_fragment, intent
         )
         currentNavController = controller
+        currentNavController?.observe(this, {
+            if (it.currentDestination?.label == "search_fragment") {
+                viewModel.disableSearchAnimation = false
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -60,8 +74,21 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initLandingData() {
-        GlobalScope.launch {
-            viewModel.getLandingData()
+        if (isInternetAvailable(this)) {
+            lifecycleScope.launch {
+                viewModel.getLandingData()
+            }
+        } else {
+            getNoInternetDialog(this).setPositiveButton(
+                R.string.retry
+            ) { _, _ ->
+                initLandingData()
+            }.show()
         }
+    }
+
+    override fun onBackPressed() {
+        viewModel.disableSearchAnimation = true
+        super.onBackPressed()
     }
 }

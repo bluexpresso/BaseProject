@@ -8,13 +8,16 @@ import com.idslogic.levelshoes.data.models.Content
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.data.repositories.OnboardingRepository
 import com.idslogic.levelshoes.utils.GENDER_WOMEN
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
 import java.util.HashMap
+import javax.inject.Inject
 
-class LandingViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LandingViewModel @Inject constructor(
     application: Application,
     private val onboardingRepository: OnboardingRepository,
     private val configurationRepository: ConfigurationRepository

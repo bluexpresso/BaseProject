@@ -9,15 +9,12 @@ import com.idslogic.levelshoes.data.source.ProductListPagingDataSource
 import com.idslogic.levelshoes.network.API
 import com.idslogic.levelshoes.network.APIUrl
 import com.idslogic.levelshoes.utils.ProductListingRequestBuilder
-import com.idslogic.levelshoes.utils.RequestBuilder
 import com.idslogic.levelshoes.utils.getStoreCode
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asExecutor
-import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 
-class ProductsRepository(
+class ProductsRepository @Inject constructor(
     private val api: API,
     private val appCache: AppCache,
     private val appDatabase: AppDatabase
@@ -34,21 +31,28 @@ class ProductsRepository(
             )
         ).execute()
 
-    fun getCategoryBasedProductsFromKlevu(categoryId: String,gender:String? = null): Response<ListingProductResponse> {
+    fun getCategoryBasedProductsFromKlevu(
+        categoryId: String,
+        gender: String? = null
+    ): Response<ListingProductResponse> {
         return api.getCategoryBasedProductsFromKlevuIdSearch(
             APIUrl.getCategoryBasedProductsFromKlevuIdSearch(),
-            ProductListingRequestBuilder.getCategoryBasedProductsQueryParams(categoryId, "*",gender = gender)
+            ProductListingRequestBuilder.getCategoryBasedProductsQueryParams(
+                categoryId,
+                "*",
+                gender = gender
+            )
         ).execute()
     }
 
     fun initProductsPagerLiveDataSource(
-        categoryId: Int,
+        categoryId: Int,genderFilter : String = "",
         productIds: ArrayList<ListingProduct>,
         scope: CoroutineScope
     ) {
         if (productsPagerLiveData == null)
             productsPagerLiveData = Pager(PagingConfig(pageSize = 20)) {
-                ProductListPagingDataSource(api, appCache, categoryId, productIds)
+                ProductListPagingDataSource(api, appCache, categoryId, productIds,genderFilter)
             }.liveData.cachedIn(scope)
     }
 

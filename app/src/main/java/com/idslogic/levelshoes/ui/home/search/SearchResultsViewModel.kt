@@ -13,14 +13,17 @@ import com.idslogic.levelshoes.data.repositories.CategoryRepository
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.network.Resource
 import com.idslogic.levelshoes.utils.GENDER_WOMEN
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class SearchResultsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SearchResultsViewModel @Inject constructor(
     application: Application,
     private val categoryRepository: CategoryRepository,
     private val configurationRepository: ConfigurationRepository
@@ -33,11 +36,9 @@ class SearchResultsViewModel @ViewModelInject constructor(
     private val context = application.applicationContext
     val categorySearchLiveData =
         MutableLiveData<Resource<ArrayList<Pair<CategorySearch, CategorySearch>>>>()
-    private var searchResultsCall: Call<ListingProductResponse>? = null
     var gender: String = GENDER_WOMEN
     val recentTrendingList = mutableListOf<SearchRecentTrendingWrapper>()
     val trendingProductsLiveData = MutableLiveData<Resource<ArrayList<ListingProduct>>>()
-    val productSearchResultsLiveData = MutableLiveData<Resource<ListingProductResponse>>()
     suspend fun getTendingItems() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -60,35 +61,6 @@ class SearchResultsViewModel @ViewModelInject constructor(
     }
 
     fun getSelectedCurrency() = configurationRepository.getCurrency()
-
-    suspend fun getProductsFromCategory(searchString: String, gender: String) {
-        try {
-            viewModelScope.launch {
-                withContext(Dispatchers.IO) {
-                    productSearchResultsLiveData.postValue(Resource.loading())
-                    searchResultsCall?.cancel()
-                    searchResultsCall =
-                        categoryRepository.getCategoryBasedSearchResultsProductsFromKlevu(
-                            searchString,
-                            gender
-                        )
-                    val productIdsResponse = searchResultsCall!!.execute()
-                    if (productIdsResponse.isSuccessful && productIdsResponse.body()?.result?.isNotEmpty() == true) {
-                        productSearchResultsLiveData.postValue(
-                            Resource.success(
-                                productIdsResponse.body()!!,
-                                productIdsResponse.code()
-                            )
-                        )
-                    } else {
-                        productSearchResultsLiveData.postValue(Resource.error())
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            productSearchResultsLiveData.postValue(Resource.error())
-        }
-    }
 
     fun getRecentSearches() = configurationRepository.getRecentSearches()
     fun addRecentSearch(text: String) {
@@ -135,30 +107,4 @@ class SearchResultsViewModel @ViewModelInject constructor(
             )
         }
     }
-
-    suspend fun getCategoriesSearchResults(searchTerm: String) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                categorySearchLiveData.postValue(Resource.loading())
-                val searchResults = ArrayList<Pair<CategorySearch, CategorySearch>>()
-                categories?.get(gender)?.forEach {
-                    it.value?.forEach { catSearch ->
-                        if (catSearch.name?.contains(searchTerm,true) == true) {
-                            searchResults.add(Pair(it.key, catSearch))
-                        }
-                        catSearch.childrenData?.forEach { catChildrenData ->
-                            if (catChildrenData.name?.contains(searchTerm,true) == true) {
-                                searchResults.add(Pair(catSearch, catChildrenData))
-                            }
-                        }
-                    }
-                }
-                categorySearchLiveData.postValue(
-                    if (searchResults.size > 0) Resource.success(searchResults)
-                    else Resource.error()
-                )
-            }
-        }
-    }
-
 }

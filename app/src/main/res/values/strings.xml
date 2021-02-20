@@ -39,15 +39,63 @@
     <string name="editorial_notes">Editorial Notes</string>
     <string name="about_the_product">About the product</string>
     <string name="shipping_and_returns"><![CDATA[Shipping & Returns]]></string>
-    <string name="active_filters">Active Filters</string>
+    <string name="active_filters">Active filters</string>
     <string name="sort_by">Sort by</string>
     <string name="view_all_collection">View all collection</string>
     <string name="no_search_results_title">No results found</string>
     <string name="no_search_results_body">Sorry, we couldn\'t find any item matching your search</string>
     <string name="searchresult">Search results</string>
     <string name="recent_items">RECENT ITEMS</string>
-    <string name="trending_items">TRENDING NOW</string>
+    <string name="trending_items">WHAT\'S TRENDING</string>
     <string name="menu">Menu</string>
     <string name="number_of_products">%d products</string>
     <string name="category_search_result_placeholder">%s > %s</string>
+    <string name="register_signin_description">Sign in to yout account. New to Level Shoes? Create an account by clicking Register below.</string>
+    <string name="register">REGISTER</string>
+    <string name="sign_in_caps">SIGN IN</string>
+    <string name="information_help">General Information</string>
+    <string name="account_category">Select Gender</string>
+    <string name="account_location">My Location</string>
+    <string name="account_push_notification">Push Notifications</string>
+    <string name="account_push_notification_description">Receive push notifications from\nLevel Shoes</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="title">Title<font color='red'>*</font></string>
+    <string name="first_name">First Name<font color='red'>*</font></string>
+    <string name="last_name">Last Name<font color='red'>*</font></string>
+    <string name="mobile_number">Mobile Number<font color='red'>*</font></string>
+    <string name="email">Email Address<font color='red'>*</font></string>
+    <string name="gender">Gender<font color='red'>*</font></string>
+    <string name="birthday">Birthday<font color='red'>*</font></string>
+    <string name="save_changes">SAVE CHANGES</string>
+    <string name="security_information">Security information</string>
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="address_book">Address book</string>
+    <string name="default_button">DEFAULT</string>
+    <string name="edit_address"><u>Edit your address</u></string>
+    <string name="remove"><u>Remove</u></string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="colours">COLOURS</string>
+    <string name="aply_filt">APPLY FILTER</string>
+    <string name="size">SIZE</string>
+    <string name="price_lbl">PRICE</string>
+    <string name="show">SHOW</string>
+    <string name="results">RESULTS</string>
+    <string name="desig_lbl">DESIGNERS</string>
+    <string name="clear"><u>Clear</u></string>
+    <string name="filter_by">Filter by</string>
+    <string name="order_details">ORDER DETAILS</string>
+    <string name="order_status">Order Status</string>
+    <string name="delivered">DELIVERED</string>
+    <string name="your_order_number">YOUR ORDER NUMBER:</string>
+    <string name="shipping_add">Shipping Address</string>
+    <string name="billing_add">Billing Address</string>
+    <string name="your_items">Your Items</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="need_help">Need Help?</string>
+    <string name="relevance">Relevance</string>
+    <string name="highest_price">Highest price</string>
+    <string name="lowest_price">Lowest price</string>
+    <string name="newest_first">Newest first</string>
+
+
 </resources>
