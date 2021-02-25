@@ -42,6 +42,8 @@
                 app:layout_constraintEnd_toStartOf="@id/right_icon"
                 app:layout_constraintStart_toEndOf="@id/left_icon"
                 app:layout_constraintTop_toTopOf="parent"
+                android:maxLines="1"
+                android:ellipsize="end"
                 app:layout_goneMarginEnd="@dimen/spacing_64"
                 tools:text="New In" />
 

@@ -24,8 +24,11 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
             android:fillViewport="true"
+            android:paddingBottom="@dimen/spacing_32"
+            app:layout_constraintBottom_toTopOf="@id/btn_apply_filter"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,6 +100,95 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_16"
                     app:layout_constraintTop_toBottomOf="@id/sort_by" />
+
+                <View
+                    android:id="@+id/divider_sort_view"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/spacing_32"
+                    android:layout_marginTop="@dimen/spacing_56"
+                    android:background="@color/dividerColorOnSurface"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sort_view" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/filter_by"
+                    style="@style/TextHeading4.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_32"
+                    android:layout_marginTop="@dimen/spacing_40"
+                    android:text="@string/filter_by"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_sort_view" />
+
+                <com.idslogic.levelshoes.custom.FilterByView
+                    android:id="@+id/filter_by_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_24"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_bg_on_light"
+                    android:paddingHorizontal="@dimen/spacing_32"
+                    app:layout_constraintTop_toBottomOf="@id/filter_by"
+                    app:title="@string/filter_by_category" />
+
+                <com.idslogic.levelshoes.custom.FilterByView
+                    android:id="@+id/filter_by_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_bg_on_light"
+                    android:paddingHorizontal="@dimen/spacing_32"
+                    app:layout_constraintTop_toBottomOf="@id/filter_by_category"
+                    app:title="@string/filter_by_gender" />
+
+                <com.idslogic.levelshoes.custom.FilterByView
+                    android:id="@+id/filter_by_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_bg_on_light"
+                    android:paddingHorizontal="@dimen/spacing_32"
+                    app:layout_constraintTop_toBottomOf="@id/filter_by_gender"
+                    app:title="@string/filter_by_color" />
+
+                <com.idslogic.levelshoes.custom.FilterByView
+                    android:id="@+id/filter_by_designer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_bg_on_light"
+                    android:paddingHorizontal="@dimen/spacing_32"
+                    app:layout_constraintTop_toBottomOf="@id/filter_by_color"
+                    app:title="@string/filter_by_designer" />
+
+                <com.idslogic.levelshoes.custom.FilterByView
+                    android:id="@+id/filter_by_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_bg_on_light"
+                    android:paddingHorizontal="@dimen/spacing_32"
+                    app:layout_constraintTop_toBottomOf="@id/filter_by_designer"
+                    app:title="@string/filter_by_size" />
+
+                <com.idslogic.levelshoes.custom.FilterByView
+                    android:id="@+id/filter_by_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_bg_on_light"
+                    android:paddingHorizontal="@dimen/spacing_32"
+                    app:layout_constraintTop_toBottomOf="@id/filter_by_size"
+                    app:title="@string/filter_by_price" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

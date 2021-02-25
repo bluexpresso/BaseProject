@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="categorySearch"
+            type="com.idslogic.levelshoes.data.models.CategorySearch" />
+    </data>
+
+    <merge
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:paddingHorizontal="@dimen/spacing_32"
+        tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            style="@style/TextBodySmall2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/spacing_16"
+            android:textColor="@color/textOnSurface"
+            app:layout_constraintEnd_toStartOf="@id/selected_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="New In" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/selected_filter"
+            style="@style/TextBodySmall2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:paddingVertical="@dimen/spacing_16"
+            android:paddingStart="@dimen/spacing_12"
+            android:singleLine="true"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/textOnSurface"
+            app:layout_constraintEnd_toStartOf="@+id/arrow_next"
+            app:layout_constraintStart_toEndOf="@+id/title"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry"
+            tools:text="(1) Women women women women women women wome" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/arrow_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_baseline_chevron_right_24"
+            android:tint="@color/iconTintOnSurface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/selected_filter"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black_panther"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </merge>
+</layout>

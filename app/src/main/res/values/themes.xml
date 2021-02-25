@@ -93,6 +93,7 @@
     <color name="tabIndicatorColor">@color/white</color>
 
     <color name="dividerColorOnSurfaceReverse">@color/light_gray</color>
+    <color name="dividerColorOnSurface">@color/black</color>
 
     <color name="tabIndicatorColorOnSurface">@color/black</color>
     <color name="plpLabelBackgroundColor">@color/whiteSmokeColor</color>

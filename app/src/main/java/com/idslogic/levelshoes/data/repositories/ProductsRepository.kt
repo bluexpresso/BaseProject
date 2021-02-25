@@ -11,6 +11,7 @@ import com.idslogic.levelshoes.network.APIUrl
 import com.idslogic.levelshoes.utils.ProductListingRequestBuilder
 import com.idslogic.levelshoes.utils.getStoreCode
 import kotlinx.coroutines.CoroutineScope
+import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ class ProductsRepository @Inject constructor(
     private val appDatabase: AppDatabase
 ) {
     var productsPagerLiveData: LiveData<PagingData<BaseModel.Hit<Product>>>? = null
-
+    var pagingSource: ProductListPagingDataSource? = null
     fun getCategoryDetailsFromCategoryId(categoryId: Int): Response<BaseModel.Hit<CategoryResponse>> =
         api.getCategoryDetailFromId(
             APIUrl.getCategoryNameFromCategoryId(
@@ -45,15 +46,64 @@ class ProductsRepository @Inject constructor(
         ).execute()
     }
 
-    fun initProductsPagerLiveDataSource(
-        categoryId: Int,genderFilter : String = "",
+    fun getProducts(
+        categoryId: Int, genderFilter: String = "",
         productIds: ArrayList<ListingProduct>,
-        scope: CoroutineScope
+        filterData: FilterData? = null,
+    ): LiveData<PagingData<BaseModel.Hit<Product>>> {
+        return Pager(PagingConfig(pageSize = 20), pagingSourceFactory = {
+            ProductListPagingDataSource(
+                api, appCache, categoryId, productIds, genderFilter,
+                filterData
+            )
+        }
+        ).liveData
+    }
+
+    fun initProductsPagerLiveDataSource(
+        categoryId: Int, genderFilter: String = "",
+        productIds: ArrayList<ListingProduct>,
+        scope: CoroutineScope,
+        filterData: FilterData? = null,
     ) {
-        if (productsPagerLiveData == null)
-            productsPagerLiveData = Pager(PagingConfig(pageSize = 20)) {
-                ProductListPagingDataSource(api, appCache, categoryId, productIds,genderFilter)
-            }.liveData.cachedIn(scope)
+        pagingSource =
+            ProductListPagingDataSource(
+                api, appCache, categoryId, productIds, genderFilter,
+                filterData
+            )
+        productsPagerLiveData =
+            Pager(
+                PagingConfig(
+                    pageSize = 20,
+                    enablePlaceholders = false
+                )
+            ) { pagingSource!! }.liveData.cachedIn(scope)
+    }
+
+    suspend fun getProductsFromCategory(
+        categoryId: Int, genderFilter: String = "",
+        products: ArrayList<ListingProduct>,
+        filterData: FilterData? = null,
+    ): Response<BaseModel<Product>> {
+        val productIds = arrayListOf<Long>()
+        products.forEach { listingProduct ->
+            productIds.add(listingProduct.itemGroupId?.toLong() ?: 0)
+        }
+        return api.getProducts(
+            APIUrl.getProducts(
+                getStoreCode(
+                    appCache.getSelectedCountry().storeCode,
+                    appCache.getSelectedLanguage()
+                ),
+            ),
+            ProductListingRequestBuilder.buildCategoryBasedProductListingRequest(
+                0,
+                categoryId,
+                productIds,
+                genderFilter,
+                filterData
+            )
+        ).execute()
     }
 
     fun getProducts(

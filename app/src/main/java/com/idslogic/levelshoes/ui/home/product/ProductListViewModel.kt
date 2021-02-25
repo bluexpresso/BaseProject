@@ -1,18 +1,19 @@
 package com.idslogic.levelshoes.ui.home.product
 
+import android.app.Application
 import androidx.lifecycle.*
 import androidx.paging.PagingData
-import com.idslogic.levelshoes.data.models.BaseModel
-import com.idslogic.levelshoes.data.models.FilterData
-import com.idslogic.levelshoes.data.models.ListingProduct
-import com.idslogic.levelshoes.data.models.Product
+import com.idslogic.levelshoes.R
+import com.idslogic.levelshoes.data.models.*
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.data.repositories.ProductsRepository
+import com.idslogic.levelshoes.network.Resource
 import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
@@ -20,22 +21,31 @@ import javax.inject.Inject
 class ProductListViewModel @Inject constructor(
     private val productsRepository: ProductsRepository,
     private val configurationRepository: ConfigurationRepository,
-    private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
-
+    private val savedStateHandle: SavedStateHandle, application: Application
+) : AndroidViewModel(application) {
+    private val context = application.applicationContext
+    val filtersListLiveData = MutableLiveData<Resource<ArrayList<Filter>>>()
     var genderFilter: String = ""
     var categoryPath: String? = null
     var title: String? = null
     var gender = GENDER_WOMEN
+    var productPriceLiveData = MutableLiveData<Pair<Double, Double>>()
     var categoryId: Int = NO_CATEGORY
     val productIdsLiveData = MutableLiveData<ArrayList<ListingProduct>>()
     val loadingLiveData = MutableLiveData<Boolean>()
     var parentCategoryId: Int = NO_CATEGORY
-    var filterData = MutableLiveData<Event<FilterData>>()
+    var filterData: FilterData? = null
+//    val productsLiveData = productIdsLiveData.switchMap { ids ->
+//        productsRepository.getProducts(
+//            categoryId, genderFilter, ids, filterData
+//        ).cachedIn(viewModelScope)
+//    }
+
     suspend fun getProductsFromCategory() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 loadingLiveData.postValue(true)
+                filtersListLiveData.postValue(Resource.loading())
                 if (!categoryPath.isNullOrEmpty()) {
                     if (categoryId == NO_CATEGORY) {
                         val categoryResponse =
@@ -52,6 +62,12 @@ class ProductListViewModel @Inject constructor(
                     }
                     val productIdsResponse =
                         productsRepository.getCategoryBasedProductsFromKlevu(categoryPath!!, gender)
+                    val filters = productIdsResponse.body()?.filters
+                    if (!filters.isNullOrEmpty()) {
+                        filtersListLiveData.postValue(Resource.success(filters))
+                    } else {
+                        filtersListLiveData.postValue(Resource.error())
+                    }
                     if (productIdsResponse.isSuccessful && productIdsResponse.body()?.result?.isNotEmpty() == true) {
                         productIdsLiveData.postValue(productIdsResponse.body()!!.result!!)
                     } else {
@@ -91,6 +107,12 @@ class ProductListViewModel @Inject constructor(
                             )
                             val productIdsResponse =
                                 productsRepository.getCategoryBasedProductsFromKlevu(sBuilder.toString())
+                            val filters = productIdsResponse.body()?.filters
+                            if (!filters.isNullOrEmpty()) {
+                                filtersListLiveData.postValue(Resource.success(filters))
+                            } else {
+                                filtersListLiveData.postValue(Resource.error())
+                            }
                             if (productIdsResponse.isSuccessful && productIdsResponse.body()?.result?.isNotEmpty() == true) {
                                 productIdsLiveData.postValue(productIdsResponse.body()!!.result!!)
                             } else {
@@ -106,10 +128,66 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
-    fun getProductPagingLiveData(): LiveData<PagingData<BaseModel.Hit<Product>>>? {
+    private fun getPrice(
+        filters: ArrayList<Filter>,
+        productIdsResponse: Response<ListingProductResponse>
+    ) {
+        filters.add(
+            Filter(
+                FILTER_TYPE_PRICE, context.getString(R.string.price),
+                "", arrayListOf(
+                    FilterOption(
+                        1, "false",
+                        "min", productIdsResponse.body()?.price?.min ?: "0"
+                    ),
+                    FilterOption(
+                        1, "false",
+                        "max", productIdsResponse.body()?.price?.max ?: "20000"
+                    )
+                )
+            )
+        )
+    }
+
+    suspend fun getProductsList(filterData: FilterData?): MutableLiveData<Resource<List<BaseModel.Hit<Product>>>> {
+        val productsResourceLiveData =
+            MutableLiveData<Resource<List<BaseModel.Hit<Product>>>>()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                productsResourceLiveData.postValue(Resource.loading())
+                val productsResponse = productsRepository.getProductsFromCategory(
+                    categoryId, genderFilter,
+                    productIdsLiveData.value!!, filterData
+                )
+                if (productsResponse.isSuccessful &&
+                    !productsResponse.body()?.hits?.hits.isNullOrEmpty()
+                ) {
+                    val sortedProducts = productsResponse.body()?.hits?.hits?.sortedWith(
+                        compareBy(
+                            nullsLast(), { it.score })
+                    )
+                    productsResourceLiveData.postValue(
+                        Resource.success(sortedProducts)
+                    )
+                    productPriceLiveData.postValue(
+                        Pair(
+                            productsResponse.body()?.aggregations?.minPrice?.value ?: 0.toDouble(),
+                            productsResponse.body()?.aggregations?.maxPrice?.value
+                                ?: 10000.toDouble()
+                        )
+                    )
+                } else {
+                    productsResourceLiveData.postValue(Resource.error())
+                }
+            }
+        }
+        return productsResourceLiveData
+    }
+
+    fun getProductPagingLiveData(filterData: FilterData? = null): LiveData<PagingData<BaseModel.Hit<Product>>>? {
         productsRepository.initProductsPagerLiveDataSource(
             categoryId, genderFilter, productIdsLiveData.value!!,
-            viewModelScope
+            viewModelScope, filterData
         )
         return productsRepository.productsPagerLiveData
     }

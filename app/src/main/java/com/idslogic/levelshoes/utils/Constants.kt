@@ -64,6 +64,8 @@ const val NO_CATEGORY = -1
 fun getStoreCode(country: String?, selectedLanguage: String) =
     MAGNETO.plus("_").plus(country ?: DEFAULT_COUNTRY).plus("_").plus(selectedLanguage)
 
+val seasonDescList = arrayOf(1870, 2019)
+
 val productFields = arrayOf(
     "name",
     "final_price",
@@ -99,6 +101,14 @@ val productFields = arrayOf(
     "special_from_date"
 )
 
+const val FILTER_TYPE_CATEGORY = "lvl_category"
+const val FILTER_TYPE_MANUFACTURER = "manufacturer"
+const val FILTER_TYPE_COLOR = "color"
+const val FILTER_TYPE_SIZE = "size"
+const val FILTER_TYPE_GENDER = "gender"
+const val FILTER_TYPE_VISIBILITY = "visibility"
+const val FILTER_TYPE_SUBCATEGORY = "subcategory"
+const val FILTER_TYPE_PRICE = "price"
 
 val categorySearchFields = arrayOf(
     "name",
@@ -111,11 +121,11 @@ val categorySearchFields = arrayOf(
     "menu_item_link",
     "children_data.name"
 )
-val gender_val= arrayOf(
+val gender_val = arrayOf(
     "Male",
     "Female"
 )
-val title_val= arrayOf(
+val title_val = arrayOf(
     "Mr.",
     "Ms.",
     "Mrs."

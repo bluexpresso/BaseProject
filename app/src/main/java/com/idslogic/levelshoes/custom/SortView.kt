@@ -109,7 +109,7 @@ class SortView @JvmOverloads constructor(
 
     companion object {
         const val SORT_BY_RELEVANCE = "rel"
-        const val SORT_BY_NEWEST_FIRST = "new"
+        const val SORT_BY_NEWEST_FIRST = "newest_first"
         const val SORT_BY_LOWEST_PRICE = "asc"
         const val SORT_BY_HIGHEST_PRICE = "desc"
     }

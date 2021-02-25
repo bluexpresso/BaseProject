@@ -1,11 +1,16 @@
 package com.idslogic.levelshoes.utils
 
 import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import com.idslogic.levelshoes.custom.SortView
+import com.idslogic.levelshoes.custom.SortView.Companion.SORT_BY_HIGHEST_PRICE
+import com.idslogic.levelshoes.custom.SortView.Companion.SORT_BY_LOWEST_PRICE
+import com.idslogic.levelshoes.custom.SortView.Companion.SORT_BY_NEWEST_FIRST
+import com.idslogic.levelshoes.data.models.FilterData
 import com.idslogic.levelshoes.network.APIUrl
+import java.lang.StringBuilder
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class ProductListingRequestBuilder {
     companion object {
@@ -14,7 +19,8 @@ class ProductListingRequestBuilder {
             fromPosition: Int,
             category: Int,
             productIds: ArrayList<Long>,
-            genderFilter: String = ""
+            genderFilter: String = "",
+            filterData: FilterData? = null
         ): JsonObject {
             val request = JsonObject()
 
@@ -23,22 +29,58 @@ class ProductListingRequestBuilder {
                 "function_score", buildFunctionScoreForKlevuCategoryProducts(
                     category,
                     productIds,
-                    genderFilter
+                    genderFilter,
+                    filterData
                 )
             )
 
             request.add("_source", getSourceArray())
-            request.addProperty("size", 20)
-            request.addProperty("from", fromPosition)
+            request.addProperty("size", productIds.size)
+            request.addProperty("from", 0)
             request.add("aggs", buildAggsForKlevuCategoryProducts())
             request.add("query", query)
+            if (!filterData?.sortBy.isNullOrEmpty() && filterData?.sortBy != SortView.SORT_BY_RELEVANCE) {
+                request.add("sort", buildSortByPrice(filterData!!.sortBy!!))
+            }
             return request
+        }
+
+        private fun buildSortByPrice(sortBy: String): JsonElement? {
+            val finalPrice = JsonObject()
+            if (sortBy == SORT_BY_HIGHEST_PRICE || sortBy == SORT_BY_LOWEST_PRICE) {
+                val order = JsonObject()
+                order.addProperty("order", sortBy)
+                finalPrice.add("final_price", order)
+                return finalPrice
+            }
+            if (sortBy == SORT_BY_NEWEST_FIRST) {
+                val order = JsonObject()
+                order.addProperty("order", SORT_BY_HIGHEST_PRICE)
+                val scriptChildJson = JsonObject()
+                scriptChildJson.addProperty(
+                    "script",
+                    "if([1870, 2019].contains((int)doc['seasondesc'].value)) return 1; else return 0;"
+                )
+                scriptChildJson.addProperty("type", "number")
+                scriptChildJson.addProperty("order", "desc")
+                val scriptParentJson = JsonObject()
+                scriptParentJson.add("_script", scriptChildJson)
+
+                val seasonDescJson = JsonObject()
+                seasonDescJson.addProperty("seasondesc", "desc")
+                return JsonArray().apply {
+                    add(scriptParentJson)
+                    add(seasonDescJson)
+                }
+            }
+            return null
         }
 
         private fun buildFunctionScoreForKlevuCategoryProducts(
             category: Int,
             productIds: ArrayList<Long>,
-            genderFilters: String? = ""
+            genderFilters: String? = "",
+            filterData: FilterData? = null
         ): JsonObject {
             val functionScore = JsonObject()
             val query = JsonObject()
@@ -108,11 +150,32 @@ class ProductListingRequestBuilder {
             must.add(matchStatus)
             must.add(matchIsInStock)
             must.add(range)
+
+            //FILTERS
+            //1) Category filters
+            if (!filterData?.categories.isNullOrEmpty()) {
+                must.add(buildCategoryFilterJson(filterData))
+            }
             bool.add("must", must)
             query.add("bool", bool)
             functionScore.add("query", query)
             functionScore.add("script_score", buildScriptJson(productIds))
             return functionScore
+        }
+
+        private fun buildCategoryFilterJson(filterData: FilterData?): JsonObject {
+            val matchCategoryParent = JsonObject()
+            val matchCategoryChild = JsonObject()
+            val sbCategories = StringBuilder()
+            filterData?.categories?.values?.forEach { catFilterOption ->
+                sbCategories.append("${catFilterOption.name},")
+            }
+            sbCategories.deleteCharAt(sbCategories.lastIndex)
+            matchCategoryChild.addProperty(
+                "configurable_children.lvl_category_label", sbCategories.toString()
+            )
+            matchCategoryParent.add("match", matchCategoryChild)
+            return matchCategoryParent
         }
 
         private fun buildScriptJson(productIds: ArrayList<Long>): JsonObject {

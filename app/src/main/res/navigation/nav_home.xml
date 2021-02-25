@@ -25,8 +25,10 @@
         <action
             android:id="@+id/action_to_filters"
             app:destination="@id/filtersScreen"
-            app:exitAnim="@anim/fragment_enter_slide"
-            app:popExitAnim="@anim/fragment_exit_slide"/>
+            app:enterAnim="@anim/fragment_enter_slide"
+            app:exitAnim="@anim/fragment_exit_fade"
+            app:popEnterAnim="@anim/fragment_enter_fade"
+            app:popExitAnim="@anim/fragment_exit_slide" />
         <action
             android:id="@+id/action_to_product_details"
             app:destination="@id/productDetailsScreen" />
@@ -35,7 +37,32 @@
         android:id="@+id/filtersScreen"
         android:name="com.idslogic.levelshoes.ui.home.product.filters.FiltersFragment"
         android:label="FiltersFragment"
-        tools:layout="@layout/fragment_filters" />
+        tools:layout="@layout/fragment_filters">
+        <action
+            android:id="@+id/action_to_filter_selection"
+            app:destination="@id/filterSelectionScreen"
+            app:enterAnim="@anim/fragment_enter_slide"
+            app:exitAnim="@anim/fragment_exit_fade"
+            app:popEnterAnim="@anim/fragment_enter_fade"
+            app:popExitAnim="@anim/fragment_exit_slide" />
+        <action
+            android:id="@+id/action_to_price_selection"
+            app:destination="@id/filtersPriceScreen"
+            app:enterAnim="@anim/fragment_enter_slide"
+            app:exitAnim="@anim/fragment_exit_fade"
+            app:popEnterAnim="@anim/fragment_enter_fade"
+            app:popExitAnim="@anim/fragment_exit_slide" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterSelectionScreen"
+        android:name="com.idslogic.levelshoes.ui.home.product.filters.FiltersSelectionFragment"
+        android:label="FiltersSelectionFragment"
+        tools:layout="@layout/fragment_filters_selection" />
+    <fragment
+        android:id="@+id/filtersPriceScreen"
+        android:name="com.idslogic.levelshoes.ui.home.product.filters.FiltersPriceFragment"
+        android:label="PriceFragment"
+        tools:layout="@layout/fragment_filters_price" />
     <fragment
         android:id="@+id/productDetailsScreen"
         android:name="com.idslogic.levelshoes.ui.home.product.ProductDetailsFragment"

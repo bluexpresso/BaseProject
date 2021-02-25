@@ -9,11 +9,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import com.idslogic.levelshoes.BuildConfig
+import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.data.AppCache
-import com.idslogic.levelshoes.data.models.BaseModel
-import com.idslogic.levelshoes.data.models.CategorySearch
-import com.idslogic.levelshoes.data.models.Content
-import com.idslogic.levelshoes.data.models.Product
+import com.idslogic.levelshoes.data.models.*
 import com.idslogic.levelshoes.data.repositories.ConfigurationRepository
 import com.idslogic.levelshoes.network.Resource
 import com.idslogic.levelshoes.network.Status.SUCCESS
@@ -30,6 +28,7 @@ class MainViewModel @Inject constructor(
     private val appCache: AppCache, application: Application
 ) :
     AndroidViewModel(application) {
+    private val context = application.applicationContext
     val clearSearchFocusLiveData = MutableLiveData<Boolean>()
     var disableSearchAnimation = false
     var searchCategories: HashMap<String, LinkedHashMap<CategorySearch, ArrayList<CategorySearch>?>>? =
@@ -185,8 +184,8 @@ class MainViewModel @Inject constructor(
         if (contentList.size > 1 && appCache.getAuthToken().isEmpty()) {
             contentList.add(
                 1, Content(
-                    BOX_TYPE_REGISTER_SIGN_IN, 1, "context.getString(R.string.sign_in_to_account)",
-                    "context.getString(R.string.register_sign_in_description)", 0, null, null, null
+                    BOX_TYPE_REGISTER_SIGN_IN, 1, context.getString(R.string.sign_in_to_account),
+                    context.getString(R.string.register_sign_in_description), 0, null, null, null
                 )
             )
         }

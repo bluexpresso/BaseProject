@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.google.gson.Gson
 import com.idslogic.levelshoes.data.AppCache
 import com.idslogic.levelshoes.data.models.BaseModel
+import com.idslogic.levelshoes.data.models.FilterData
 import com.idslogic.levelshoes.data.models.ListingProduct
 import com.idslogic.levelshoes.data.models.Product
 import com.idslogic.levelshoes.network.API
@@ -15,14 +16,16 @@ import retrofit2.await
 import timber.log.Timber
 import java.lang.Exception
 
-class ProductListPagingDataSource(
+open class ProductListPagingDataSource(
     private val api: API,
     private val appCache: AppCache,
     private val category: Int,
     private val productIdsList: ArrayList<ListingProduct>,
-    private val genderFilter : String
+    private val genderFilter: String,
+    private val filterData: FilterData? = null
 ) :
     PagingSource<Int, BaseModel.Hit<Product>>() {
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BaseModel.Hit<Product>> {
         try {
             val currentFromPosition = params.key?.plus(1) ?: 0
@@ -45,7 +48,8 @@ class ProductListPagingDataSource(
                         0,
                         category,
                         productIds,
-                        genderFilter
+                        genderFilter,
+                        filterData
                     )
                 )
                 if (response.hits.hits.isNullOrEmpty())
@@ -68,4 +72,10 @@ class ProductListPagingDataSource(
     override fun getRefreshKey(state: PagingState<Int, BaseModel.Hit<Product>>): Int? {
         TODO("Not yet implemented")
     }
+
+
+//    override fun getRefreshKey(state: PagingState<Int, BaseModel.Hit<Product>>): Int? {
+////        return null
+//    }
+
 }

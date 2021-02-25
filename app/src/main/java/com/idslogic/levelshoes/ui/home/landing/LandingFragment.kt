@@ -17,6 +17,7 @@ import com.idslogic.levelshoes.network.Status.*
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
 import com.idslogic.levelshoes.ui.home.product.ProductListViewModel
+import com.idslogic.levelshoes.ui.home.product.filters.FiltersViewModel
 import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_landing.*
@@ -31,7 +32,7 @@ class LandingFragment : BaseFragment() {
 
     private lateinit var viewModel: LandingViewModel
     private val activityViewModel: MainViewModel by activityViewModels()
-    private val productListViewModel: ProductListViewModel by activityViewModels<ProductListViewModel>()
+    private val filtersViewModel : FiltersViewModel by activityViewModels()
     private lateinit var landingListAdapter: LandingListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class LandingFragment : BaseFragment() {
         initDismissibleCard(binding)
         initProductListNavigation(binding)
         initProductDetailsNavigation(binding)
-        productListViewModel.filterData.value = null
+        filtersViewModel.filterData.value = null
         return binding.root
     }
 

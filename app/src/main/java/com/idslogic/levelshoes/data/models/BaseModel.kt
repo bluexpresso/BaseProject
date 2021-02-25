@@ -20,6 +20,26 @@ class BaseModel<T> {
     @SerializedName("hits")
     lateinit var hits: Hits<T>
 
+    @Expose
+    @SerializedName("aggregations")
+    var aggregations: Aggregation? = null
+
+    class Aggregation {
+        @SerializedName("max_price")
+        @Expose
+        var maxPrice: Value? = null
+
+        @SerializedName("min_price")
+        @Expose
+        var minPrice: Value? = null
+    }
+
+    class Value {
+        @SerializedName("value")
+        @Expose
+        var value: Double? = null
+    }
+
     class Shards {
         @Expose
         @SerializedName("total")
@@ -67,7 +87,7 @@ class BaseModel<T> {
 
         @Expose
         @SerializedName("_score")
-        lateinit var score: Any
+        var score: Double? = null
 
         @Expose
         @SerializedName("_source")

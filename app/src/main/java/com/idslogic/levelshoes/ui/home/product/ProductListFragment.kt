@@ -9,25 +9,32 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.idslogic.levelshoes.R
 import com.idslogic.levelshoes.databinding.FragmentProductListBinding
+import com.idslogic.levelshoes.network.Status.LOADING
+import com.idslogic.levelshoes.network.Status.SUCCESS
 import com.idslogic.levelshoes.ui.BaseFragment
 import com.idslogic.levelshoes.ui.MainViewModel
+import com.idslogic.levelshoes.ui.home.product.filters.FiltersViewModel
 import com.idslogic.levelshoes.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProductListFragment : BaseFragment() {
-    val activityViewModel: MainViewModel by activityViewModels()
-    val viewModel by activityViewModels<ProductListViewModel>()
-    lateinit var productListAdapter: ProductListAdapter
+    val activityViewModel by activityViewModels<MainViewModel>()
+    private val filtersViewModel by activityViewModels<FiltersViewModel>()
+    val viewModel by viewModels<ProductListViewModel>()
+
+    //    lateinit var productListPagingAdapter: ProductListPagingAdapter
+    private lateinit var productsListAdapter: ProductListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        productsListAdapter = ProductListAdapter(viewModel.getSelectedCurrency())
     }
 
     override fun onCreateView(
@@ -42,21 +49,21 @@ class ProductListFragment : BaseFragment() {
         readArguments()
         initToolbar(binding.toolbar)
         initProducts(binding)
-        initCategory(binding)
-        initFilters(binding)
+        if (viewModel.productIdsLiveData.value.isNullOrEmpty()) {
+            initCategory(binding)
+            observeProductIds(binding)
+        } else {
+            loadProducts(binding)
+        }
         return binding.root
     }
 
-    private fun initFilters(binding: FragmentProductListBinding) {
-        viewModel.filterData.observe(viewLifecycleOwner, EventObserver {
-            Toast.makeText(requireContext(), Gson().toJson(it), Toast.LENGTH_SHORT).show()
-        })
-    }
-
     private fun initCategory(binding: FragmentProductListBinding) {
-        binding.shimmerLoadingView.visibility = View.VISIBLE
-        binding.viewProducts.visibility = View.GONE
+        binding.shimmerLoadingView.visibility = View.GONE
+        binding.viewProducts.visibility = View.VISIBLE
         if (isInternetAvailable(requireContext())) {
+            binding.shimmerLoadingView.visibility = View.VISIBLE
+            binding.viewProducts.visibility = View.GONE
             lifecycleScope.launch {
                 viewModel.getProductsFromCategory()
             }
@@ -77,10 +84,10 @@ class ProductListFragment : BaseFragment() {
             arguments?.getInt(ARG_PARENT_CATEGORY_ID, NO_CATEGORY) ?: NO_CATEGORY
         viewModel.categoryPath = arguments?.getString(ARG_CATEGORY_PATH, null)
         viewModel.genderFilter = arguments?.getString(ARG_GENDER_FILTER, "") ?: ""
+        viewModel.filterData = filtersViewModel.filterData.value?.peekContent()
     }
 
     private fun initProducts(binding: FragmentProductListBinding) {
-        productListAdapter = ProductListAdapter(viewModel.getSelectedCurrency())
 //        productListAdapter.onProductClicked = { product, transitionImage ->
 //            findNavController().navigate(
 //                R.id.action_to_product_details, Bundle().apply {
@@ -91,7 +98,7 @@ class ProductListFragment : BaseFragment() {
 //                )
 //            )
 //        }
-        binding.viewProducts.adapter = productListAdapter
+        binding.viewProducts.adapter = productsListAdapter
         binding.viewProducts.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
@@ -106,18 +113,64 @@ class ProductListFragment : BaseFragment() {
                 }
             }
         })
+    }
+
+    private fun observeProductIds(binding: FragmentProductListBinding) {
         viewModel.productIdsLiveData.observe(viewLifecycleOwner, {
             if (!it.isNullOrEmpty()) {
-                binding.shimmerLoadingView.visibility = View.GONE
-                binding.viewProducts.visibility = View.VISIBLE
-                lifecycleScope.launch {
-                    viewModel.getProductPagingLiveData()
-                        ?.observe(viewLifecycleOwner, { pagingData ->
-                            productListAdapter.submitData(lifecycle, pagingData)
-                        })
+                loadProducts(binding)
+            }
+        })
+        viewModel.filtersListLiveData.observe(viewLifecycleOwner, {
+            when (it.status) {
+                LOADING -> {
+                    binding.toolbar.disableRightIcon()
+                }
+                SUCCESS -> {
+                    filtersViewModel.filtersList = it.data
+                    binding.toolbar.enableRightIcon()
+                }
+                else -> {
+                    binding.toolbar.enableRightIcon()
                 }
             }
         })
+        viewModel.productPriceLiveData.observe(viewLifecycleOwner, {
+            if (filtersViewModel.filterData.value?.peekContent() == null) {
+                filtersViewModel.price = it
+            } else {
+                filtersViewModel.filteredPrice = it
+            }
+        })
+    }
+
+    private fun loadProducts(binding: FragmentProductListBinding) {
+        lifecycleScope.launch {
+            viewModel.getProductsList(filtersViewModel.filterData.value?.peekContent())
+                .observe(viewLifecycleOwner, { resource ->
+                    when (resource.status) {
+                        LOADING -> {
+                            binding.shimmerLoadingView.visibility = View.VISIBLE
+                            binding.viewProducts.visibility = View.GONE
+                        }
+                        SUCCESS -> {
+                            binding.shimmerLoadingView.visibility = View.GONE
+                            binding.viewProducts.visibility = View.VISIBLE
+                            productsListAdapter.setItems(
+                                resource.data ?: arrayListOf()
+                            )
+                        }
+                        else -> {
+                            binding.shimmerLoadingView.visibility = View.GONE
+                            binding.viewProducts.visibility = View.GONE
+                            Toast.makeText(
+                                requireContext(), "No products found",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                })
+        }
     }
 
     private fun initToolbar(toolbar: CustomToolbar) {

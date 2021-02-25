@@ -30,6 +30,11 @@ import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.idslogic.levelshoes.R
+import com.idslogic.levelshoes.custom.SortView
+import com.idslogic.levelshoes.custom.SortView.Companion.SORT_BY_HIGHEST_PRICE
+import com.idslogic.levelshoes.custom.SortView.Companion.SORT_BY_LOWEST_PRICE
+import com.idslogic.levelshoes.custom.SortView.Companion.SORT_BY_NEWEST_FIRST
+import com.idslogic.levelshoes.custom.SortView.Companion.SORT_BY_RELEVANCE
 import com.idslogic.levelshoes.data.models.CategorySearch
 import com.idslogic.levelshoes.di.GlideApp
 import java.io.*
@@ -238,7 +243,7 @@ fun hideSoftKeyboard(view: View?) {
     view?.clearFocus()
     val imm =
         view?.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-    imm!!.hideSoftInputFromWindow(view?.windowToken,InputMethodManager.RESULT_HIDDEN)
+    imm!!.hideSoftInputFromWindow(view?.windowToken, InputMethodManager.RESULT_HIDDEN)
 }
 
 fun forceHideKeyboard(view: View?) {
@@ -470,6 +475,15 @@ fun getCurrency(language: String, countryCode: String): String {
 //    "OMR" = "ر.ع.";
 //    "BHD" = "د.ب."
 }
+
+fun getSortByValue(sortBy: String) =
+    when (sortBy) {
+        SORT_BY_HIGHEST_PRICE -> "desc"
+        SORT_BY_LOWEST_PRICE -> "asc"
+        SORT_BY_NEWEST_FIRST -> "newest_first"
+        SORT_BY_RELEVANCE -> "rel"
+        else -> null
+    }
 
 const val SCROLL_ROTATION_MAGNITUDE = 0.25f
 

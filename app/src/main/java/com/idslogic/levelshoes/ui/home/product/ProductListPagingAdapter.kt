@@ -16,14 +16,13 @@ import com.idslogic.levelshoes.databinding.ItemProductInListBinding
 import com.idslogic.levelshoes.di.GlideApp
 import com.idslogic.levelshoes.utils.formatPrice
 
-class ProductListAdapter(val currency: String) :
-    RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
-    var products: List<BaseModel.Hit<Product>> = arrayListOf()
+class ProductListPagingAdapter(val currency: String) :
+    PagingDataAdapter<BaseModel.Hit<Product>, ProductListPagingAdapter.ViewHolder>(DiffUtils) {
 
     inner class ViewHolder(val binding: ItemProductInListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            products[bindingAdapterPosition].source?.let { source ->
+            getItem(bindingAdapterPosition)?.source?.let { source ->
                 binding.name.text = source.name
                 binding.brand.text = source.manufacturerName ?: ""
                 binding.price.text = formatPrice(
@@ -70,11 +69,21 @@ class ProductListAdapter(val currency: String) :
         holder.bind()
     }
 
-    override fun getItemCount() = products.size
+    object DiffUtils : DiffUtil.ItemCallback<BaseModel.Hit<Product>>() {
 
-    fun setItems(products: List<BaseModel.Hit<Product>>) {
-        this.products = products
-        notifyDataSetChanged()
+        override fun areItemsTheSame(
+            oldItem: BaseModel.Hit<Product>,
+            newItem: BaseModel.Hit<Product>
+        ): Boolean {
+            return oldItem.source?.id == newItem.source?.id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: BaseModel.Hit<Product>,
+            newItem: BaseModel.Hit<Product>
+        ): Boolean {
+            return oldItem.source == newItem.source
+        }
     }
 
     var onProductClicked: ((Product, AppCompatImageView) -> Unit)? = null

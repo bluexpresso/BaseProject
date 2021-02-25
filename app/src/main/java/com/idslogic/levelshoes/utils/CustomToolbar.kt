@@ -101,6 +101,14 @@ class CustomToolbar @JvmOverloads constructor(
         title_text.text = title ?: ""
     }
 
+    fun disableRightIcon() {
+        right_icon.isEnabled = false
+    }
+
+    fun enableRightIcon() {
+        right_icon.isEnabled = true
+    }
+
     var onRightIconClick: (() -> Unit)? = null
     var onActionButtonClick: (() -> Unit)? = null
     var onLeftIconClick: (() -> Unit)? = null
