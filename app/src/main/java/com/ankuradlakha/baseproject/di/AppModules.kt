@@ -13,8 +13,8 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 class AppModules {
     companion object {
         private const val CACHE_SIZE = 10L * 1024 * 1024   //10MB
@@ -46,7 +46,7 @@ class AppModules {
                 builder.addHeader("Authorization", String.format("Token %s", token))
             }
             val response = it.proceed(builder.build())
-            if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
 //                logOutUser(context,appCache)
             }
             response
